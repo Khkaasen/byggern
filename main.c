@@ -12,11 +12,11 @@ void main(){
 
     UART_init(MYUBRR);
 
-    unsigned char data = "h";
-    while (!(data="")){
-        printf("Skriv det du vil at skal sendes:");
-        data=getchar();
-        UART_Transmit(data);
+    unsigned char data;
+    while (1){
+        //printf("Skriv det du vil at skal sendes:");
+        //data=getchar();
+        UART_Transmit('a');
     }
 
 

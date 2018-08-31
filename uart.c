@@ -7,9 +7,9 @@ void UART_init(unsigned int ubrr){
     UBRR0H = (unsigned char)(ubrr>>8);    //set baud rate
     UBRR0L = (unsigned char)ubrr;
 
-    UCSRB0 = (1<<RXEN0)|(1<<TXEN0);    //enable reciever and transmitter
+    UCSR0B = (1<<RXEN0)|(1<<TXEN0);    //enable reciever and transmitter
 
-    UCRSC0 = (1<<URSEL0)|(1<<USBS0)|(3<<UCSZ00);    //Set frame format: 8data, 2 stop bit
+    UCSR0C = (1<<URSEL0)|(1<<USBS0)|(3<<UCSZ00);    //Set frame format: 8data, 2 stop bit
 }
 
 void UART_Transmit(unsigned char data){
@@ -35,8 +35,3 @@ void UART_Flush(void){
 }
 
 
-
-URSELx
-URSELn
-URSExL
-URSEnL

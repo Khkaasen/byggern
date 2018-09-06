@@ -11,7 +11,7 @@ void UART_init(unsigned int ubrr){
 
     UCSR0C = (1<<URSEL0)|(1<<USBS0)|(3<<UCSZ00);    //Set frame format: 8data, 2 stop bit
 
-    fdevopen(UART_Transmit,UART_Receive);
+    fdevopen(UART_Transmit,UART_Receive); 
 }
 
 void UART_Transmit(unsigned char data){

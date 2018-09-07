@@ -11,7 +11,9 @@ void UART_init(unsigned int ubrr){
 
     UCSR0C = (1<<URSEL0)|(1<<USBS0)|(3<<UCSZ00);    //Set frame format: 8data, 2 stop bit
 
-    fdevopen(UART_Transmit,UART_Receive);
+    fdevopen(&UART_Transmit,&UART_Receive);
+    
+    MCUCR = (1<<SRE);  //Enables the external memory interface
 }
 
 void UART_Transmit(unsigned char data){
@@ -20,6 +22,7 @@ void UART_Transmit(unsigned char data){
 
     //printf("Sent!!");
     UDR0 = data; //Put data into buffer, sends the data
+
 
 }
 unsigned char UART_Receive (void){

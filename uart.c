@@ -13,7 +13,6 @@ void UART_init(unsigned int ubrr){
 
     fdevopen(&UART_Transmit,&UART_Receive);
     
-    MCUCR = (1<<SRE);  //Enables the external memory interface
 }
 
 void UART_Transmit(unsigned char data){

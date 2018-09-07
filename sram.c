@@ -1,7 +1,10 @@
+#define F_CPU 4915200UL
 #include <stdlib.h>
+#include <stdio.h>
+#include <avr/io.h>
+#include <util/delay.h>
 void SRAM_test(void)
 {
-	
 	volatile char *ext_ram = (char *) 0x1800; // Start address for the SRAM
 	uint16_t ext_ram_size= 0x800;
 	uint16_t write_errors= 0;
@@ -20,6 +23,8 @@ void SRAM_test(void)
 			printf("Write phase error: ext_ram[%4d] = %02X (should be %02X)\n", i, retreived_value, some_value);
 			write_errors++;
 		}
+		_delay_ms(1000);
+		
 	}
 	// Retrieval phase: Check that no values were changed during or after the write phase
 	srand(seed); // reset the PRNG to the state it had before the write phase
@@ -33,3 +38,6 @@ void SRAM_test(void)
 	}
 	printf("SRAM test completed with \n%4d errors in write phase and \n%4d errors in retrieval phase\n\n", write_errors, retrieval_errors);
 }
+
+
+

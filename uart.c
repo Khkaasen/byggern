@@ -13,6 +13,7 @@ void UART_init(unsigned int ubrr){
 
     fdevopen(&UART_Transmit,&UART_Receive);
     
+    MCUCR = (1<<SRE);
 }
 
 void UART_Transmit(unsigned char data){

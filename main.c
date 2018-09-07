@@ -3,6 +3,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include "uart.h"
+#include "sram.h"
 #define Baudrate 9600
 #define MYUBRR F_CPU/16/Baudrate-1
 
@@ -18,14 +19,14 @@ void main(){
         //data=getchar();
     //}
 
-
-    
-    DDRC = 0xFF; // setter c register til output  
-    DDRA = 0xFF;
-
+	
+    SRAM_test();
+    //DDRC = 0xFF; // setter c register til output  
+    //DDRA = 0xFF;
+	
     while(1) {
-        PORTC = 0xFF;
-        PORTA = 0xFF;
+        //PORTC = 0xFF;
+       	//PORTA = 0xFF;
         //UART_Transmit(UART_Receive());
         //UART_Transmit('b');
         //UART_Transmit('\n');
@@ -39,5 +40,4 @@ void main(){
         //printf("a\n");
         //_delay_ms(100);
     }
-    
 }

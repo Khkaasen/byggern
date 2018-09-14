@@ -3,6 +3,13 @@
 #include <stdio.h>
 #include <avr/io.h>
 #include <util/delay.h>
+
+void SRAM_init(void)
+{
+	MCUCR = (1<<SRE);
+	SFIOR = (1<<XMM2);
+	
+}
 void SRAM_test(void)
 {
 	volatile char *ext_ram = (char *) 0x1800; // Start address for the SRAM

@@ -12,6 +12,8 @@
 void main(){
 
     UART_init(MYUBRR);
+    
+    SRAM_init();
 
     //unsigned char data;
     //while (1){
@@ -22,10 +24,10 @@ void main(){
 	
     SRAM_test();
     //DDRC = 0xFF; // setter c register til output  
-    //DDRA = 0xFF;
+    //DDRB = 0xFF;
     /*while(1) {
         //PORTC = 0xFF;
-       	//PORTA = 0x1FF;
+       	//PORTB = 0xFF;
         //UART_Transmit(UART_Receive());
         //UART_Transmit('b');
         //UART_Transmit('\n');
@@ -34,7 +36,7 @@ void main(){
         //PORTC = 0x80; 
         //_delay_ms(1000);
         //PORTC = 0x00;
-        //PORTA = 0X00;
+        //PORTA = 0xF5;
         //_delay_ms(1000);
         //printf("a\n");
         //_delay_ms(100);

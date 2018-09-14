@@ -13,7 +13,7 @@ void main(){
 
     UART_init(MYUBRR);
 
-    unsigned char data;
+    //unsigned char data;
     //while (1){
         //printf("Skriv det du vil at skal sendes:");
         //data=getchar();
@@ -23,10 +23,9 @@ void main(){
     SRAM_test();
     //DDRC = 0xFF; // setter c register til output  
     //DDRA = 0xFF;
-	
-    while(1) {
+    /*while(1) {
         //PORTC = 0xFF;
-       	//PORTA = 0xFF;
+       	//PORTA = 0x1FF;
         //UART_Transmit(UART_Receive());
         //UART_Transmit('b');
         //UART_Transmit('\n');
@@ -39,5 +38,5 @@ void main(){
         //_delay_ms(1000);
         //printf("a\n");
         //_delay_ms(100);
-    }
+    }*/
 }

@@ -4,11 +4,12 @@
 #include <util/delay.h>
 #include "uart.h"
 #include "sram.h"
+#include "joystick.h"
 #define Baudrate 9600
 #define MYUBRR F_CPU/16/Baudrate-1
 
 //testprogram med jtag
-
+//Cutoff frequency: 796.18 Hz
 void main(){
 
     UART_init(MYUBRR);
@@ -20,13 +21,15 @@ void main(){
         //printf("Skriv det du vil at skal sendes:");
         //data=getchar();
     //}
+    //printf("heeeeei\n");
+	joystick_status joystick;
 
-	
-    SRAM_test();
+    //SRAM_test();
     //DDRC = 0xFF; // setter c register til output  
     //DDRB = 0xFF;
-    /*while(1) {
-        //PORTC = 0xFF;
+    while(1) {
+    	joystick = get_joystick_status();
+    	 //PORTC = 0xFF;
        	//PORTB = 0xFF;
         //UART_Transmit(UART_Receive());
         //UART_Transmit('b');
@@ -40,5 +43,5 @@ void main(){
         //_delay_ms(1000);
         //printf("a\n");
         //_delay_ms(100);
-    }*/
+    }
 }

@@ -6,6 +6,7 @@
 #include "sram.h"
 #include "joystick.h"
 #include "buttons.h"
+#include "sliders.h"
 #define Baudrate 9600
 #define MYUBRR F_CPU/16/Baudrate-1
 
@@ -29,9 +30,8 @@ void main(){
     //DDRC = 0xFF; // setter c register til output  
     DDRB = 0x00;
     while(1) {
-    	//joystick = get_joystick_status();
-        read_left_button();
-        read_right_button();
+    	get_joystick_status(); 
+        get_sliders_status();
     	//PORTC = 0xFF;
        	//PORTB = 0xFF;
         //UART_Transmit(UART_Receive());

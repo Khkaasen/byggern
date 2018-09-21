@@ -1,3 +1,4 @@
+#include <stdint.h>
 
 
 typedef enum 
@@ -6,13 +7,13 @@ typedef enum
 	RIGHT=1,
 	DOWN=2,
 	LEFT=3,
-	NO_DIR=4
+	NEUTRAL=4
 } joystick_dir;
 
 typedef struct joystick_status
 {
-	unsigned char x;
-	unsigned char y;
+	int8_t x;
+	int8_t y;
 	joystick_dir dir;
 } joystick_status;
 

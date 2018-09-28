@@ -4,9 +4,9 @@
 #include <util/delay.h>
 #include "uart.h"
 #include "sram.h"
-#include "../joystick.h"
-#include "../buttons.h"
-#include "../sliders.h"
+#include "joystick.h"
+#include "buttons.h"
+#include "sliders.h"
 #include "oled.h"
 
 #define Baudrate 9600
@@ -19,7 +19,10 @@ void main(){
     UART_init(MYUBRR);
     
     SRAM_init();
-    //oled_init(); 
+    oled_reset();
+    oled_init(); 
+ 
+
 
     //unsigned char data;
     //while (1){
@@ -32,15 +35,21 @@ void main(){
     //SRAM_test();
     //DDRC = 0xFF; // setter c register til output  
     DDRB = 0x00;
+    oledbajs();
+    
     while(1) {
-    	get_joystick_status(); 
-        get_sliders_status();
+        //print_test();
+
+    	//get_joystick_status(); 
+        //get_sliders_status();
     	//PORTC = 0xFF;
         //oled_print(3);
        	//PORTB = 0xFF;
         //UART_Transmit(UART_Receive());
         //UART_Transmit('b');
         //UART_Transmit('\n');
+        //oled_init();
+
         //PORTC |= (1 << PC0); // setter dette bitet 1, lar alle andre være
         //PORTC &= ~(1<< PC0); //setter dette bitet 0, lar alle andre være 
         //PORTC = 0x80; 
@@ -49,6 +58,8 @@ void main(){
         //PORTA = 0xF5;
         //_delay_ms(1000);
         //printf("a\n");
-        //_delay_ms(100);
     }
+    
+    
+    
 }

@@ -4,9 +4,11 @@
 #include <util/delay.h>
 #include "uart.h"
 #include "sram.h"
-#include "joystick.h"
-#include "buttons.h"
-#include "sliders.h"
+#include "../joystick.h"
+#include "../buttons.h"
+#include "../sliders.h"
+#include "oled.h"
+
 #define Baudrate 9600
 #define MYUBRR F_CPU/16/Baudrate-1
 
@@ -17,6 +19,7 @@ void main(){
     UART_init(MYUBRR);
     
     SRAM_init();
+    //oled_init(); 
 
     //unsigned char data;
     //while (1){
@@ -33,6 +36,7 @@ void main(){
     	get_joystick_status(); 
         get_sliders_status();
     	//PORTC = 0xFF;
+        //oled_print(3);
        	//PORTB = 0xFF;
         //UART_Transmit(UART_Receive());
         //UART_Transmit('b');

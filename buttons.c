@@ -6,10 +6,12 @@ bool read_left_button(){
     if (PINB & (1<<PB0)){
         return true;
     }
+    return false;
 }
 
 bool read_right_button(){
     if (PINB & (1<<PB1)){
         return true;
     }
+    return false;
 }

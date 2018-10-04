@@ -5,11 +5,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
 #include "oled.h"
 #include "usbmultifunction.h"
 #include "fonts.h"
 
 
+//#define FDEV_SETUP_STREAM(oled_stream,)
 
 
 volatile char* OLED_COMMAND = (char*) 0x1000;
@@ -87,7 +89,7 @@ void oled_reset()
 }
 
 
-void oled_print(char* data)
+void oled_print_char(const char data)
 {
     for (int i =0; i<8; i++){
             write_d(pgm_read_byte(&font8[(int)data-32][i]));
@@ -95,8 +97,24 @@ void oled_print(char* data)
 
 }
 
-void oled_print_string(char string){
-    for (int i=0; i< string.length(); i++){
-        write_d(pgm_read_byte(&font8[(int)string[i]-32][i]))
-    }
+
+void oled_print(const char* string){
+	char* stringPtr=string;
+	while(*stringPtr != '\0'){
+		printf(string);
+		oled_print_char(*stringPtr);
+		++stringPtr;
+	}
 }
+
+
+/*
+void oled_print(char* string){
+	int i;
+	for (i=0; i< strlen(string); i++){
+		oled_print_char(&string[i]);
+	}
+	return 0;
+}
+*/
+

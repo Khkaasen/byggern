@@ -16,6 +16,16 @@ volatile char* OLED_COMMAND = (char*) 0x1000;
 volatile char* OLED_DATA = (char*) 0x1200; 
 uint16_t OLED_DATA_SIZE= 0x200;
 
+#define PAGE0 0xb0
+#define PAGE1 0xb1
+#define PAGE2 0xb2
+#define PAGE3 0xb3
+#define PAGE4 0xb4
+#define PAGE5 0xb5
+#define PAGE6 0xb6
+#define PAGE7 0xb7
+
+
 void oled_init()
 {
     write_c(0xae);  //display off
@@ -40,6 +50,9 @@ void oled_init()
     write_c(0xa4);  //out follows RAM content
     write_c(0xa6);  //set normal display
     write_c(0xaf);  //display on
+    write_c(PAGE0);	//set page start page 0.
+    write_c(0x0F);	//set lower column to 0.
+    write_c(0x10);	//set higher column to 0.
 }
 
 /*
@@ -61,34 +74,24 @@ void oled_reset()
 {
     //OLED_DATA[0]=0xFF;
     //OLED_DATA[1]=0xFF;
-    for (uint16_t i = 0xb0; i<=0xb8; i++){
+    for (uint16_t i = PAGE0; i<=PAGE7; i++){
 
         write_c(i);
 
         for (uint16_t j = 0; j < 128; j++){
 
-        OLED_DATA[0]=0x00;
+        	write_d(0x00);  //pekeren iterer av seg selv
             
         }
     }       
 }
 
 
-void oledbajs(){
-    write_c(0xb0);
-    OLED_DATA[0]=0xFF;
-}
-
-void oled_print(char* b)
+void oled_print(char* data)
 {
-    int x = b;
-    for (int i =0; i<4; i++){
-            OLED_DATA[i]=font4[x][i];
+    for (int i =0; i<8; i++){
+            write_d(pgm_read_byte(&font8[(int)data-32][i]));
     }
 
 }
-void print_test(){
-    for (int i=1; i<8;i++){
-        OLED_DATA[0]= font4[30][0];
-    }
-}
+

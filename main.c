@@ -35,8 +35,18 @@ void main(){
     //SRAM_test();
     //DDRC = 0xFF; // setter c register til output  
     DDRB = 0x00;
-    oledbajs();
     
+    oled_print('m');
+    oled_print('a');
+    oled_print('r');
+    oled_print('i');
+    oled_print('u');
+    oled_print('s');
+    oled_print(' ');
+    oled_print('s');
+    oled_print('u');
+    oled_print('g');
+    oled_print('e');
     while(1) {
         //print_test();
 

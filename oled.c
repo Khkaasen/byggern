@@ -51,7 +51,7 @@ void oled_init()
     write_c(0xa6);  //set normal display
     write_c(0xaf);  //display on
     write_c(PAGE0);	//set page start page 0.
-    write_c(0x0F);	//set lower column to 0.
+    write_c(0x00);	//set lower column to 0.
     write_c(0x10);	//set higher column to 0.
 }
 

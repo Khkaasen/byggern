@@ -95,3 +95,8 @@ void oled_print(char* data)
 
 }
 
+void oled_print_string(char string){
+    for (int i=0; i< string.length(); i++){
+        write_d(pgm_read_byte(&font8[(int)string[i]-32][i]))
+    }
+}

@@ -7,3 +7,4 @@ void write_d();
 
 void oled_print(char* b);
 void print_test();
+void oled_print_string(char string);

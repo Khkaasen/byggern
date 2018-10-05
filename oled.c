@@ -1,7 +1,6 @@
 #define F_CPU 4915200
 #include <avr/interrupt.h>
 #include <util/delay.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -76,11 +75,11 @@ void oled_reset()
 {
     //OLED_DATA[0]=0xFF;
     //OLED_DATA[1]=0xFF;
-    for (uint16_t i = PAGE0; i<=PAGE7; i++){
+    for (uint8_t i = PAGE0; i<=PAGE7; i++){
 
         write_c(i);
 
-        for (uint16_t j = 0; j < 128; j++){
+        for (uint8_t j = 0; j < 128; j++){
 
         	write_d(0x00);  //pekeren iterer av seg selv
             
@@ -107,14 +106,4 @@ void oled_print(const char* string){
 	}
 }
 
-
-/*
-void oled_print(char* string){
-	int i;
-	for (i=0; i< strlen(string); i++){
-		oled_print_char(&string[i]);
-	}
-	return 0;
-}
-*/
 

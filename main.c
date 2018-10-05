@@ -8,6 +8,7 @@
 #include "buttons.h"
 #include "sliders.h"
 #include "oled.h"
+#include "menu.h"
 
 #define Baudrate 9600
 #define MYUBRR F_CPU/16/Baudrate-1
@@ -20,7 +21,8 @@ void main(){
     
     SRAM_init();
     oled_reset();
-    oled_init(); 
+    oled_init();
+    menu_init(); 
  
 
 
@@ -36,10 +38,11 @@ void main(){
     //DDRC = 0xFF; // setter c register til output  
     DDRB = 0x00;
     //????????????????????????????????????????????????????????????????????????????? PS vi lurer på hvorfor vi må ta inn streng og ikke char hehe :PPP   XDDDD LOOOOLLLL lurer også på fdv setup shit
-    oled_print("kris");
+    oled_print("hei");
     //oled_print_char('w');
-    
+
     while(1) {
+        move_cursor();
     	
     	//printf("a");
         //print_test();

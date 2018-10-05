@@ -2,6 +2,7 @@
 #include "joystick.h"
 #include <stdio.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 #define CHANNEL_X 4  //CHANNEL 1
 #define CHANNEL_Y 5  //CHANNEL 2
@@ -54,3 +55,7 @@ joystick_status get_joystick_status() {
 	
 }
 
+bool pos_max(joystick_status joy)
+{
+    return (abs(joy.x)==100 || abs(joy.y)==100);
+}

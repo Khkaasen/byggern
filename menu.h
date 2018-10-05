@@ -3,7 +3,7 @@
 typedef struct menu_struct
 {
 	uint8_t cursor_pos;
-	uint8_t page;
+	uint8_t length;
 } menu_struct;
 
 void menu_init();

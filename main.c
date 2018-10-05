@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <avr/io.h>
 #include <util/delay.h>
+#include <string.h>
 #include "uart.h"
 #include "sram.h"
 #include "joystick.h"
@@ -23,9 +24,12 @@ void main(){
     oled_reset();
     oled_init();
     menu_init(); 
- 
-
-
+    char *menulist[4] = {"Main menu", "Play", "Settings","test"};
+    display_menu(menulist,4);
+    //int len = sizeof(menulist)/sizeof(menulist[0]);
+    //printf("%d\n",len );
+    //printf(menulist[3]);
+    //oled_print(menulist[0]);
     //unsigned char data;
     //while (1){
         //printf("Skriv det du vil at skal sendes:");
@@ -38,7 +42,7 @@ void main(){
     //DDRC = 0xFF; // setter c register til output  
     DDRB = 0x00;
     //????????????????????????????????????????????????????????????????????????????? PS vi lurer på hvorfor vi må ta inn streng og ikke char hehe :PPP   XDDDD LOOOOLLLL lurer også på fdv setup shit
-    oled_print("hei");
+    //oled_print("hei");
     //oled_print_char('w');
 
     while(1) {

@@ -100,10 +100,16 @@ void oled_print_char(const char data)
 void oled_print(const char* string){
 	char* stringPtr=string;
 	while(*stringPtr != '\0'){
-		printf(string);
 		oled_print_char(*stringPtr);
 		++stringPtr;
 	}
 }
 
+void set_start_col(int col)
+{
+    if(col>128 || col<0)
+    {
+        return;
+    }
 
+}

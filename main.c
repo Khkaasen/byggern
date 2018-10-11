@@ -23,9 +23,7 @@ void main(){
     SRAM_init();
     oled_reset();
     oled_init();
-    menu_init(); 
-    char *menulist[4] = {"Main menu", "Play", "Settings","test"};
-    display_menu(menulist,4);
+    menu_init();
     //int len = sizeof(menulist)/sizeof(menulist[0]);
     //printf("%d\n",len );
     //printf(menulist[3]);

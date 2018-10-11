@@ -3,11 +3,7 @@
 #include "joystick.h"
 #include <stdbool.h>
 #include <string.h>
-
-
-menu_struct menu;
-bool shift_allowed;
-
+#include <stdio.h>
 
 #define TITLE 0xb0
 #define LINE1 0xb1
@@ -18,15 +14,63 @@ bool shift_allowed;
 #define LINE6 0xb6
 #define LAST_LINE 0xb7
 
+struct menu_struct menu;
+bool shift_allowed;
+
+struct menu_node_t main_menu;
+struct menu_node_t singleplayer;
+struct menu_node_t multiplayer;
+struct menu_node_t registersingleplayer;
+
+
+menu_node_t main_menu = 
+{
+	
+	.title = "Main Menu",
+	.parent = 0,
+	.childs = {&singleplayer, &multiplayer},
+	.reallength = 2
+};
+
+menu_node_t singleplayer = 
+{
+	.title = "Singleplayer",
+	.parent = &main_menu,
+	.childs = {&registersingleplayer,0},
+	.reallength = 1		
+};
+
+menu_node_t multiplayer = 
+{
+	.title = "Multiplayer",
+	.parent = &main_menu,
+	.childs = {0,0},
+	.reallength = 0		
+};
+
+menu_node_t registersingleplayer = 
+{
+	.title = "Register single player",
+	.parent = &singleplayer,
+	.childs = {0,0},
+	.reallength = 0	
+};
+
+
+
+
+
 
 void menu_init()
 {
 	write_c(0x00);	//set lower column to 0.
     write_c(0x10);	//set higher column to 0.
 	menu.cursor_pos=LINE1;
-	menu.length=0;
+	menu.length= main_menu.reallength;
 	write_c(menu.cursor_pos);
 	draw_cursor();
+	display_menu(&main_menu);
+	shift_allowed = false;
 }
 
 void draw_cursor()
@@ -48,25 +92,23 @@ void delete_cursor()
 
 }
 
-void display_menu(char **menulist, int length)
+void display_menu(menu_node_t * node)
 {
 
 	uint8_t line= TITLE;
-	menu.length = length-1;
-	/*if(len>7)
-	{
-		return;
-	}
-	*/
-	for(int i= 0; i<length; i++)
+	menu.length = node->reallength;
+	write_c(line);
+	oled_print(node->title);
+	for(int i= 0; i<node->reallength; i++)
 	{
 		write_c(0x0F);
 		write_c(0x10);
-		write_c(line);
-		oled_print(menulist[i]);
 		line++;
+		write_c(line);
+		oled_print((node->childs[i])->title);
 	}
 }
+
 
 
 void move_cursor()
@@ -82,7 +124,7 @@ void move_cursor()
 		shift_allowed=false;
 		switch(joy.dir)
 		{
-			case 0:
+			case 0: //up
 				delete_cursor();
 				if(menu.cursor_pos!=LINE1)
 				{
@@ -90,20 +132,25 @@ void move_cursor()
 				}
 				draw_cursor();
 				break;
-			case 2:
+			case 2: //down
 				delete_cursor();
-				if(menu.cursor_pos!=(TITLE+menu.length))
+				if(menu.cursor_pos!=(TITLE+ menu.length))
 				{
 					menu.cursor_pos++;
 				}
 				draw_cursor();
 				break;
+			case 1: // right
+				delete_cursor();
+
+				break;
+			case 3: // left
+
+				break;
 			default:
 				break;
 		}
 	}
-
-
 }
 
 

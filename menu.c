@@ -17,6 +17,7 @@
 struct menu_struct menu;
 bool shift_allowed;
 
+struct menu_node_t* curr_menu;
 struct menu_node_t main_menu;
 struct menu_node_t singleplayer;
 struct menu_node_t multiplayer;
@@ -45,15 +46,15 @@ menu_node_t multiplayer =
 	.title = "Multiplayer",
 	.parent = &main_menu,
 	.childs = {0,0},
-	.reallength = 0		
+	.reallength = 1		
 };
 
 menu_node_t registersingleplayer = 
 {
-	.title = "Register single player",
+	.title = "Register",
 	.parent = &singleplayer,
 	.childs = {0,0},
-	.reallength = 0	
+	.reallength = 1	
 };
 
 
@@ -66,10 +67,14 @@ void menu_init()
 	write_c(0x00);	//set lower column to 0.
     write_c(0x10);	//set higher column to 0.
 	menu.cursor_pos=LINE1;
-	menu.length= main_menu.reallength;
+	menu.position = 0;
+	//menu.length= main_menu.reallength;
+	menu.length = singleplayer.reallength;
 	write_c(menu.cursor_pos);
 	draw_cursor();
-	display_menu(&main_menu);
+	//curr_menu = &main_menu;
+	curr_menu = &singleplayer;
+	display_menu(curr_menu);
 	shift_allowed = false;
 }
 
@@ -94,8 +99,12 @@ void delete_cursor()
 
 void display_menu(menu_node_t * node)
 {
-
+	oled_reset();
+	menu.cursor_pos=LINE1;
+	menu.position = 0;
 	uint8_t line= TITLE;
+	write_c(menu.cursor_pos);
+	draw_cursor();
 	menu.length = node->reallength;
 	write_c(line);
 	oled_print(node->title);
@@ -129,6 +138,7 @@ void move_cursor()
 				if(menu.cursor_pos!=LINE1)
 				{
 					menu.cursor_pos--;
+					menu.position --;
 				}
 				draw_cursor();
 				break;
@@ -137,14 +147,31 @@ void move_cursor()
 				if(menu.cursor_pos!=(TITLE+ menu.length))
 				{
 					menu.cursor_pos++;
+					menu.position ++;
 				}
 				draw_cursor();
 				break;
 			case 1: // right
-				delete_cursor();
+				
+				if(curr_menu->childs[menu.position]!=0)
+				{
+					delete_cursor();
+					curr_menu = curr_menu->childs[menu.position];
+					display_menu(curr_menu);
+					
+				}
+
 
 				break;
 			case 3: // left
+				
+				if(curr_menu->parent != 0)
+				{
+					delete_cursor();
+					curr_menu = curr_menu->parent;
+					display_menu(curr_menu);
+				}
+				
 
 				break;
 			default:

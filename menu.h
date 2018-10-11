@@ -4,6 +4,9 @@ typedef struct menu_struct
 {
 	uint8_t cursor_pos;
 	uint8_t length;
+	int position;
+
+	
 
 } menu_struct;
 

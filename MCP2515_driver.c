@@ -3,15 +3,15 @@
 #include "SPI_driver.h"
 #include <avr/io.h>
 
-/*
+
 uint8_t mcp2515_init()
 {
-	uint8_t value;
+	/*uint8_t value;
 	SPI_init(); // Initialize SPI
-	mcp2515_reset(); // Send reset-command
+	MCP2515_reset(); // Send reset-command
 	
 	// Self-test
-	mcp2515_read(MCP_CANSTAT, &value);
+	MCP2515_read(MCP_CANSTAT, &value);
 	if ((value & MODE_MASK) != MODE_CONFIG) {
 		printf(”MCP2515 is NOT in configuration mode after reset!\n”);
 		return 1;
@@ -20,11 +20,12 @@ uint8_t mcp2515_init()
 	// More initialization
 
 	return 0;
+	*/
 }
 
 
-*/
-uint8_t MCP2515_read(uint8_t address)
+
+uint8_t MCP_read(uint8_t address)
 {
 	uint8_t result;
 
@@ -40,10 +41,77 @@ uint8_t MCP2515_read(uint8_t address)
 	//read result
 	result = SPI_read();
 
+	SET_BIT(PORTB,PB4);
+
 	return result;
 }
 
-void mcp2515_write(uint8_t data)
+void MCP_write(uint8_t data, uint8_t address)
 {
+	//select CAN-controller
+	CLEAR_BIT(PORTB,PB4);
 
+	//send write instruction
+	SPI_write(MCP_WRITE);
+
+	//send address
+	SPI_write(address);
+
+	//send data
+	SPI_write(data);
+
+	SET_BIT(PORTB,PB4);
+
+}
+
+
+void MCP_request_to_send(uint8_t txb)
+{
+	CLEAR_BIT(PORTB,PB4);
+
+	SPI_write(txb);
+
+	SET_BIT(PORTB,PB4);
+
+}
+
+uint8_t MCP_read_status()
+{
+	uint8_t result;
+
+	CLEAR_BIT(PORTB,PB4);
+
+	SPI_write(MCP_READ_STATUS);
+
+	result = SPI_read();
+
+	SET_BIT(PORTB,PB4);
+
+	return result;
+
+}
+
+void MCP_bit_modify(uint8_t mask, uint8_t address, uint8_t data)
+{
+	CLEAR_BIT(PORTB,PB4);
+
+	SPI_write(MCP_BITMOD);
+
+	SPI_write(address);
+
+	SPI_write(mask);
+
+	SPI_write(data);
+
+	SET_BIT(PORTB,PB4);
+}
+
+
+void MCP_reset()
+{
+	CLEAR_BIT(PORTB,PB4);
+
+	SPI_write(MCP_RESET);
+
+	SET_BIT(PORTB,PB4);
 }

@@ -1,8 +1,6 @@
 #include "SPI_driver.h"
 #include <avr/io.h>
 
-#define SET_BIT(reg, bit) (reg |= (1 << bit))
-#define CLEAR_BIT(reg, bit) (reg &= ~(1 << bit))
 
 void SPI_init()
 {
@@ -17,6 +15,7 @@ void SPI_init()
 
 char SPI_read()
 {
+	//lag egen funksjon for å velge hvilken slave det skal skrives til
 	CLEAR_BIT(PORTB, PB4);
 
 
@@ -26,6 +25,7 @@ char SPI_read()
 		;
 	/* Return data register */
 
+	//egen funksjon her og
 	SET_BIT(PORTB, PB4);
 
 	return SPDR;

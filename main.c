@@ -28,6 +28,7 @@ void main(){
     oled_init();
     menu_init();
     SPI_init();
+    printf("%d",MCP_read_status());
    
     while(1) {
         //move_cursor();

@@ -42,5 +42,3 @@ void SPI_write(char cData)
 
 	SET_BIT(PORTB, PB4);
 }
-
-

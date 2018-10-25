@@ -64,12 +64,32 @@ void MCP_write(uint8_t data, uint8_t address)
 
 }
 
+void MCP_write_n_byte(uint8_t *data, uint8_t address, uint8_t num_bytes)
+{
+	//select CAN-controller
+	CLEAR_BIT(PORTB,PB4);
 
-void MCP_request_to_send(uint8_t txb)
+	//send write instruction
+	SPI_write(MCP_WRITE);
+
+	//send address
+	SPI_write(address);
+
+	for(int i =0; i<num_bytes; i++)
+	{
+		//send data
+		SPI_write(data[i]);
+	}
+ 
+	SET_BIT(PORTB,PB4);
+
+}
+
+void MCP_request_to_send()
 {
 	CLEAR_BIT(PORTB,PB4);
 
-	SPI_write(txb);
+	SPI_write(MCP_RTS_TX0);
 
 	SET_BIT(PORTB,PB4);
 

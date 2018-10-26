@@ -39,19 +39,20 @@ void main(){
    		.id=1,
    		.RTR=0
    	};
-    //printf("start:\n");
 
-
+    _delay_ms(10);
     
-    if(MCP_read(MCP_CANSTAT) & 01000000)
+
+    /*
+    if((MCP_read(MCP_CANSTAT) & MODE_MASK) == MODE_LOOPBACK) //må huske å maske
     {
-         printf("hello, m0th3rfuck3r");
+         printf("hello");
 
-
-    } 
+    }
+  */ 
 
  
-    /*
+    
     printf("%d\n",msg.length);
 
    	CAN_write(msg);
@@ -60,18 +61,20 @@ void main(){
    	msg.length=2;
    	msg.data=0;
    	printf("%d\n",msg.length);
-
+    
     _delay_ms(1000);
    	msg = CAN_read();
-  
-   	
+    //printf("VIktig = 1: ");
     printf("%d\n", msg.length);
-   	*/
-    //printf("%d", msg.data);
    	
+    //printf("%d\n", msg.data);
+   	//CLEAR_BIT(PORTB,PB4);
     while(1) {
         //move_cursor();
     	//SPI_write(0xF0);
+
+      MCP_read(0x03);
+    _delay_ms(1);
 
     }
     

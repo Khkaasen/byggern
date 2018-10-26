@@ -46,6 +46,8 @@ uint8_t MCP_read(uint8_t address)
 	return result;
 }
 
+
+
 void MCP_write(uint8_t data, uint8_t address)
 {
 	//select CAN-controller

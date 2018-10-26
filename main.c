@@ -36,7 +36,7 @@ void main(){
    	{
    		.length=1,
    		.data=&a,
-   		.id=1,
+   		.id=5,
    		.RTR=0
    	};
 
@@ -52,21 +52,27 @@ void main(){
   */ 
 
  
-    
+    printf("length = 1: ");
     printf("%d\n",msg.length);
 
    	CAN_write(msg);
+    printf("length_write = 1: ");
     printf("%d\n",msg.length);
 
    	msg.length=2;
    	msg.data=0;
+    printf("length = 2: ");
    	printf("%d\n",msg.length);
-    
+
     _delay_ms(1000);
    	msg = CAN_read();
-    //printf("VIktig = 1: ");
+    printf("length_read = 1: ");
     printf("%d\n", msg.length);
+
+    printf("data: ");
+    printf("%x\n",msg.data);
    	
+
     //printf("%d\n", msg.data);
    	//CLEAR_BIT(PORTB,PB4);
     while(1) {

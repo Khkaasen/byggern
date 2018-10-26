@@ -34,7 +34,7 @@ char SPI_read()
 
 void SPI_write(char cData)
 {
-	//CLEAR_BIT(PORTB, PB4);
+	//CLEAR_BIT(PORTB, PB4);  burde fjerne fra mcp og ikke spi
 	/* Start transmission */
 	SPDR = cData;
 	/* Wait for transmission complete */

@@ -3,7 +3,7 @@
 typedef struct struct_can_message
 {
 	uint8_t id;
-	uint8_t *data;
+	uint8_t data[8];
 	uint8_t length;
 	uint8_t RTR;
 

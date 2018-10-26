@@ -4,23 +4,23 @@
 #include <avr/io.h>
 
 
-uint8_t mcp2515_init()
+uint8_t MCP_init()
 {
-	/*uint8_t value;
-	SPI_init(); // Initialize SPI
-	MCP2515_reset(); // Send reset-command
+	//uint8_t value;
+	//SPI_init(); // Initialize SPI
+	//MCP2515_reset(); // Send reset-command
 	
 	// Self-test
-	MCP2515_read(MCP_CANSTAT, &value);
+	/*MCP2515_read(MCP_CANSTAT, &value);
 	if ((value & MODE_MASK) != MODE_CONFIG) {
 		printf(”MCP2515 is NOT in configuration mode after reset!\n”);
 		return 1;
 	}
-
+	*/
 	// More initialization
 
 	return 0;
-	*/
+	
 }
 
 
@@ -44,6 +44,28 @@ uint8_t MCP_read(uint8_t address)
 	SET_BIT(PORTB,PB4);
 
 	return result;
+}
+
+void MCP_read_n_byte(uint8_t *data,uint8_t address, uint8_t num_bytes)
+{
+
+
+	//select CAN-controller
+	CLEAR_BIT(PORTB,PB4);
+
+	//send read instrucion
+	SPI_write(MCP_READ);
+
+	//send address
+	SPI_write(address);
+
+	for(int i =0; i<num_bytes;i++)
+	{
+		data[i] = SPI_read();
+	}	
+	
+
+	SET_BIT(PORTB,PB4);
 }
 
 
@@ -73,12 +95,13 @@ void MCP_write_n_byte(uint8_t *data, uint8_t address, uint8_t num_bytes)
 
 	//send write instruction
 	SPI_write(MCP_WRITE);
-
+	
 	//send address
 	SPI_write(address);
 
-	for(int i =0; i<num_bytes; i++)
+	for(int i =0; i<num_bytes; ++i)
 	{
+
 		//send data
 		SPI_write(data[i]);
 	}

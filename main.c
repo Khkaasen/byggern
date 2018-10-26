@@ -22,6 +22,7 @@
 //Cutoff frequency: 796.18 Hz
 void main(){
 
+
     UART_init(MYUBRR);
     
     SRAM_init();
@@ -31,15 +32,15 @@ void main(){
     SPI_init();
     //printf("%d",MCP_read_status());
    	CAN_init();
-   	uint8_t a= 0b11110000;
+    uint8_t b[2] = {0xFF,0x0dc};
    	 can_message msg = 
    	{
-   		.length=1,
-   		.data=&a,
+   		.length=2,
    		.id=5,
    		.RTR=0
    	};
-
+    msg.data[0] = b[0];
+    msg.data[1]=b[1];
     _delay_ms(10);
     
 
@@ -50,28 +51,32 @@ void main(){
 
     }
   */ 
+    //printf("start program \n");
+    //printf("data1 before write: %x \n", msg.data[0]);
+    //printf("data2 before write: %x \n", msg.data[1]);
 
  
-    printf("length = 1: ");
-    printf("%d\n",msg.length);
+    //printf("length before write (1): %x \n",msg.length);
+    //printf("id before write (5): %x \n",msg.id);
 
-   	CAN_write(msg);
-    printf("length_write = 1: ");
-    printf("%d\n",msg.length);
+   	
+    CAN_write(msg);
+    //printf("length after write (1) %x \n",msg.length);
+    //printf("id after write (5) %x \n",msg.id);
 
-   	msg.length=2;
-   	msg.data=0;
-    printf("length = 2: ");
-   	printf("%d\n",msg.length);
+    msg.length=2;
+    //printf("length = 2: ");
+   	//printf("%d\n",msg.length);
 
     _delay_ms(1000);
    	msg = CAN_read();
-    printf("length_read = 1: ");
-    printf("%d\n", msg.length);
+    //printf("length after read (1) %x \n",msg.length);
+    //printf("id after read (5) %x \n",msg.id);
 
-    printf("data: ");
-    printf("%x\n",msg.data);
-   	
+    //printf("data1 after read: ");
+    //printf("%x\n",msg.data[0]);
+    //printf("data2 after read: ");
+    //printf("%x\n",msg.data[1]);
 
     //printf("%d\n", msg.data);
    	//CLEAR_BIT(PORTB,PB4);

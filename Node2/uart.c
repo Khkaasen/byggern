@@ -9,7 +9,7 @@ void UART_init(unsigned int ubrr){
 
     UCSR0B = (1<<RXEN0)|(1<<TXEN0);    //enable reciever and transmitter
 
-    UCSR0C = (1<<URSEL0)|(1<<USBS0)|(3<<UCSZ00);    //Set frame format: 8data, 2 stop bit
+    UCSR0C = (1<<USBS0)|(3<<UCSZ00);    //Set frame format: 8data, 2 stop bit
 
     fdevopen(&UART_Transmit,&UART_Receive);
     
@@ -31,11 +31,6 @@ unsigned char UART_Receive (void){
         ;
     //Get and return received data from buffer
     return UDR0; 
-}
-
-void UART_Flush(void){
-    unsigned char dummy;
-    //while ( UCSRA & (1<<RXC)) dummy = UDR;
 }
 
 

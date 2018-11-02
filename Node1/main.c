@@ -91,14 +91,14 @@ void main(){
     //printf("%d\n", msg.data);
    	//CLEAR_BIT(PORTB,PB4);
 
-     //joystick_status joystick;
+     joystick_status joystick;
 
 
     while(1) {
 
-      //joystick = get_joystick_status();
+      joystick = get_joystick_status();
 
-      //transmit_joystick_status(joystick);
+      transmit_joystick_status(joystick);
         //move_cursor();
     	//SPI_write(0xF0);
 

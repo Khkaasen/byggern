@@ -36,7 +36,7 @@ void main(){
 
     */
 
-    can_message msg=CAN_receive();
+    can_message msg;
 
 
 
@@ -48,6 +48,11 @@ void main(){
 	
 
     while(1) {
+
+      msg=CAN_receive();
+
+      printf("x: %d \n", (int8_t)msg.data[0]);
+      _delay_ms(500);
             //printf("%x\n", MCP_read(MCP_CANINTF));
 
   	}

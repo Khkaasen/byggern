@@ -67,7 +67,7 @@ bool pos_max(joystick_status joy)
 
 void transmit_joystick_status(joystick_status joystick)
 {
-    uint8_t b[3] = {joystick.x,joystick.y,joystick.dir};
+    int8_t b[3] = {joystick.x,joystick.y,joystick.dir};
     can_message msg=
     {
         .length=3,

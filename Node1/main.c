@@ -35,7 +35,7 @@ void main(){
 
     printf("program start\n");
 
-
+/*
     uint8_t b[2] = {0xFF,0x0dc};
    	 can_message msg = 
    	{
@@ -47,8 +47,10 @@ void main(){
     msg.data[1]=b[1];
      _delay_ms(10);
 
-    CAN_transmit(msg);
+     
 
+    CAN_transmit(msg);
+*/
    
     
     //joystick_status joy = get_joystick_status();
@@ -91,14 +93,14 @@ void main(){
     //printf("%d\n", msg.data);
    	//CLEAR_BIT(PORTB,PB4);
 
-     joystick_status joystick;
+     joystick_status joy;
 
 
     while(1) {
 
-      joystick = get_joystick_status();
+      joy = get_joystick_status();
 
-      transmit_joystick_status(joystick);
+      transmit_joystick_status(joy);
         //move_cursor();
     	//SPI_write(0xF0);
 

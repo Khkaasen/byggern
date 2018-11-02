@@ -12,7 +12,7 @@
 #define MASK_RTR 0x40
 void CAN_init()
 {
-	MCP_bit_modify(MODE_MASK, MCP_CANCTRL, MODE_NORMAL); //set CAN to normal mode.
+	MCP_bit_modify(MODE_MASK, MCP_CANCTRL, MODE_LOOPBACK); //set CAN to normal mode.
 	MCP_bit_modify(MODE_MASK,MCP_TXB0CTRL+2,0x00);
 	MCP_bit_modify(0x60,MCP_RXB0CTRL,0xff);
 	MCP_write(0xff,MCP_CANINTE);
@@ -21,7 +21,7 @@ void CAN_init()
 
 void CAN_transmit(can_message msg)
 {
-	while((MCP_read(MCP_TXB0CTRL)&(1<<TXREQ)));
+	//while((MCP_read(MCP_TXB0CTRL)&(1<<TXREQ))); //fungerer ikke som vi tenker burde også være motsatt(!)
 
 
 	MCP_write(msg.id,MCP_TXB0CTRL + 1);

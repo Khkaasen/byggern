@@ -59,7 +59,7 @@ void main(){
 
     transmit_joystick_status(joy);
     */
-     _delay_ms(10);
+     _delay_ms(1000);
     
     /*
     if((MCP_read(MCP_CANSTAT) & MODE_MASK) == MODE_LOOPBACK) //må huske å maske

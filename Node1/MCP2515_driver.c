@@ -28,10 +28,10 @@ uint8_t MCP_init()
 uint8_t MCP_read(uint8_t address)
 {
 
-	CLEAR_BIT(PORTB, PB4); 
+
 	uint8_t result;
 
-
+	CLEAR_BIT(PORTB, PB4); 
 
 	//send read instrucion
 	SPI_write(MCP_READ);
@@ -41,6 +41,8 @@ uint8_t MCP_read(uint8_t address)
 
 	//read result
 	result = SPI_read();
+
+	SET_BIT(PORTB,PB4);
 
 	return result;
 }
@@ -61,6 +63,8 @@ CLEAR_BIT(PORTB, PB4);
 	{
 		data[i] = SPI_read();
 	}	
+
+	SET_BIT(PORTB,PB4);
 	
 }
 
@@ -108,6 +112,8 @@ void MCP_request_to_send()
 
 	SPI_write(MCP_RTS_TX0);
 
+	SET_BIT(PORTB,PB4);
+
 }
 
 uint8_t MCP_read_status()
@@ -117,7 +123,6 @@ uint8_t MCP_read_status()
 	uint8_t result;
 
 	
-
 	SPI_write(MCP_READ_STATUS);
 
 	result = SPI_read();
@@ -133,7 +138,8 @@ uint8_t MCP_read_status()
 void MCP_bit_modify(uint8_t mask, uint8_t address, uint8_t data)
 {
 	
-CLEAR_BIT(PORTB, PB4); 
+	CLEAR_BIT(PORTB, PB4); 
+
 	SPI_write(MCP_BITMOD);
 
 	SPI_write(address);
@@ -141,6 +147,7 @@ CLEAR_BIT(PORTB, PB4);
 	SPI_write(mask);
 
 	SPI_write(data);
+	
 	SET_BIT(PORTB, PB4); 
 }
 

@@ -1,5 +1,5 @@
-# List all source files to be compiled; separate with space
-SOURCE_FILES := main.c uart.c
+# List all source files to be compiled; separate with space ... CAN_driver.c MCP2515_driver.c SPI_driver.c
+SOURCE_FILES := main.c uart.c 
 
 # Set this flag to "yes" (no quotes) to use JTAG; otherwise ISP (SPI) is used
 PROGRAM_WITH_JTAG := yes

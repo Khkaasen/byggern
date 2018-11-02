@@ -20,6 +20,7 @@
 
 //testprogram med jtag
 //Cutoff frequency: 796.18 Hz
+//ttyS0 putty
 void main(){
 
 
@@ -32,7 +33,7 @@ void main(){
     SPI_init();
     //printf("%d",MCP_read_status());
    	CAN_init();
-    uint8_t b[2] = {0xFF,0x0dc};
+    uint8_t b[2] = {0xFF,0x1d};
    	 can_message msg = 
    	{
    		.length=2,
@@ -63,20 +64,8 @@ void main(){
     CAN_write(msg);
     //printf("length after write (1) %x \n",msg.length);
     //printf("id after write (5) %x \n",msg.id);
-
-    msg.length=2;
     //printf("length = 2: ");
    	//printf("%d\n",msg.length);
-
-    _delay_ms(1000);
-   	msg = CAN_read();
-    //printf("length after read (1) %x \n",msg.length);
-    //printf("id after read (5) %x \n",msg.id);
-
-    //printf("data1 after read: ");
-    //printf("%x\n",msg.data[0]);
-    //printf("data2 after read: ");
-    //printf("%x\n",msg.data[1]);
 
     //printf("%d\n", msg.data);
    	//CLEAR_BIT(PORTB,PB4);
@@ -86,6 +75,7 @@ void main(){
 
       MCP_read(0x03);
     _delay_ms(1);
+
 
     }
     

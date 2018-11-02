@@ -30,7 +30,7 @@ uint8_t MCP_read(uint8_t address)
 	uint8_t result;
 
 	//select CAN-controller
-	CLEAR_BIT(PORTB,PB4);
+	
 
 	//send read instrucion
 	SPI_write(MCP_READ);
@@ -41,7 +41,6 @@ uint8_t MCP_read(uint8_t address)
 	//read result
 	result = SPI_read();
 
-	SET_BIT(PORTB,PB4);
 
 	return result;
 }
@@ -51,7 +50,7 @@ void MCP_read_n_byte(uint8_t *data,uint8_t address, uint8_t num_bytes)
 
 
 	//select CAN-controller
-	CLEAR_BIT(PORTB,PB4);
+	
 
 	//send read instrucion
 	SPI_write(MCP_READ);
@@ -63,9 +62,6 @@ void MCP_read_n_byte(uint8_t *data,uint8_t address, uint8_t num_bytes)
 	{
 		data[i] = SPI_read();
 	}	
-	
-
-	SET_BIT(PORTB,PB4);
 }
 
 
@@ -73,7 +69,7 @@ void MCP_read_n_byte(uint8_t *data,uint8_t address, uint8_t num_bytes)
 void MCP_write(uint8_t data, uint8_t address)
 {
 	//select CAN-controller
-	CLEAR_BIT(PORTB,PB4);
+	
 
 	//send write instruction
 	SPI_write(MCP_WRITE);
@@ -84,14 +80,13 @@ void MCP_write(uint8_t data, uint8_t address)
 	//send data
 	SPI_write(data);
 
-	SET_BIT(PORTB,PB4);
 
 }
 
 void MCP_write_n_byte(uint8_t *data, uint8_t address, uint8_t num_bytes)
 {
 	//select CAN-controller
-	CLEAR_BIT(PORTB,PB4);
+	
 
 	//send write instruction
 	SPI_write(MCP_WRITE);
@@ -106,17 +101,17 @@ void MCP_write_n_byte(uint8_t *data, uint8_t address, uint8_t num_bytes)
 		SPI_write(data[i]);
 	}
  
-	SET_BIT(PORTB,PB4);
+
 
 }
 
 void MCP_request_to_send()
 {
-	CLEAR_BIT(PORTB,PB4);
+	
 
 	SPI_write(MCP_RTS_TX0);
 
-	SET_BIT(PORTB,PB4);
+
 
 }
 
@@ -124,13 +119,12 @@ uint8_t MCP_read_status()
 {
 	uint8_t result;
 
-	CLEAR_BIT(PORTB,PB4);
+	
 
 	SPI_write(MCP_READ_STATUS);
 
 	result = SPI_read();
 
-	SET_BIT(PORTB,PB4);
 
 	return result;
 
@@ -138,7 +132,7 @@ uint8_t MCP_read_status()
 
 void MCP_bit_modify(uint8_t mask, uint8_t address, uint8_t data)
 {
-	CLEAR_BIT(PORTB,PB4);
+	
 
 	SPI_write(MCP_BITMOD);
 
@@ -147,16 +141,14 @@ void MCP_bit_modify(uint8_t mask, uint8_t address, uint8_t data)
 	SPI_write(mask);
 
 	SPI_write(data);
-
-	SET_BIT(PORTB,PB4);
 }
 
 
 void MCP_reset()
 {
-	CLEAR_BIT(PORTB,PB4);
+	
 
 	SPI_write(MCP_RESET);
 
-	SET_BIT(PORTB,PB4);
+
 }

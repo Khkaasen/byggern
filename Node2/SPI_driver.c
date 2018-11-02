@@ -7,10 +7,10 @@
 void SPI_init()
 {
 
-	/* Set MOSI and SCK output, all others input */
-	DDRB = (1<<DDB5)|(1<<DDB7)|(1<<PB4);
+	/* Set MOSI, SCK and SS output, all others input */
+	DDRB = (1<<PB1)|(1<<PB2)|(1<<PB7);
 
-	/* Enable SPI, Master, set clock rate fck/16 */
+	/* Enable SPI, Master, set clock rate fck/16 */				/*kan sette bit 7 idette registeret for interrupt enable*/
 	SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR0);
 }
 
@@ -18,7 +18,7 @@ void SPI_init()
 char SPI_read()
 {
 	//lag egen funksjon for å velge hvilken slave det skal skrives til
-	//CLEAR_BIT(PORTB, PB4); //overfladisk når vi skriver det samme i mcp_read
+	CLEAR_BIT(PORTB, PB7); //husk å fejrne fra mcp driver
 
 
 	SPDR = 0x00;
@@ -28,7 +28,7 @@ char SPI_read()
 	/* Return data register */
 
 	//egen funksjon her og
-	//SET_BIT(PORTB, PB4); //overfladisk når vi skriver det samme i mcp_read
+	SET_BIT(PORTB, PB7);
 
 	return SPDR;
 }
@@ -36,11 +36,11 @@ char SPI_read()
 
 void SPI_write(char cData)
 {
-	//CLEAR_BIT(PORTB, PB4);  burde fjerne fra mcp og ikke spi
+	CLEAR_BIT(PORTB, PB7); 
 	/* Start transmission */
 	SPDR = cData;
 	/* Wait for transmission complete */
 	while(!(SPSR & (1<<SPIF)));
 
-	//SET_BIT(PORTB, PB4);
+	SET_BIT(PORTB, PB7);
 }

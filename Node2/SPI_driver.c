@@ -18,7 +18,6 @@ void SPI_init()
 char SPI_read()
 {
 	//lag egen funksjon for å velge hvilken slave det skal skrives til
-	CLEAR_BIT(PORTB, PB7); //husk å fejrne fra mcp driver
 
 
 	SPDR = 0x00;
@@ -28,7 +27,6 @@ char SPI_read()
 	/* Return data register */
 
 	//egen funksjon her og
-	SET_BIT(PORTB, PB7);
 
 	return SPDR;
 }
@@ -36,11 +34,9 @@ char SPI_read()
 
 void SPI_write(char cData)
 {
-	CLEAR_BIT(PORTB, PB7); 
 	/* Start transmission */
 	SPDR = cData;
 	/* Wait for transmission complete */
 	while(!(SPSR & (1<<SPIF)));
 
-	SET_BIT(PORTB, PB7);
 }

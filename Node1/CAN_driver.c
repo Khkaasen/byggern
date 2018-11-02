@@ -12,7 +12,7 @@
 #define MASK_RTR 0x40
 void CAN_init()
 {
-	MCP_bit_modify(MODE_MASK, MCP_CANCTRL, MODE_LOOPBACK); //set CAN to normal mode.
+	MCP_bit_modify(MODE_MASK, MCP_CANCTRL, MODE_NORMAL); //set CAN to normal mode.
 	MCP_bit_modify(MODE_MASK,MCP_TXB0CTRL+2,0x00);
 	MCP_bit_modify(0x60,MCP_RXB0CTRL,0xff);
 	MCP_write(0xff,MCP_CANINTE);

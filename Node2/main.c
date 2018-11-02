@@ -23,6 +23,8 @@ void main(){
     SPI_init();
     //printf("%d",MCP_read_status());
    	CAN_init();
+
+    /*
   	uint8_t b[2] = {0xFF,0x1d};
    	can_message msg = 
    	{
@@ -32,20 +34,21 @@ void main(){
    	};
     msg.data[0] = b[0];
 
+    */
 
-    msg=CAN_receive();
+    can_message msg=CAN_receive();
 
 
 
   	printf("start program \n");
-    printf("data1 after read: %x \n", msg.data[0]);
+    printf("data1 after read: %x \n", msg.data[1]);
     //printf("data2 after read: %x \n", msg.data[1]);
     printf("length after read (2): %x \n",msg.length);
     printf("id after read (5): %x \n",msg.id);
 	
 
     while(1) {
-            printf("%x\n", MCP_read(MCP_CANINTF));
+            //printf("%x\n", MCP_read(MCP_CANINTF));
 
   	}
     

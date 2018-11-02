@@ -69,7 +69,7 @@ void main(){
     }
 
     */
-    can_message msg_recieve = CAN_read();
+    //can_message msg_recieve = CAN_read();
     //printf("start program \n");
     //printf("data1 before write: %x \n", msg.data[0]);
     //printf("data2 before write: %x \n", msg.data[1]);
@@ -79,10 +79,10 @@ void main(){
     //printf("id before write (5): %x \n",msg.id);
 
    	
-    printf("length after read (3) %x \n",msg_recieve.length);
-    printf("id after read (1) %x \n",msg_recieve.id);
-    printf("data1 after read: %x \n", msg_recieve.data[0]);
-    printf("data2 after read: %x \n", msg_recieve.data[1]);
+    //printf("length after read (3) %x \n",msg_recieve.length);
+    //printf("id after read (1) %x \n",msg_recieve.id);
+    //printf("data1 after read: %x \n", msg_recieve.data[0]);
+    //printf("data2 after read: %x \n", msg_recieve.data[1]);
     //printf("data3 after read: %x \n", msg.data[2]);
     //printf("length = 2: ");
    	//printf("%d\n",msg.length);
@@ -90,7 +90,15 @@ void main(){
 
     //printf("%d\n", msg.data);
    	//CLEAR_BIT(PORTB,PB4);
+
+     //joystick_status joystick;
+
+
     while(1) {
+
+      //joystick = get_joystick_status();
+
+      //transmit_joystick_status(joystick);
         //move_cursor();
     	//SPI_write(0xF0);
 

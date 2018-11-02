@@ -49,7 +49,7 @@ uint8_t MCP_read(uint8_t address)
 	return result;
 }
 
-void MCP_read_n_byte(uint8_t *data,uint8_t address, uint8_t num_bytes)
+void MCP_read_n_byte(int8_t *data,uint8_t address, uint8_t num_bytes)
 {
 
 	CLEAR_BIT(PORTB, PB7); 
@@ -72,7 +72,7 @@ void MCP_read_n_byte(uint8_t *data,uint8_t address, uint8_t num_bytes)
 
 
 
-void MCP_write(uint8_t data, uint8_t address)
+void MCP_write(int8_t data, uint8_t address)
 {
 	//select CAN-controller
 	CLEAR_BIT(PORTB, PB7); 
@@ -91,7 +91,7 @@ void MCP_write(uint8_t data, uint8_t address)
 
 }
 
-void MCP_write_n_byte(uint8_t *data, uint8_t address, uint8_t num_bytes)
+void MCP_write_n_byte(int8_t *data, uint8_t address, uint8_t num_bytes)
 {
 	//select CAN-controller
 	CLEAR_BIT(PORTB, PB7); 
@@ -145,7 +145,7 @@ uint8_t MCP_read_status()
 
 }
 
-void MCP_bit_modify(uint8_t mask, uint8_t address, uint8_t data)
+void MCP_bit_modify(uint8_t mask, uint8_t address, int8_t data)
 {
 	
 	CLEAR_BIT(PORTB, PB7); 

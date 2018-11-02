@@ -40,18 +40,20 @@ void main(){
 
 
 
-  	printf("start program \n");
-    printf("data1 after read: %x \n", msg.data[1]);
+  	//printf("start program \n");
+    //printf("data1 after read: %x \n", msg.data[1]);
     //printf("data2 after read: %x \n", msg.data[1]);
-    printf("length after read (2): %x \n",msg.length);
-    printf("id after read (5): %x \n",msg.id);
+    //printf("length after read (2): %x \n",msg.length);
+    //printf("id after read (5): %x \n",msg.id);
 	
 
     while(1) {
 
       msg=CAN_receive();
 
-      printf("x: %d \n", (int8_t)msg.data[0]);
+      printf("X  : %d \n", msg.data[0]);
+      printf("Y  : %d \n", msg.data[1]);
+      printf("DIR: %d \n", msg.data[2]);
       _delay_ms(500);
             //printf("%x\n", MCP_read(MCP_CANINTF));
 

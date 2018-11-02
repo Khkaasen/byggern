@@ -12,14 +12,14 @@
 #define MASK_RTR 0x40
 void CAN_init()
 {
-	MCP_bit_modify(MODE_MASK, MCP_CANCTRL, MODE_NORMAL); //bit modify og ikke write, set CAN to normal mode.
+	MCP_bit_modify(MODE_MASK, MCP_CANCTRL, MODE_NORMAL); //set CAN to normal mode.
 	MCP_bit_modify(MODE_MASK,MCP_TXB0CTRL+2,0x00);
 	MCP_bit_modify(0x60,MCP_RXB0CTRL,0xff);
 	MCP_write(0xff,MCP_CANINTE);
 	MCP_write(0x00,MCP_CANINTF);
 }
 
-void CAN_write(can_message msg)
+void CAN_transmit(can_message msg)
 {
 	while((MCP_read(MCP_TXB0CTRL)&(1<<TXREQ)));
 
@@ -49,7 +49,7 @@ can_message CAN_read()
 	//printf("%x\n", MCP_read(MCP_RXB0CTRL+5));
 	msg.length = (0x0F & datalength);
 	
-	msg.RTR = (0x40 && datalength);
+	msg.RTR = (0x40 & datalength);
 
 
 	MCP_read_n_byte(msg.data,MCP_RXB0CTRL+6,msg.length);

@@ -23,7 +23,6 @@
 //ttyS0 putty
 void main(){
 
-
     UART_init(MYUBRR);
     
     SRAM_init();
@@ -33,6 +32,10 @@ void main(){
     SPI_init();
     //printf("%d",MCP_read_status());
    	CAN_init();
+
+    printf("program start\n");
+
+
     uint8_t b[2] = {0xFF,0x1d};
    	 can_message msg = 
    	{
@@ -42,16 +45,26 @@ void main(){
    	};
     msg.data[0] = b[0];
     msg.data[1]=b[1];
+
+    CAN_transmit(msg);
     _delay_ms(10);
     
-
+    joystick_status joy = get_joystick_status();
     /*
-    if((MCP_read(MCP_CANSTAT) & MODE_MASK) == MODE_LOOPBACK) //må huske å maske
+    printf("Joystick X:%d\n", joy.x);
+    printf("Joystick Y:%d\n", joy.y);
+    printf("Joystick dir:%d\n", joy.dir);
+
+    transmit_joystick_status(joy);
+    */
+     _delay_ms(10);
+    
+    /*if((MCP_read(MCP_CANSTAT) & MODE_MASK) == MODE_LOOPBACK) //må huske å maske
     {
-         printf("hello");
+         printf("loopback mode\n");
 
     }
-  */ 
+    msg = CAN_read();
     //printf("start program \n");
     //printf("data1 before write: %x \n", msg.data[0]);
     //printf("data2 before write: %x \n", msg.data[1]);
@@ -61,11 +74,14 @@ void main(){
     //printf("id before write (5): %x \n",msg.id);
 
    	
-    CAN_write(msg);
-    //printf("length after write (1) %x \n",msg.length);
-    //printf("id after write (5) %x \n",msg.id);
+    printf("length after read (3) %x \n",msg.length);
+    printf("id after read (1) %x \n",msg.id);
+    printf("data1 after read: %x \n", msg.data[0]);
+    printf("data2 after read: %x \n", msg.data[1]);
+    //printf("data3 after read: %x \n", msg.data[2]);
     //printf("length = 2: ");
    	//printf("%d\n",msg.length);
+    */
 
     //printf("%d\n", msg.data);
    	//CLEAR_BIT(PORTB,PB4);
@@ -73,8 +89,8 @@ void main(){
         //move_cursor();
     	//SPI_write(0xF0);
 
-      MCP_read(0x03);
-    _delay_ms(1);
+      //MCP_read(0x03);
+      //_delay_ms(1);
 
 
     }

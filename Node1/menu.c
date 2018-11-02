@@ -14,6 +14,12 @@
 #define LINE6 0xb6
 #define LAST_LINE 0xb7
 
+#define LOWER_COL0 0x00
+#define HIGHER_COL0 0x10
+
+#define MENU_POS_LOW 0x0F
+#define MENU_POS_HIGH 0x10
+
 struct menu_struct menu;
 bool shift_allowed;
 
@@ -64,32 +70,30 @@ menu_node_t registersingleplayer =
 
 void menu_init()
 {
-	write_c(0x00);	//set lower column to 0.
-    write_c(0x10);	//set higher column to 0.
-	menu.cursor_pos=LINE1;
+	write_c(LOWER_COL0);	//set lower column to 0.
+    write_c(HIGHER_COL0);	//set higher column to 0.
+	menu.cursor_pos=LINE1; //cursor position at first option
 	menu.position = 0;
-	//menu.length= main_menu.reallength;
-	menu.length = singleplayer.reallength;
+	menu.length= main_menu.reallength; 	//set initial to main menu
 	write_c(menu.cursor_pos);
 	draw_cursor();
-	//curr_menu = &main_menu;
-	curr_menu = &singleplayer;
+	curr_menu = &main_menu;
 	display_menu(curr_menu);
 	shift_allowed = false;
 }
 
 void draw_cursor()
 {
-	write_c(0x00);	//set lower column to 0.
-    write_c(0x10);	//set higher column to 0.
+	write_c(LOWER_COL0);	//set lower column to 0.
+    write_c(HIGHER_COL0);	//set higher column to 0.
     write_c(menu.cursor_pos);
 	oled_print("->");
 }
 
 void delete_cursor()
 {
-	write_c(0x00);
-	write_c(0x10);
+	write_c(LOWER_COL0);
+	write_c(HIGHER_COL0);
 	write_c(menu.cursor_pos);
 	for (uint8_t j = 0; j < 16; j++){
         write_d(0x00);  //pekeren iterer av seg selv      
@@ -110,8 +114,8 @@ void display_menu(menu_node_t * node)
 	oled_print(node->title);
 	for(int i= 0; i<node->reallength; i++)
 	{
-		write_c(0x0F);
-		write_c(0x10);
+		write_c(MENU_POS_LOW);
+		write_c(MENU_POS_HIGH);
 		line++;
 		write_c(line);
 		oled_print((node->childs[i])->title);

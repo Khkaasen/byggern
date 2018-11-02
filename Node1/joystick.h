@@ -18,3 +18,5 @@ typedef struct joystick_status
 } joystick_status;
 
 joystick_status get_joystick_status(void);
+
+void transmit_joystick_status(joystick_status joystick);

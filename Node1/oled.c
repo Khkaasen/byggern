@@ -10,7 +10,6 @@
 #include "fonts.h"
 
 
-//#define FDEV_SETUP_STREAM(oled_stream,)
 
 
 volatile char* OLED_COMMAND = (char*) 0x1000;
@@ -56,12 +55,6 @@ void oled_init()
     write_c(0x10);	//set higher column to 0.
 }
 
-/*
-void oled_print(char* )
-{
-    OLED_DATA[tall]= tall;
-}
-*/
 
 void write_c(uint8_t command){
     *OLED_COMMAND = command;
@@ -73,8 +66,6 @@ void write_d(unsigned int data){
 
 void oled_reset()
 {
-    //OLED_DATA[0]=0xFF;
-    //OLED_DATA[1]=0xFF;
     for (uint8_t i = PAGE0; i<=PAGE7; i++){
 
         write_c(i);

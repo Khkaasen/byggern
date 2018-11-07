@@ -101,6 +101,7 @@ void main(){
       joy = get_joystick_status();
 
       transmit_joystick_status(joy);
+
         //move_cursor();
     	//SPI_write(0xF0);
 

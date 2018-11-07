@@ -78,6 +78,10 @@ void transmit_joystick_status(joystick_status joystick)
     msg.data[1] = b[1];
     msg.data[2] = b[2];
 
+    //printf("X  : %d \n", msg.data[0]);
+    //printf("Y  : %d \n", msg.data[1]);
+    //printf("DIR: %d \n", msg.data[2]);
+
     CAN_transmit(msg);
 
 }

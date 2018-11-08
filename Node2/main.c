@@ -3,6 +3,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <string.h>
+#include <stdint.h>
 #include "uart.h"
 //#include "CAN_driver.h"
 #include "SPI_driver.h"
@@ -10,6 +11,8 @@
 #include "MCP2515_driver.h"
 #include "PWM_driver.h"
 #include "joystick_driver.h"
+#include "ADC_driver.h"
+#include "IR_driver.h"
 
 #define Baudrate 9600
 #define MYUBRR F_CPU/16/Baudrate-1
@@ -26,6 +29,8 @@ void main(){
     //printf("%d",MCP_read_status());
    	CAN_init();
     PWM_init();
+    ADC_init();
+    IR_init();
     /*
   	uint8_t b[2] = {0xFF,0x1d};
    	can_message msg = 
@@ -37,10 +42,10 @@ void main(){
     msg.data[0] = b[0];
 
     */
-
+    uint8_t blockage;
     can_message msg;
 
-
+    uint16_t data;
 
   	//printf("start program \n");
     //printf("data1 after read: %x \n", msg.data[1]);
@@ -51,14 +56,23 @@ void main(){
 
     while(1) {
 
+      data = ADC_read();
+
+
+      count_goals();
+      printf("%d\n", get_n_goals());
+
+      //printf("%d\n", data);
+
      //PWM_set_duty_cycle(-100);
 
       msg=CAN_receive();
+      joystick_to_servopos(msg);
 
       //printf("X  : %d \n", msg.data[0]);
       //printf("Y  : %d \n", msg.data[1]);
       //printf("DIR: %d \n", msg.data[2]);
-      joystick_to_servopos(msg);
+      //joystick_to_servopos(msg);
       //_delay_ms(500);
             //printf("%x\n", MCP_read(MCP_CANINTF));
 

@@ -50,7 +50,7 @@ void PWM_set_duty_cycle(float percentage)
 
 	//printf("%d\n", (int)percentage );
 
-	float duty_cycle = CENTER_PERCENTAGE + GAIN_PERCENTAGE * percentage/100;
+	float duty_cycle = CENTER_PERCENTAGE - GAIN_PERCENTAGE * percentage/100;
 	
 	//printf("%d\n",(int)(duty_cycle*100));
 

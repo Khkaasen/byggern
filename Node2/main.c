@@ -13,6 +13,7 @@
 #include "joystick_driver.h"
 #include "ADC_driver.h"
 #include "IR_driver.h"
+#include "TWI_Master.h"
 
 #define Baudrate 9600
 #define MYUBRR F_CPU/16/Baudrate-1

@@ -1,3 +1,4 @@
+#define F_CPU 16000000  //16MHz
 #include "Motor_driver.h"
 #include <avr/io.h>
 #include <util/delay.h>
@@ -22,17 +23,15 @@ void motor_init()
 	PORTH = (1<<PH4);
 
 	//default direction
-	PORTH |= (0<<PH1);
+	PORTH |= (1<<PH1);
 
 	//Toggle RST to reset encoder
-	PORTH &= ~(1<<RST);
-	_delay_ms(20);
-	PORTH |= (1<<RST);
-
+	encoder_reset();
 }
 
 void set_motor_dir(uint8_t dir)	//spørre studass om type int eller kanskje uint8_t
 {
+	//SE PÅ OPP-HØYRE/VENSTRE DIR
 	if(dir==0)
 		PORTH&= ~(1<<PH1);
 	else
@@ -40,9 +39,9 @@ void set_motor_dir(uint8_t dir)	//spørre studass om type int eller kanskje uint
 }
 
 
-uint16_t read_encoder()
+int16_t read_encoder()
 {
-	uint16_t encoder_read;
+	int16_t encoder_read;
 	//set OE (active low) low to enable output of encoder
 	PORTH &= ~(1<<OE);
 
@@ -60,16 +59,27 @@ uint16_t read_encoder()
 	//read LSB
 	encoder_read+=PINK;
 
-	
+	/*
 	//Toggle !RST to reset encoder??
 	PORTH &= ~(1<<RST);
 	_delay_ms(20);
 	PORTH |= (1<<RST);
-	
+	*/
 
 	//set !OE high to disable output of encoder
 	PORTH |= (1<<OE);
 
 	return encoder_read;
+
+}
+
+void encoder_reset()
+{
+	//Toggle RST to reset encoder
+
+	PORTH &= ~(1<<RST);
+	_delay_ms(20);
+	PORTH |= (1<<RST);
+
 
 }

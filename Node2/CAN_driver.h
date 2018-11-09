@@ -1,3 +1,5 @@
+#ifndef CAN_driver_h
+#define CAN_driver_h
 #include <stdint.h>
 
 typedef struct struct_can_message
@@ -14,4 +16,4 @@ void CAN_init();
 void CAN_transmit(can_message msg);
 can_message CAN_receive();
 
-
+#endif

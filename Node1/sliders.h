@@ -8,3 +8,5 @@ typedef struct sliders_status
 } sliders ;
 
 sliders get_sliders_status();
+
+void transmit_sliders_status(sliders slider);

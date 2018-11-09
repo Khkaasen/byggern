@@ -17,6 +17,7 @@
 #include "DAC_driver.h"
 #include <avr/interrupt.h>
 #include "Motor_driver.h"
+#include "slider_driver.h"
 
 #define Baudrate 9600
 #define MYUBRR F_CPU/16/Baudrate-1
@@ -40,6 +41,8 @@ void main(){
     motor_init();
 
     sei();
+    _delay_ms(100);
+    position_controller_init();
     /*
   	uint8_t b[2] = {0xFF,0x1d};
    	can_message msg = 
@@ -54,15 +57,14 @@ void main(){
     uint8_t blockage;
     can_message msg;
 
-    uint8_t data;
-    uint16_t encoder;
+    int32_t ref;
+    int16_t encoder;
+
   	//printf("start program \n");
     //printf("data1 after read: %x \n", msg.data[1]);
     //printf("data2 after read: %x \n", msg.data[1]);
     //printf("length after read (2): %x \n",msg.length);
     //printf("id after read (5): %x \n",msg.id);
-	
-
     while(1) {
 
       //data = ADC_read();
@@ -76,16 +78,20 @@ void main(){
      //PWM_set_duty_cycle(-100);
 
       msg=CAN_receive();
-      joystick_to_servopos(msg);
-      data =joystick_to_motorspeed(msg);
-      uint8_t dir = joystick_to_motordir(msg);
-      //printf("%d\n", msg.data[2] );
-      //printf("%d\n", dir);
-      //printf("%d\n", data );
-      DAC_set_output(data);
-      set_motor_dir(dir);
+      ref =slider_to_motorref(msg);
+      position_controller(ref);
+     //encoder=live_calibration();
       //encoder = read_encoder();
-      //printf("%d\n", encoder);
+      //printf("%x\n", encoder);
+      //joystick_to_servopos(msg);
+
+      //data =joystick_to_motorspeed(msg);
+      //uint8_t dir = joystick_to_motordir(msg);
+      //printf("%d\n", msg.data[1] );
+      printf("%d\n", msg.id);
+      //printf("%d\n", data );
+
+      //set_motor_dir(dir);
       //printf("X  : %d \n", msg.data[0]);
       //printf("Y  : %d \n", msg.data[1]);
       //printf("DIR: %d \n", msg.data[2]);

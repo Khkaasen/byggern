@@ -79,7 +79,7 @@ void main(){
  
     //printf("length before write (1): %x \n",msg.length);
     //printf("id before write (5): %x \n",msg.id);
-
+     
    	
     //printf("length after read (3) %x \n",msg_recieve.length);
     //printf("id after read (1) %x \n",msg_recieve.id);
@@ -95,12 +95,20 @@ void main(){
 
      joystick_status joy;
 
+     sliders slider;
+
 
     while(1) {
 
-      joy = get_joystick_status();
+      //joy = get_joystick_status();
 
-      transmit_joystick_status(joy);
+      slider = get_sliders_status();
+      //printf("%d\n", slider.right_slider);
+      //transmit_joystick_status(joy);
+
+      //_delay_ms(50);
+
+      transmit_sliders_status(slider);
 
         //move_cursor();
     	//SPI_write(0xF0);

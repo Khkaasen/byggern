@@ -14,6 +14,9 @@
 #include "ADC_driver.h"
 #include "IR_driver.h"
 #include "TWI_Master.h"
+#include "DAC_driver.h"
+#include <avr/interrupt.h>
+#include "Motor_driver.h"
 
 #define Baudrate 9600
 #define MYUBRR F_CPU/16/Baudrate-1
@@ -32,6 +35,11 @@ void main(){
     PWM_init();
     ADC_init();
     IR_init();
+    TWI_Master_Initialise();
+    DAC_init();
+    motor_init();
+
+    sei();
     /*
   	uint8_t b[2] = {0xFF,0x1d};
    	can_message msg = 
@@ -46,8 +54,8 @@ void main(){
     uint8_t blockage;
     can_message msg;
 
-    uint16_t data;
-
+    uint8_t data;
+    uint16_t encoder;
   	//printf("start program \n");
     //printf("data1 after read: %x \n", msg.data[1]);
     //printf("data2 after read: %x \n", msg.data[1]);
@@ -57,11 +65,11 @@ void main(){
 
     while(1) {
 
-      data = ADC_read();
+      //data = ADC_read();
 
 
-      count_goals();
-      printf("%d\n", get_n_goals());
+      //count_goals();
+      //printf("%d\n", get_n_goals());
 
       //printf("%d\n", data);
 
@@ -69,7 +77,15 @@ void main(){
 
       msg=CAN_receive();
       joystick_to_servopos(msg);
-
+      data =joystick_to_motorspeed(msg);
+      uint8_t dir = joystick_to_motordir(msg);
+      //printf("%d\n", msg.data[2] );
+      //printf("%d\n", dir);
+      //printf("%d\n", data );
+      DAC_set_output(data);
+      set_motor_dir(dir);
+      //encoder = read_encoder();
+      //printf("%d\n", encoder);
       //printf("X  : %d \n", msg.data[0]);
       //printf("Y  : %d \n", msg.data[1]);
       //printf("DIR: %d \n", msg.data[2]);

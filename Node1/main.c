@@ -27,7 +27,8 @@ void main(){
     
     SRAM_init();
     oled_reset();
-    oled_init();
+    multi_card_init();
+    //oled_init(); //denne skjer nå i multi_card_init(); 
     menu_init();
     SPI_init();
     //printf("%d",MCP_read_status());
@@ -116,7 +117,7 @@ void main(){
     	//SPI_write(0xF0);
 
       //MCP_read(0x03);
-      //_delay_ms(1);
+      _delay_ms(1000);
 
 
     }

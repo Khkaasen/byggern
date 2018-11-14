@@ -17,6 +17,7 @@ typedef struct joystick_status
 	int8_t x;
 	int8_t y;
 	joystick_dir dir;
+	int8_t button; 
 } joystick_status;
 
 joystick_status get_joystick_status(void);

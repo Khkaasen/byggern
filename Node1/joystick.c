@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "CAN_driver.h"
+#include <avr/io.h>
 #define CHANNEL_X 4  //CHANNEL 1
 #define CHANNEL_Y 5  //CHANNEL 2
 
@@ -11,6 +12,9 @@
 #define Y_OFFSET 128
 #define JOYSTICK_PERCENTAGE -0.788
 #define JOYSTICK_ID 1
+#define JOYSTICK_BUTTON_PIN PB2
+
+
 
 int get_dir(int8_t x, int8_t y){
         //nodir
@@ -49,9 +53,21 @@ joystick_status get_joystick_status() {
     }
 
     joystick.dir=get_dir(joystick.x,joystick.y);
-    //printf("Joystick X:pos %4d  ", joystick.x);
-    //printf("Joystick y:pos %4d \n  ", joystick.y);
-    //printf("Joystick dir %4d \n", joystick.dir);
+    joystick.button = (PINB & (1<<PB2));  //prøver å lese av pin, usikker på hva vi egt leser av nå. 
+
+    if (joystick.button >0)
+    {
+    	joystick.button=1;
+    }
+    else
+    {
+    	joystick.button=0;
+    }
+
+    printf("Joystick X:pos %4d  ", joystick.x);
+    printf("Joystick y:pos %4d \n  ", joystick.y);
+    printf("Joystick dir %4d \n", joystick.dir);
+    printf("Joystick button %4d \n", joystick.button);
     return joystick;
     
     

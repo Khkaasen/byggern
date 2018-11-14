@@ -2,10 +2,18 @@
 #include "usbmultifunction.h"
 #include <stdint.h>
 #include <util/delay.h>
+#include "oled.h"
+#include <avr/io.h>
 
-#define MESSAGE_LENGTH 5
+#define MESSAGE_LENGTH 6
 
 #define IO_ID 1
+
+void multi_card_init()
+{
+    oled_init();
+    DDRB |= 0<<PB2; // set this pin as input 
+}
 
 unsigned char read_channel(int channel)
 {
@@ -17,7 +25,7 @@ unsigned char read_channel(int channel)
 
 void transmit_IO_card(sliders sliders, joystick_status joystick)
 {
-	int8_t b[MESSAGE_LENGTH] = {joystick.x,joystick.y,joystick.dir, sliders.left_slider,sliders.right_slider};
+	int8_t b[MESSAGE_LENGTH] = {joystick.x,joystick.y,joystick.dir, joystick.button, sliders.left_slider,sliders.right_slider};
     can_message msg=
     {
         .length=MESSAGE_LENGTH,
@@ -29,6 +37,7 @@ void transmit_IO_card(sliders sliders, joystick_status joystick)
     msg.data[2] = b[2];
     msg.data[3] = b[3];
     msg.data[4] = b[4];
+    msg.data[5] = b[5];
 
 
 

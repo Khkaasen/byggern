@@ -1,5 +1,6 @@
 #define F_CPU 4915200
 #include "usbmultifunction.h"
+#include "oled.h"
 #include <stdint.h>
 #include <util/delay.h>
 #include "oled.h"

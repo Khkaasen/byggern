@@ -17,14 +17,17 @@
 
 
 int get_dir(int8_t x, int8_t y){
-        //nodir
+    
+    /* nodir */
     if (x==0 && y==0){return NEUTRAL;}
-    //up/down (siden <= vil denne skje om det er x=-100 y=100)
+    
+    /* up/down */
     if(abs(x)<=abs(y)){
         if(y>0){return UP;}
         else {return DOWN;}
     }
-    //left/right
+
+    /* left/right */
     else if(abs(x)>abs(y)){
         if(x>0){return RIGHT;}
         else {return LEFT;}
@@ -39,12 +42,11 @@ joystick_status get_joystick_status() {
 
     joystick.dir= NEUTRAL;
 
-    //converting joystick x to percentage
-
+    /*converting joystick x to percentage*/
     joystick.x = (X_OFFSET-read_channel(CHANNEL_X))*(JOYSTICK_PERCENTAGE);
     joystick.y = (Y_OFFSET-read_channel(CHANNEL_Y))*(JOYSTICK_PERCENTAGE);  
 
-    //offset
+    /*offset*/
     if(joystick.x>(-2) && joystick.x<2){
         joystick.x=0;
     }
@@ -69,9 +71,6 @@ joystick_status get_joystick_status() {
     //printf("Joystick dir %4d \n", joystick.dir);
     //printf("Joystick button %4d \n", joystick.button);
     return joystick;
-    
-    
-	
 }
 
 bool pos_max(joystick_status joy)
@@ -93,10 +92,6 @@ void transmit_joystick_status(joystick_status joystick)
     msg.data[0] = b[0];
     msg.data[1] = b[1];
     msg.data[2] = b[2];
-
-    //printf("X  : %d \n", msg.data[0]);
-    //printf("Y  : %d \n", msg.data[1]);
-    //printf("DIR: %d \n", msg.data[2]);
 
     CAN_transmit(msg);
 

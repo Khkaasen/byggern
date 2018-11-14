@@ -88,7 +88,7 @@ void main(){
       //data =joystick_to_motorspeed(msg);
       //uint8_t dir = joystick_to_motordir(msg);
       //printf("%d\n", msg.data[1] );
-      printf("%d\n", msg.id);
+      //printf("%d\n", msg.id);
       //printf("%d\n", data );
 
       //set_motor_dir(dir);

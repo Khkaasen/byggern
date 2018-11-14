@@ -1,3 +1,6 @@
+#ifndef menu_h
+#define menu_h
+
 #include <stdint.h>
 
 typedef struct menu_struct
@@ -23,3 +26,5 @@ void menu_init();
 void draw_cursor();
 void delete_cursor();
 void move_cursor();
+
+#endif

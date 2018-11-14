@@ -1,3 +1,6 @@
+#ifndef sliders_h
+#define sliders_h
+
 #include <stdint.h>
 
 typedef struct sliders_status
@@ -10,3 +13,5 @@ typedef struct sliders_status
 sliders get_sliders_status();
 
 void transmit_sliders_status(sliders slider);
+
+#endif

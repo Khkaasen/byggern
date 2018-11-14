@@ -1,7 +1,7 @@
 #ifndef joystick_h
 #define joystick_h
-#include <stdint.h>
 
+#include <stdint.h>
 
 typedef enum 
 {

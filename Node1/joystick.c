@@ -64,10 +64,10 @@ joystick_status get_joystick_status() {
     	joystick.button=0;
     }
 
-    printf("Joystick X:pos %4d  ", joystick.x);
-    printf("Joystick y:pos %4d \n  ", joystick.y);
-    printf("Joystick dir %4d \n", joystick.dir);
-    printf("Joystick button %4d \n", joystick.button);
+    //printf("Joystick X:pos %4d  ", joystick.x);
+    //printf("Joystick y:pos %4d \n  ", joystick.y);
+    //printf("Joystick dir %4d \n", joystick.dir);
+    //printf("Joystick button %4d \n", joystick.button);
     return joystick;
     
     

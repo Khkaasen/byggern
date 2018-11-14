@@ -49,7 +49,7 @@ int32_t slider_to_motorref(can_message msg)
 		long b = a*encoder_endpoint;
 		//printf("%d\n", read_encoder());
 		motorref = b/100;
-		printf("%d\n", a);
+		//printf("%d\n", a);
 		//printf("%ld\n",b); 
 		//printf("%d\n",motorpos );
 		//_delay_ms(1000);

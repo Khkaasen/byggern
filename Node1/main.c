@@ -117,7 +117,7 @@ void main(){
     	//SPI_write(0xF0);
 
       //MCP_read(0x03);
-      _delay_ms(1000);
+      _delay_ms(1);
 
 
     }

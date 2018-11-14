@@ -12,7 +12,7 @@
 void multi_card_init()
 {
     oled_init();
-    DDRB |= 0<<PB2; // set this pin as input 
+    DDRB &= ~(1<<PB2); // set this pin as input 
 }
 
 unsigned char read_channel(int channel)

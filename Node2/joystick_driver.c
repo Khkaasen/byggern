@@ -1,10 +1,17 @@
 #include "joystick_driver.h"
 #include "PWM_driver.h"
-
+#include <avr/io.h>
 
 
 #define MOTOR_GAIN 2.55
 int motor_dir;
+
+void joystick_init()
+{
+	//set PC6 to output
+	DDRC |= (1<<PC6);
+
+}
 
 void joystick_to_servopos(can_message msg)
 {
@@ -38,3 +45,13 @@ int joystick_to_motordir(can_message msg)
 	return motor_dir;
 }
 
+void joystick_button_to_soleniode(can_message msg)
+{
+	if(msg.id ==IO_ID)
+	{
+		if(msg.data[JOYSTICK_BUTTON]==1)
+			PORTC |= (1<<PB6);
+		else
+			PORTC &= ~(1<<PB6);
+	}
+}

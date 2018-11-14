@@ -5,8 +5,8 @@
 #include <stdint.h>
 #include "CAN_driver.h"
 
-#define SLIDER_LEFT 3
-#define SLIDER_RIGHT 4
+#define SLIDER_LEFT 4
+#define SLIDER_RIGHT 5
 #define IO_ID 1
 
 

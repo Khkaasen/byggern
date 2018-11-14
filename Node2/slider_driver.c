@@ -17,7 +17,7 @@ void position_controller_init()
 {
 	error_integral = 0;
 	last_error = 0;
-	DAC_set_output(70);
+	DAC_set_output(100);
     _delay_ms(2800);
     DAC_set_output(0);
     _delay_ms(500);
@@ -30,7 +30,7 @@ void position_controller_init()
 
 
     set_motor_dir(0);
-    DAC_set_output(70);
+    DAC_set_output(100);
     _delay_ms(2800);
     DAC_set_output(0);
     _delay_ms(500);
@@ -43,13 +43,13 @@ void position_controller_init()
 int32_t slider_to_motorref(can_message msg)
 {
 	int32_t motorref;
-	if(msg.id==SLIDER_ID)
+	if(msg.id==IO_ID)
 	{
 		int32_t a = msg.data[SLIDER_RIGHT]; //changes direction on slider
 		long b = a*encoder_endpoint;
 		//printf("%d\n", read_encoder());
 		motorref = b/100;
-		//printf("%d\n", a);
+		printf("%d\n", a);
 		//printf("%ld\n",b); 
 		//printf("%d\n",motorpos );
 		//_delay_ms(1000);

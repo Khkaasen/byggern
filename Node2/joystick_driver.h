@@ -8,7 +8,7 @@
 #define JOYSTICK_X 0
 #define JOYSTICK_Y 1
 #define JOYSTICK_DIR 2
-#define JOYSTICK_ID 1
+#define IO_ID 1
 
 void joystick_to_servopos(can_message msg);
 

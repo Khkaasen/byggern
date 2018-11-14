@@ -83,7 +83,7 @@ void main(){
      //encoder=live_calibration();
       //encoder = read_encoder();
       //printf("%x\n", encoder);
-      //joystick_to_servopos(msg);
+      joystick_to_servopos(msg);
 
       //data =joystick_to_motorspeed(msg);
       //uint8_t dir = joystick_to_motordir(msg);

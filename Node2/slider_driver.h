@@ -5,9 +5,9 @@
 #include <stdint.h>
 #include "CAN_driver.h"
 
-#define SLIDER_LEFT 0
-#define SLIDER_RIGHT 1
-#define SLIDER_ID 2
+#define SLIDER_LEFT 3
+#define SLIDER_RIGHT 4
+#define IO_ID 1
 
 
 void position_controller_init();

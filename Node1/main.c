@@ -100,15 +100,17 @@ void main(){
 
     while(1) {
 
-      //joy = get_joystick_status();
+      joy = get_joystick_status();
 
       slider = get_sliders_status();
+
+      transmit_IO_card(slider, joy);
       //printf("%d\n", slider.right_slider);
       //transmit_joystick_status(joy);
 
       //_delay_ms(50);
 
-      transmit_sliders_status(slider);
+      //transmit_sliders_status(slider);
 
         //move_cursor();
     	//SPI_write(0xF0);

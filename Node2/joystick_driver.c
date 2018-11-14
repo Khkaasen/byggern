@@ -8,16 +8,16 @@ int motor_dir;
 
 void joystick_to_servopos(can_message msg)
 {
-	if(msg.id==JOYSTICK_ID)
+	if(msg.id==IO_ID)
 	{
-		PWM_set_duty_cycle(msg.data[JOYSTICK_Y]);
+		PWM_set_duty_cycle(-msg.data[JOYSTICK_X]);
 	}
 	return;
 }
 
 uint8_t joystick_to_motorspeed (can_message msg)
 {
-	if(msg.id==JOYSTICK_ID)
+	if(msg.id==IO_ID)
 	{
 		int8_t a = msg.data[JOYSTICK_X];
 		uint8_t b= abs(a);
@@ -28,7 +28,7 @@ uint8_t joystick_to_motorspeed (can_message msg)
 
 int joystick_to_motordir(can_message msg)
 {
-	if(msg.id ==JOYSTICK_ID)
+	if(msg.id ==IO_ID)
 	{
 		if (msg.data[JOYSTICK_DIR]==1)
 			motor_dir=1;

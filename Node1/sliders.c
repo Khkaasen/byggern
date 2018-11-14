@@ -19,8 +19,8 @@ sliders get_sliders_status(){
     value.left_slider = read_channel(CHANNEL_LS)*(CONVERT_8_BIT_TO_100);
     value.right_slider = 100- read_channel(CHANNEL_RS)*(CONVERT_8_BIT_TO_100); //changes direction on the slider (max in the middle)
 
-    printf("left_slider: %4d ",value.left_slider);
-    printf("right_slider: %4d \n",value.right_slider);
+    //printf("left_slider: %4d ",value.left_slider);
+    //printf("right_slider: %4d \n",value.right_slider);
 
     return value;
 }

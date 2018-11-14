@@ -101,11 +101,13 @@ void main(){
 
     while(1) {
 
-      joy = get_joystick_status();
+      //joy = get_joystick_status();
 
-      slider = get_sliders_status();
+      //slider = get_sliders_status();
 
-      transmit_IO_card(slider, joy);
+      //transmit_IO_card(slider, joy);
+
+      move_cursor();
       //printf("%d\n", slider.right_slider);
       //transmit_joystick_status(joy);
 

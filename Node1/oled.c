@@ -86,7 +86,11 @@ void oled_print_char(const char data)
     }
 
 }
-
+void oled_print_char_small(const char data)
+{
+    for (int i=0; i<4;i++)
+        write_d(pgm_read_byte(&font4[(int)data-32][i]));
+}
 
 void oled_print(const char* string){
 	char* stringPtr=string;
@@ -94,6 +98,15 @@ void oled_print(const char* string){
 		oled_print_char(*stringPtr);
 		++stringPtr;
 	}
+}
+
+void oled_print_small(const char* string)
+{
+    char* stringPtr=string;
+    while(*stringPtr != '\0'){
+        oled_print_char_small(*stringPtr);
+        ++stringPtr;
+    }
 }
 
 void set_start_col(int col)

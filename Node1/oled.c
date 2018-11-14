@@ -9,9 +9,6 @@
 #include "usbmultifunction.h"
 #include "fonts.h"
 
-
-
-
 volatile char* OLED_COMMAND = (char*) 0x1000;
 volatile char* OLED_DATA = (char*) 0x1200; 
 uint16_t OLED_DATA_SIZE= 0x200;
@@ -66,23 +63,28 @@ void write_d(unsigned int data){
 
 void oled_reset()
 {
+    /* iterate all pages */
     for (uint8_t i = PAGE0; i<=PAGE7; i++){
 
         write_c(i);
 
+        /* loop 128 times, wait for pointer to iterate all bytes. */
         for (uint8_t j = 0; j < 128; j++){
 
-        	write_d(0x00);  //pekeren iterer av seg selv
+        	write_d(0x00);  //set all bytes to 0, this pointer increases by itself
             
         }
     }       
 }
 
 
+
+//JEG KOM HIT!!!!!!!!!!!!!
+
 void oled_print_char(const char data)
 {
     for (int i =0; i<8; i++){
-            write_d(pgm_read_byte(&font8[(int)data-32][i]));
+            write_d(pgm_read_byte(&font8[(int)data-32][i])); 
     }
 
 }

@@ -2,34 +2,39 @@
 #include <avr/io.h>
 #include <stdio.h>
 
-void UART_init(unsigned int ubrr){
 
-    UBRR0H = (unsigned char)(ubrr>>8);    //set baud rate
-    UBRR0L = (unsigned char)ubrr;
+void UART_init(unsigned int ubrr)
+{
+    /* set baud rate */
+    UBRR0H = (unsigned char)(ubrr>>8);  // high bits
+    UBRR0L = (unsigned char)ubrr;       // low bits
 
-    UCSR0B = (1<<RXEN0)|(1<<TXEN0);    //enable reciever and transmitter
+    /* enable reciever and transmitter */
+    UCSR0B = (1<<RXEN0)|(1<<TXEN0);
 
-    UCSR0C = (1<<URSEL0)|(1<<USBS0)|(3<<UCSZ00);    //Set frame format: 8data, 2 stop bit
+    /* set frame format: 8 data bits, 2 stop bits */
+    UCSR0C = (1<<URSEL0)|(1<<USBS0)|(3<<UCSZ00);    
 
-    fdevopen(&UART_Transmit,&UART_Receive);
-    
+    fdevopen(&UART_Transmit,&UART_Receive); //legg til kommentar her. 
 }
 
-void UART_Transmit(unsigned char data){
-    while(!(UCSR0A & (1<<UDRE0)))     //wait for empty transmit
-        ;
 
-    //printf("Sent!!");
-    UDR0 = data; //Put data into buffer, sends the data
+void UART_Transmit(unsigned char data)
+{
+    /* wait for empty transmit buffer */
+    while(!(UCSR0A & (1<<UDRE0)));
 
-
+    /*load data into buffer, send data*/
+    UDR0 = data; 
 }
-unsigned char UART_Receive (void){
-    //Wait for data to be received
 
-    while(!(UCSR0A & (1<<RXC0)))
-        ;
-    //Get and return received data from buffer
+
+unsigned char UART_Receive (void)
+{
+    /* wait for data to be received */
+    while(!(UCSR0A & (1<<RXC0)));
+
+    /* return received data from buffer */
     return UDR0; 
 }
 

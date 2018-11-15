@@ -11,6 +11,10 @@ void joystick_init()
 	//set PC6 to output
 	DDRC |= (1<<PC6);
 
+	PINC |= (1<<PC6);
+
+
+
 }
 
 void joystick_to_servopos(can_message msg)

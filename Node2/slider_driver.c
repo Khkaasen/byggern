@@ -5,7 +5,7 @@
 #include "PWM_driver.h"
 #include <util/delay.h>
 
-#define KP 200 
+#define KP 150 
 #define KI 1
 #define KD 20
 
@@ -15,13 +15,21 @@ int32_t last_error;
 
 void position_controller_init()
 {
+	uint16_t encoder_read;
+	//DAC_set_output(0);
+	encoder_reset();
+	//encoder_read = read_encoder();
+	//printf("encoder reset:%d\n", encoder_read );
 	error_integral = 0;
 	last_error = 0;
+	set_motor_dir(1);
 	DAC_set_output(100);
     _delay_ms(2800);
     DAC_set_output(0);
     _delay_ms(500);
     encoder_reset();
+    //encoder_read = read_encoder();
+    //printf("Initial start pos:%d\n", encoder_read );
 
     //_delay_ms(1000);
     
@@ -34,6 +42,7 @@ void position_controller_init()
     _delay_ms(2800);
     DAC_set_output(0);
     _delay_ms(500);
+
 
     encoder_endpoint = read_encoder();
     //printf("Endpoint %d\n", encoder_endpoint);
@@ -60,6 +69,8 @@ int32_t slider_to_motorref(can_message msg)
 
 void position_controller(int32_t ref)
 {	
+	//reset encoder hvis den når FFFF
+
 	int32_t error = ref - read_encoder();
 	error_integral +=error;
 	int32_t error_derivate = error - last_error;

@@ -83,7 +83,7 @@ void main(){
       position_controller(ref);
      //encoder=live_calibration();
       //encoder = read_encoder();
-      //printf("%x\n", encoder);
+      //printf("%d\n", encoder);
       joystick_to_servopos(msg);
       joystick_button_to_soleniode(msg);
 
@@ -94,8 +94,8 @@ void main(){
       //printf("%d\n", data );
 
       //set_motor_dir(dir);
-      //printf("X  : %d \n", msg.data[0]);
-      //printf("Y  : %d \n", msg.data[1]);
+      //printf("Right B  : %d \n", msg.data[6]);
+      //printf("Left B  : %d \n", msg.data[7]);
       //printf("DIR: %d \n", msg.data[2]);
       //joystick_to_servopos(msg);
       //_delay_ms(500);

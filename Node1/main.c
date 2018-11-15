@@ -99,17 +99,21 @@ void main(){
 
      sliders slider;
 
+     buttons_struct buttons;
+
 
     while(1) {
 
-      //joy = get_joystick_status();
+      joy = get_joystick_status();
 
-      //slider = get_sliders_status();
+      slider = get_sliders_status();
 
-      //transmit_IO_card(slider, joy);
+      buttons = get_buttons_status();
+
+      transmit_IO_card(slider, joy, buttons);
 
       //game();
-      menu_change_menu();
+      //enu_change_menu();
 
       //printf("%d\n", slider.right_slider);
       //transmit_joystick_status(joy);

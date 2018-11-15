@@ -1,16 +1,16 @@
 Make menus
 
-transmit buttons from I/O card via CAN
 
 implement timer interrupt and interrupt on CAN (send 50 CAN meldinger i sekundet)
 
-lagre highscore (SRAM??) --> skal dette være tid? implementer måte å telle poeng
 
-make game
+lagre highscore (pc/minnebrikke???) --> skal dette være tid? implementer måte å telle poeng
+
+make game 
 
 Tune controller (PID, P, PD)
 
-Fikse ledninger
+Fikse ledninger (kan forbedres hvis tid)
 
 fikse kode, legg til kommentarer alle kommentarer på /* denne formen!! */ (NB: liten forbokstav) 
 static const menus

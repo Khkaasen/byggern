@@ -4,6 +4,7 @@
 #include "joystick.h"
 #include "sliders.h"
 #include "CAN_driver.h"
+#include "buttons.h"
 
 
 void multi_card_init();

@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
+#include "game.h"
 
 #define TITLE 0xb0
 #define LINE1 0xb1
@@ -109,7 +110,8 @@ menu_node_t level_easy =
 	.title = "Level easy",
 	.parent = &main_menu,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
-	.reallength = 1
+	.reallength = 1,
+	.mode = 1
 };
 
 menu_node_t level_medium =
@@ -117,7 +119,8 @@ menu_node_t level_medium =
 	.title = "Level medium",
 	.parent = &main_menu,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
-	.reallength = 1
+	.reallength = 1,
+	.mode = 2
 };
 
 menu_node_t level_hard =
@@ -125,7 +128,8 @@ menu_node_t level_hard =
 	.title = "Level hard",
 	.parent = &main_menu,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
-	.reallength = 1
+	.reallength = 1,
+	.mode = 3
 };
 
 menu_node_t level_extreme =
@@ -133,10 +137,9 @@ menu_node_t level_extreme =
 	.title = "Level extreme",
 	.parent = &main_menu,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
-	.reallength = 1
+	.reallength = 1,
+	.mode = 4
 };
-
-
 
 
 
@@ -207,7 +210,7 @@ void display_menu(menu_node_t * node)
 
 
 
-int menu_change_menu()
+void menu_change_menu()
 {
 
 	joystick_status joy = get_joystick_status();
@@ -244,6 +247,11 @@ int menu_change_menu()
 				{
 					delete_cursor();
 					curr_menu = curr_menu->childs[menu.position];
+					if(curr_menu->mode >0)
+					{
+						game();
+						curr_menu = curr_menu->parent;
+					}
 					display_menu(curr_menu);
 
 					
@@ -265,10 +273,6 @@ int menu_change_menu()
 				break;
 		}
 	}
-
-
-	/* dette addet av mari*/
-	//return curr_menu->mode;
 }
 
 

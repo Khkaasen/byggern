@@ -17,7 +17,9 @@ void oled_print(const char* string);
 
 void oled_print_multiple_lines(const char* string);
 
-void display_countdown();
+void oled_display_countdown();
+
+void oled_display_game_over(int8_t score);
 
 void oled_print_pic();
 

@@ -22,7 +22,8 @@
 //testprogram med jtag
 //Cutoff frequency: 796.18 Hz
 //ttyS0 putty
-void main(){
+void main(){    
+
 
     UART_init(MYUBRR);
     
@@ -35,8 +36,8 @@ void main(){
     //printf("%d",MCP_read_status());
    	CAN_init();
 
-    printf("program start\n");
 
+    printf("program start\n");
 /*
     uint8_t b[2] = {0xFF,0x0dc};
    	 can_message msg = 
@@ -95,15 +96,16 @@ void main(){
     //printf("%d\n", msg.data);
    	//CLEAR_BIT(PORTB,PB4);
 
-     joystick_status joy;
+    joystick_status joy;
 
      sliders slider;
 
      buttons_struct buttons;
+     //game();
 
-
+    //display_countdown();
     while(1) {
-
+      /*
       joy = get_joystick_status();
 
       slider = get_sliders_status();
@@ -112,10 +114,12 @@ void main(){
 
 
       transmit_IO_card(slider, joy, buttons);
+      */
+    
+      menu_change_menu();
 
 
-
-      //game();
+      
       //enu_change_menu();
 
       //printf("%d\n", slider.right_slider);

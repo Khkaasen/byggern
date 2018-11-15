@@ -17,8 +17,9 @@
 #define LOWER_COL0 0x00
 #define HIGHER_COL0 0x10
 
-#define MENU_POS_LOW 0x0F
-#define MENU_POS_HIGH 0x10
+/* right adjust menu position to make space for cursor */
+#define MENU_ADJUST_LOW 0x0F
+#define MENU_ADJUST_HIGH 0x10
 
 struct menu_struct menu;
 bool shift_allowed;
@@ -189,16 +190,16 @@ void display_menu(menu_node_t * node)
 	if(menu.length==0)
 	{
 		delete_cursor();
-		write_c(MENU_POS_LOW);
-		write_c(MENU_POS_HIGH);
+		write_c(MENU_ADJUST_LOW);
+		write_c(MENU_ADJUST_HIGH);
 		line++;
 		write_c(line);
 		oled_print_multiple_lines("hei, hallo, maen, eg e best, erik eie, han rule live");
 	}
 	for(int i= 0; i<node->reallength; i++)
 	{
-		write_c(MENU_POS_LOW);
-		write_c(MENU_POS_HIGH);
+		write_c(MENU_ADJUST_LOW);
+		write_c(MENU_ADJUST_HIGH);
 		line++;
 		write_c(line);
 		oled_print((node->childs[i])->title);
@@ -240,7 +241,7 @@ int menu_change_menu()
 				break;
 			case 1: // right
 				
-				if(curr_menu->childs[menu.position]!=NULL)
+				if((curr_menu->childs[menu.position]!=NULL)) //check if menu.child is game mode 
 				{
 					delete_cursor();
 					curr_menu = curr_menu->childs[menu.position];

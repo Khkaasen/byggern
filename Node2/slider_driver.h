@@ -9,8 +9,10 @@
 #define SLIDER_RIGHT 5
 #define IO_ID 1
 
+void controller_select(int8_t game_mode);
 
-void position_controller_init();
+
+void controller_init();
 int32_t slider_to_motorref(can_message msg);
 
 void position_controller(int32_t ref);

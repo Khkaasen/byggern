@@ -190,31 +190,24 @@ void oled_display_countdown()
 }
 
 
-void oled_print(const char data)
-{
-    for (int i =0; i<8; i++)
-        write_d(pgm_read_byte(&font8[(int)data-32][i])); 
-}
-
 void oled_print_pic()
 {
     uint8_t page = PAGE0;
     write_c(MENU_POS_LOW);
     write_c(MENU_POS_HIGH);
 
-    for (int i =0; i<1008; i++)
+    for (int i =0; i<1024; i++)
     {
         if (i%128 == 0)
         {
-            page++;
             write_c(page);
             write_c(MENU_POS_LOW);
-            write_c(MENU_POS_HIGH); 
+            write_c(MENU_POS_HIGH);
+            page++; 
         }
         write_d(pgm_read_byte(&bitmap_iip07f[i]));
     }
 }
-
 
 
 void oled_display_game_over(int8_t score)

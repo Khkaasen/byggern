@@ -18,6 +18,7 @@
 #include <avr/interrupt.h>
 #include "Motor_driver.h"
 #include "slider_driver.h"
+#include "game.h"
 
 #define Baudrate 9600
 #define MYUBRR F_CPU/16/Baudrate-1
@@ -44,7 +45,7 @@ void main(){
     sei();
     _delay_ms(100);
     
-    position_controller_init();
+    controller_init();
     
     /*
   	uint8_t b[2] = {0xFF,0x1d};
@@ -82,13 +83,15 @@ void main(){
 
       msg=CAN_receive();
 
-      ref =slider_to_motorref(msg);
-      position_controller(ref);
+      game_start(msg);
+
+      //ref =slider_to_motorref(msg);
+      //position_controller(ref);
      //encoder=live_calibration();
       //encoder = read_encoder();
       //printf("%d\n", encoder);
-      joystick_to_servopos(msg);
-      joystick_button_to_soleniode(msg);
+      //joystick_to_servopos(msg);
+      //joystick_button_to_soleniode(msg);
 
       //data =joystick_to_motorspeed(msg);
       //uint8_t dir = joystick_to_motordir(msg);

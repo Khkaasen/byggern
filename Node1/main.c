@@ -105,6 +105,8 @@ void main(){
 
     //display_countdown();
     while(1) {
+
+      //oled_print_pic();
       /*
       joy = get_joystick_status();
 

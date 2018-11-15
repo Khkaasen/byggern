@@ -1,11 +1,11 @@
 #include "game.h"
-#include "CAN_driver"
-#include "sliders_driver.h"
+#include "CAN_driver.h"
+#include "slider_driver.h"
 #include "joystick_driver.h"
 #include "IR_driver.h"
 
 #include <stdio.h>
-#include <stdint.h.h>
+#include <stdint.h>
 
 #define GAME_START_ID 2 
 
@@ -13,21 +13,32 @@ void game_start(can_message msg)
 {
 	if (msg.id == GAME_START_ID)
 	{
-		position_controller_init();
+		controller_init();
 
-		game(msg.data[0]);
+		controller_select(msg.data[0]);
+
+		game();	
 	}
 
 }
 
-void game(int8_t game_mode)
+void game()
 {
-	/* switch choses correct game mode requeat sent from node 1 */
-	
 
+	can_message msg;
 
+    int32_t ref;
 	while(1)
 	{
+		msg=CAN_receive();
+
+    	ref =slider_to_motorref(msg);
+
+    	position_controller(ref);
+
+        joystick_to_servopos(msg);
+
+        joystick_button_to_soleniode(msg);
 
 	}
 }

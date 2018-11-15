@@ -1,6 +1,13 @@
 Make menus
 
 
+skrive mnodes på menyer 
+
+også må me klare å lese can message i node 
+
+
+
+
 implement timer interrupt and interrupt on CAN (send 50 CAN meldinger i sekundet)
 
 

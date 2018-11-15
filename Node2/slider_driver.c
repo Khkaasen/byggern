@@ -20,21 +20,21 @@ void controller_select(int8_t game_mode)
 
 	/* PID controller */
 	case (1): 
-		KP= 1;
+		KP= 200;
 		KI= 1;
-		KD= 1;
+		KD= 50;
 		break;
 
 	/* PD controller */
 	case (2):
-		KP= 1;
+		KP= 300;
 		KI= 0;
-		KD= 1;
+		KD= 100;
 		break;
 
 	/* P controller */
 	case (3):
-		KP= 1;
+		KP= 300;
 		KI= 0;
 		KD= 0;
 		break;
@@ -49,7 +49,7 @@ void controller_select(int8_t game_mode)
 
 }
 
-void position_controller_init()
+void controller_init()
 {
 	uint16_t encoder_read;
 	//DAC_set_output(0);

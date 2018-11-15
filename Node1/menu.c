@@ -39,8 +39,6 @@ struct menu_node_t level_hard;
 struct menu_node_t level_extreme;
 
 
-
-
 menu_node_t main_menu = 
 {
 	
@@ -194,8 +192,9 @@ void display_menu(menu_node_t * node)
 		write_c(MENU_ADJUST_HIGH);
 		line++;
 		write_c(line);
-		oled_print_multiple_lines("hei, hallo, maen, eg e best, erik eie, han rule live");
+		oled_print_multiple_lines("Teller sekunder du klarer å holde ballen i luften. Du styrer servo med joystick, og posisjon med venstre slider. LYKKE TIL! ");
 	}
+
 	for(int i= 0; i<node->reallength; i++)
 	{
 		write_c(MENU_ADJUST_LOW);

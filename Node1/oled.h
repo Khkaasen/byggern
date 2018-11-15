@@ -17,4 +17,6 @@ void oled_print(const char* string);
 
 void oled_print_multiple_lines(const char* string);
 
+void display_countdown();
+
 #endif

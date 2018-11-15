@@ -10,7 +10,7 @@ typedef enum
 	MODE_GAME_EASY=1,
 	MODE_GAME_MEDIUM= 2,
 	MODE_GAME_HARD= 3,
-	MODE_GAME_EXTREME =4
+	MODE_GAME_EXTREME =4	
 } MODES;
 
 
@@ -20,10 +20,7 @@ typedef struct menu_struct
 	uint8_t length;
 	int position;
 
-	
-
 } menu_struct;
-
 
 typedef struct menu_node_t
 {

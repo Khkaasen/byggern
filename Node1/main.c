@@ -14,6 +14,7 @@
 #include "MCP2515_driver.h"
 #include "CAN_driver.h"
 #include "MCP2515.h"
+#include "game.h"
 
 #define Baudrate 9600
 #define MYUBRR F_CPU/16/Baudrate-1
@@ -101,13 +102,14 @@ void main(){
 
     while(1) {
 
-      //joy = get_joystick_status();
+      joy = get_joystick_status();
 
-      //slider = get_sliders_status();
+      slider = get_sliders_status();
 
-      //transmit_IO_card(slider, joy);
+      transmit_IO_card(slider, joy);
 
-      move_cursor();
+      //game();
+      //move_cursor();
       //printf("%d\n", slider.right_slider);
       //transmit_joystick_status(joy);
 

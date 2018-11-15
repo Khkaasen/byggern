@@ -3,6 +3,17 @@
 
 #include <stdint.h>
 
+
+typedef enum 
+{
+	MODE_MENU=0,
+	MODE_GAME_EASY=1,
+	MODE_GAME_MEDIUM= 2,
+	MODE_GAME_HARD= 3,
+	MODE_GAME_EXTREME =4
+} MODES;
+
+
 typedef struct menu_struct
 {
 	uint8_t cursor_pos;
@@ -20,11 +31,12 @@ typedef struct menu_node_t
 	struct menu_node_t * childs[3];
 	char * title;
 	int reallength;
+	int mode;
 } menu_node_t;
 
 void menu_init();
 void draw_cursor();
 void delete_cursor();
-void move_cursor();
+int menu_change_menu();
 
 #endif

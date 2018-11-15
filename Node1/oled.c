@@ -22,6 +22,19 @@ uint16_t OLED_DATA_SIZE= 0x200;
 #define PAGE6 0xb6
 #define PAGE7 0xb7
 
+#define TITLE 0xb0
+#define LINE1 0xb1
+#define LINE2 0xb2
+#define LINE3 0xb3
+#define LINE4 0xb4
+#define LINE5 0xb5
+#define LINE6 0xb6
+#define LAST_LINE 0xb7
+
+#define MENU_POS_LOW 0x0F
+#define MENU_POS_HIGH 0x10
+
+
 
 void oled_init()
 {
@@ -118,4 +131,29 @@ void set_start_col(int col)
         return;
     }
 
+}
+
+
+void oled_print_multiple_lines(const char* string)
+{
+    uint8_t teller =0;
+    uint8_t line = LINE1;
+    write_c(MENU_POS_LOW);
+    write_c(MENU_POS_HIGH);
+    write_c(line);  
+    char* stringPtr=string;
+    while(*stringPtr !='\0')
+    {
+        teller++;
+        oled_print_char_small(*stringPtr);
+        if(teller>20 && *stringPtr ==' ' )
+        {
+            teller=0;
+            write_c(MENU_POS_LOW);
+            write_c(MENU_POS_HIGH);
+            line++;
+            write_c(line);
+        }
+        ++stringPtr;
+    }
 }

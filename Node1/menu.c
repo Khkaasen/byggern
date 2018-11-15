@@ -102,8 +102,6 @@ menu_node_t teammode_highscores =
 
 
 
-
-
 void menu_init()
 {
 	write_c(LOWER_COL0);	//set lower column to 0.
@@ -123,7 +121,7 @@ void draw_cursor()
 	write_c(LOWER_COL0);	//set lower column to 0.
     write_c(HIGHER_COL0);	//set higher column to 0.
     write_c(menu.cursor_pos);
-	oled_print(">");
+	oled_print("->");
 }
 
 void delete_cursor()
@@ -156,7 +154,7 @@ void display_menu(menu_node_t * node)
 		write_c(MENU_POS_HIGH);
 		line++;
 		write_c(line);
-		print_text_multiple_lines("hei, hallo, maen, eg e best, erik eie, han rule live");
+		oled_print_multiple_lines("hei, hallo, maen, eg e best, erik eie, han rule live");
 	}
 	for(int i= 0; i<node->reallength; i++)
 	{
@@ -168,49 +166,9 @@ void display_menu(menu_node_t * node)
 	}
 }
 
-void print_text_multiple_lines(const char* string)
-{
-	uint8_t teller =0;
-	uint8_t line = LINE1;
-	write_c(MENU_POS_LOW);
-	write_c(MENU_POS_HIGH);
-	write_c(line);	
-    char* stringPtr=string;
-	while(*stringPtr !='\0')
-	{
-		teller++;
-		oled_print_char_small(*stringPtr);
-		if(teller>20 && *stringPtr ==' ' )
-		{
-			teller=0;
-			write_c(MENU_POS_LOW);
-			write_c(MENU_POS_HIGH);
-			line++;
-			write_c(line);
-		}
-		++stringPtr;
-	}
-}
-
-void print_liten_telst(const char* string)
-{
-    char* stringPtr=string;
-    int8_t teller = 0;
-
-    while(*stringPtr != '\0'){
-    	teller++;
-        oled_print_char_small(*stringPtr);
-        ++stringPtr;
-        if(teller==127){
-        	"\n";
-        	stringPtr=0;
-        }
-    }
-}
 
 
-
-void move_cursor()
+int menu_change_menu()
 {
 
 	joystick_status joy = get_joystick_status();
@@ -248,6 +206,7 @@ void move_cursor()
 					delete_cursor();
 					curr_menu = curr_menu->childs[menu.position];
 					display_menu(curr_menu);
+
 					
 				}
 
@@ -262,12 +221,15 @@ void move_cursor()
 					display_menu(curr_menu);
 				}
 				
-
 				break;
 			default:
 				break;
 		}
 	}
+
+
+	/* dette addet av mari*/
+	return curr_menu->mode;
 }
 
 

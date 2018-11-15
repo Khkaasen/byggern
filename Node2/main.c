@@ -43,7 +43,9 @@ void main(){
 
     sei();
     _delay_ms(100);
+    
     position_controller_init();
+    
     /*
   	uint8_t b[2] = {0xFF,0x1d};
    	can_message msg = 

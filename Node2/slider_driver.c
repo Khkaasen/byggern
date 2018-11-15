@@ -5,13 +5,49 @@
 #include "PWM_driver.h"
 #include <util/delay.h>
 
-#define KP 150 
-#define KI 1
-#define KD 20
+static int32_t KP; 
+static int32_t KI;
+static int32_t KD;
 
 uint16_t encoder_endpoint;
 int32_t error_integral;
 int32_t last_error;
+
+void controller_select(int8_t game_mode)
+{
+
+	switch (game_mode){
+
+	/* PID controller */
+	case (1): 
+		KP= 1;
+		KI= 1;
+		KD= 1;
+		break;
+
+	/* PD controller */
+	case (2):
+		KP= 1;
+		KI= 0;
+		KD= 1;
+		break;
+
+	/* P controller */
+	case (3):
+		KP= 1;
+		KI= 0;
+		KD= 0;
+		break;
+
+	/* mirrored P controller */
+	case (4):
+		KP= 1;
+		KI= 0;
+		KD= 0; 
+		break; 
+	}
+
+}
 
 void position_controller_init()
 {

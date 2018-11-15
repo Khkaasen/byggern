@@ -1,5 +1,5 @@
 #ifndef slider_driver_h
-#define slider_driver_h
+#define slider_driver_h  //har skiftet navn på fil. skal linjen her og over endres? 
 
 
 #include <stdint.h>

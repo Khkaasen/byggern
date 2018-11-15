@@ -21,6 +21,10 @@ void CAN_init()
 	MCP_write(0x00,MCP_CANINTF);
 }
 
+
+//lag can konstruktør i begge nodene. 
+
+
 void CAN_transmit(can_message msg)
 {
 	while((MCP_read(MCP_TXB0CTRL)&(1<<TXREQ)));

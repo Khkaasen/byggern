@@ -110,7 +110,10 @@ void main(){
 
       buttons = get_buttons_status();
 
+
       transmit_IO_card(slider, joy, buttons);
+
+
 
       //game();
       //enu_change_menu();
@@ -126,7 +129,7 @@ void main(){
     	//SPI_write(0xF0);
 
       //MCP_read(0x03);
-      _delay_ms(1);
+     _delay_ms(1);
 
 
     }

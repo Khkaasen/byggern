@@ -32,6 +32,10 @@ void CAN_transmit(can_message msg)
 
 	MCP_write_n_byte(msg.data, MCP_TXB0CTRL + 6, msg.length); //samme^
 
+	printf("Joystick X:%d\n",msg.data[0] );
+
+	printf("Joystick Y:%d\n",msg.data[1] );
+
 	MCP_request_to_send(); //set TXREQ bit  //må være feil her, mottar nada i recieve buffer
 
 
@@ -40,7 +44,7 @@ void CAN_transmit(can_message msg)
 can_message CAN_read()
 {
 
-	//while(!(MCP_read(MCP_CANINTF)&(1<<MCP_RX0IF)));
+	//while(MCP_read(MCP_CANINTF)&(1<<MCP_RX0IF));
 	
 	can_message msg;
 	msg.id = MCP_read(MCP_RXB0CTRL+1);

@@ -11,7 +11,8 @@ void joystick_init()
 	//set PC6 to output
 	DDRC |= (1<<PC6);
 
-	PINC |= (1<<PC6);
+	/* initailize PC6 to 1 */
+	PORTC |= (1<<PC6);
 
 
 

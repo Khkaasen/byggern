@@ -27,7 +27,7 @@
 
 //ACM0 putty
 void main(){
-
+    cli();
 
   	UART_init(MYUBRR);
     SPI_init();
@@ -79,6 +79,7 @@ void main(){
      //PWM_set_duty_cycle(-100);
 
       msg=CAN_receive();
+
       ref =slider_to_motorref(msg);
       position_controller(ref);
      //encoder=live_calibration();

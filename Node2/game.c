@@ -1,6 +1,6 @@
 #include "game.h"
 #include "CAN_driver.h"
-#include "slider_driver.h"
+#include "motor_controller.h"
 #include "joystick_driver.h"
 #include "IR_driver.h"
 
@@ -32,9 +32,9 @@ void game()
 	{
 		msg=CAN_receive();
 
-    	ref =slider_to_motorref(msg);
+    	ref =controller_read_motor_ref(msg);
 
-    	position_controller(ref);
+    	controller_set_motor_input(ref);
 
         joystick_to_servopos(msg);
 

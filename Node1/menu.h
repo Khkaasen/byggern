@@ -28,12 +28,12 @@ typedef struct menu_node_t
 	struct menu_node_t * childs[5];
 	char * title;
 	int reallength;
-	int mode;
+	MODES mode;
 } menu_node_t;
 
 void menu_init();
 void draw_cursor();
 void delete_cursor();
-int menu_change_menu();
+void menu_change_menu();
 
 #endif

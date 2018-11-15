@@ -6,7 +6,7 @@
 #include "buttons.h"
 #include <stdint.h>
 #include <stdio.h>
-
+#include "oled.h"
 
 #define MODE_MENU 1
 #define MODE_GAME 2
@@ -25,18 +25,14 @@ static int mode;
 
 
 
-void game_init()
-{
-	mode = MODE_MENU;
-}
+
 
 void game_start()
 {
 
-	//print count down to oled, egen func i oled
+	oled_display_countdown();
 
-
-	//transmit game start to node 2 (game mode)
+	transmit_start_game();
 
 	
 }
@@ -52,9 +48,16 @@ int8_t game_check_game_over()
 	return 0; 
 }
 
-void game_over(int score)
+void game_over(int8_t score)
 {
-	//check highscore
+	oled_display_game_over(score);
+
+	/*save highscore in AVR
+	//read all highscores 
+	//print all highscores (top 10)
+	
+	
+|	*/
 }
 
 
@@ -62,6 +65,8 @@ void game()
 {
 
 	game_start();
+
+	printf("after game start()\n");
 
 	joystick_status joy;
 
@@ -73,24 +78,29 @@ void game()
 	while (1)
 	{
 
-      joy = get_joystick_status();
+     	joy = get_joystick_status();
 
-      slider = get_sliders_status();
+      	slider = get_sliders_status();
 
-      buttons = get_buttons_status();
+      	buttons = get_buttons_status();
 
-      transmit_IO_card(slider, joy, buttons);
+      	transmit_IO_card(slider, joy, buttons);
 
-     //_delay_ms(1);// needed? depends on implementation of CAN interrupt
+     	//_delay_ms(1);// needed? depends on implementation of CAN interrupt
 
-     if(game_check_game_over()>0)
-     {
-     	game_over(game_check_game_over());
-     	break; 
-     } 
-
+     	/*if(game_check_game_over()>0)
+     	{
+     		game_over(game_check_game_over());
+     		break; 
+     	} */
+     	if(buttons.right==1)
+     	{	
+     		//her skal oled_print_game_quit() print "player quit the game. the score was ...."
+     		break;
+     	}
 	}
 }
+
 
 void transmit_start_game()
 {
@@ -99,8 +109,6 @@ void transmit_start_game()
 		1
 	};
 
-
-    
     can_message msg=
     {
         .length=MESSAGE_LENGTH,

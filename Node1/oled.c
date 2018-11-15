@@ -37,6 +37,9 @@ uint16_t OLED_DATA_SIZE= 0x200;
 #define COUNTDOWN_POS_LOW 0x00 //må finne riktig verdi (dette skal være midten)
 #define COUNTDOWN_POS_HIGH 0x14
 
+#define PLAY_POS_LOW 0x00
+#define PLAY_POS_HIGH 0x13
+
 void oled_init()
 {
     write_c(0xae);  //display off
@@ -157,7 +160,7 @@ void oled_print_multiple_lines(const char* string)
     }
 }
 
-void display_countdown()
+void oled_display_countdown()
 {
     for(char i='3'; i>'0'; i--)
     {
@@ -166,23 +169,28 @@ void display_countdown()
         write_c(COUNTDOWN_POS_LOW);
         write_c(COUNTDOWN_POS_HIGH);
         write_c(0x81); //akkseserer contrast
-        write_c(0x10); //setter start verdi på contrast?
-        oled_print_char(i);
-
-        for (uint8_t i=0x10; i<0xFF; i++ )
+        write_c(0x00); //setter start verdi på contrast?
+        oled_print_char(i); 
+        for (uint16_t i=0x00; i<0xFF; i++ )
         {
             write_c(0x81); //akkseserer contrast
             write_c(i); //setter verdi på contrast?
-            i+=9;
-            _delay_ms(70);        
+            i+=0x04;
+            _delay_ms(40);        
         }
     }
-
+    
     oled_reset();
     write_c(LINE4); //starte på linje
-    write_c(COUNTDOWN_POS_LOW);
-    write_c(COUNTDOWN_POS_HIGH);
+    write_c(PLAY_POS_LOW);
+    write_c(PLAY_POS_HIGH);
     write_c(0x81); //akkseserer contrast
     write_c(0xFF);
     oled_print("PLAY!");
+}
+
+
+void oled_display_game_over(int8_t score)
+{
+    
 }

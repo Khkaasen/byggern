@@ -10,6 +10,6 @@ void multi_card_init();
 
 unsigned char read_channel(int channel);
 
-void transmit_IO_card(sliders sliders, joystick_status joystick);
+void transmit_IO_card(sliders sliders, joystick_status joystick, buttons_struct buttons);
 
 #endif

@@ -15,4 +15,6 @@ void print_test();
 
 void oled_print(const char* string);
 
+void oled_print_multiple_lines(const char* string);
+
 #endif

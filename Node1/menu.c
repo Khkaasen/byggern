@@ -37,9 +37,7 @@ struct menu_node_t level_medium;
 struct menu_node_t level_hard;
 struct menu_node_t level_extreme;
 
- {
- 	
- }; 
+
 
 
 menu_node_t main_menu = 
@@ -56,7 +54,7 @@ menu_node_t singleplayer =
 	.title = "Singleplayer",
 	.parent = &main_menu,
 	.childs = {&singleplayer_instructions,&level_easy,&level_medium,&level_hard,&level_extreme},
-	.reallength = 1	
+	.reallength = 5
 };
 
 menu_node_t teammode = 
@@ -64,7 +62,7 @@ menu_node_t teammode =
 	.title = "Teammode",
 	.parent = &main_menu,
 	.childs = {&teammode_instructions,&level_easy,&level_medium,&level_hard,&level_extreme},
-	.reallength = 1		
+	.reallength = 5		
 };
 
 menu_node_t singleplayer_instructions=
@@ -109,35 +107,35 @@ menu_node_t teammode_highscores =
 
 menu_node_t level_easy =
 {
-	.title = "Level easy (PID)",
+	.title = "Level easy",
 	.parent = &main_menu,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 1
-}
+};
 
 menu_node_t level_medium =
 {
-	.title = "Level medium (PD)",
+	.title = "Level medium",
 	.parent = &main_menu,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 1
-}
+};
 
 menu_node_t level_hard =
 {
-	.title = "Level hard (P)",
+	.title = "Level hard",
 	.parent = &main_menu,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 1
-}
+};
 
 menu_node_t level_extreme =
 {
-	.title = "Level extreme (mirror)",
+	.title = "Level extreme",
 	.parent = &main_menu,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 1
-}
+};
 
 
 
@@ -270,7 +268,7 @@ int menu_change_menu()
 
 
 	/* dette addet av mari*/
-	return curr_menu->mode;
+	//return curr_menu->mode;
 }
 
 

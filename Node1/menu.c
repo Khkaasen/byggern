@@ -32,6 +32,12 @@ static const struct menu_node_t teammode_instructions;
 struct menu_node_t highscores;
 struct menu_node_t singleplayer_highscores;
 struct menu_node_t teammode_highscores;
+struct menu_node_t level_easy;
+struct menu_node_t level_medium;
+struct menu_node_t level_hard;
+struct menu_node_t level_extreme;
+
+
 
 
 menu_node_t main_menu = 
@@ -39,7 +45,7 @@ menu_node_t main_menu =
 	
 	.title = "Main Menu",
 	.parent = 0,
-	.childs = {&singleplayer, &teammode, &highscores},
+	.childs = {&singleplayer, &teammode, &highscores,NULL,NULL},
 	.reallength = 3
 };
 
@@ -47,23 +53,23 @@ menu_node_t singleplayer =
 {
 	.title = "Singleplayer",
 	.parent = &main_menu,
-	.childs = {&singleplayer_instructions,NULL,NULL},
-	.reallength = 1	
+	.childs = {&singleplayer_instructions,&level_easy,&level_medium,&level_hard,&level_extreme},
+	.reallength = 5
 };
 
 menu_node_t teammode = 
 {
 	.title = "Teammode",
 	.parent = &main_menu,
-	.childs = {&teammode_instructions,NULL,NULL},
-	.reallength = 1		
+	.childs = {&teammode_instructions,&level_easy,&level_medium,&level_hard,&level_extreme},
+	.reallength = 5		
 };
 
 menu_node_t singleplayer_instructions=
 {
 	.title = "Instructions",
 	.parent = &singleplayer,
-	.childs = {NULL,NULL,NULL},
+	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 0	
 };
 
@@ -71,7 +77,7 @@ static const menu_node_t teammode_instructions=
 {
 	.title = "Instructions",
 	.parent = &teammode,
-	.childs = {NULL,NULL,NULL},
+	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 0
 };
 
@@ -79,7 +85,7 @@ menu_node_t highscores =
 {
 	.title = "Highscores",
 	.parent = &main_menu,
-	.childs = {&singleplayer_highscores,&teammode_highscores,NULL},
+	.childs = {&singleplayer_highscores,&teammode_highscores,NULL,NULL,NULL},
 	.reallength = 2	
 };
 
@@ -87,7 +93,7 @@ menu_node_t singleplayer_highscores =
 {
 	.title = "S Highscores",
 	.parent = &highscores,
-	.childs = {NULL,NULL,NULL},
+	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 0	
 };
 
@@ -95,10 +101,41 @@ menu_node_t teammode_highscores =
 {
 	.title = "T Highscores",
 	.parent = &highscores,
-	.childs = {NULL,NULL,NULL},
+	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 0
 };
 
+menu_node_t level_easy =
+{
+	.title = "Level easy",
+	.parent = &main_menu,
+	.childs = {NULL,NULL,NULL,NULL,NULL},
+	.reallength = 1
+};
+
+menu_node_t level_medium =
+{
+	.title = "Level medium",
+	.parent = &main_menu,
+	.childs = {NULL,NULL,NULL,NULL,NULL},
+	.reallength = 1
+};
+
+menu_node_t level_hard =
+{
+	.title = "Level hard",
+	.parent = &main_menu,
+	.childs = {NULL,NULL,NULL,NULL,NULL},
+	.reallength = 1
+};
+
+menu_node_t level_extreme =
+{
+	.title = "Level extreme",
+	.parent = &main_menu,
+	.childs = {NULL,NULL,NULL,NULL,NULL},
+	.reallength = 1
+};
 
 
 
@@ -123,7 +160,7 @@ void draw_cursor()
 	write_c(LOWER_COL0);	//set lower column to 0.
     write_c(HIGHER_COL0);	//set higher column to 0.
     write_c(menu.cursor_pos);
-	oled_print(">");
+	oled_print("->");
 }
 
 void delete_cursor()
@@ -156,7 +193,7 @@ void display_menu(menu_node_t * node)
 		write_c(MENU_POS_HIGH);
 		line++;
 		write_c(line);
-		print_text_multiple_lines("hei, hallo, maen, eg e best, erik eie, han rule live");
+		oled_print_multiple_lines("hei, hallo, maen, eg e best, erik eie, han rule live");
 	}
 	for(int i= 0; i<node->reallength; i++)
 	{
@@ -168,49 +205,9 @@ void display_menu(menu_node_t * node)
 	}
 }
 
-void print_text_multiple_lines(const char* string)
-{
-	uint8_t teller =0;
-	uint8_t line = LINE1;
-	write_c(MENU_POS_LOW);
-	write_c(MENU_POS_HIGH);
-	write_c(line);	
-    char* stringPtr=string;
-	while(*stringPtr !='\0')
-	{
-		teller++;
-		oled_print_char_small(*stringPtr);
-		if(teller>20 && *stringPtr ==' ' )
-		{
-			teller=0;
-			write_c(MENU_POS_LOW);
-			write_c(MENU_POS_HIGH);
-			line++;
-			write_c(line);
-		}
-		++stringPtr;
-	}
-}
-
-void print_liten_telst(const char* string)
-{
-    char* stringPtr=string;
-    int8_t teller = 0;
-
-    while(*stringPtr != '\0'){
-    	teller++;
-        oled_print_char_small(*stringPtr);
-        ++stringPtr;
-        if(teller==127){
-        	"\n";
-        	stringPtr=0;
-        }
-    }
-}
 
 
-
-void move_cursor()
+int menu_change_menu()
 {
 
 	joystick_status joy = get_joystick_status();
@@ -248,6 +245,7 @@ void move_cursor()
 					delete_cursor();
 					curr_menu = curr_menu->childs[menu.position];
 					display_menu(curr_menu);
+
 					
 				}
 
@@ -262,12 +260,15 @@ void move_cursor()
 					display_menu(curr_menu);
 				}
 				
-
 				break;
 			default:
 				break;
 		}
 	}
+
+
+	/* dette addet av mari*/
+	//return curr_menu->mode;
 }
 
 

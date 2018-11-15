@@ -2,16 +2,27 @@
 #include <stdio.h>
 #include <avr/io.h>
 
-bool read_left_button(){
+int8_t read_left_button(){
     if (PINB & (1<<PB0)){
-        return true;
+        return 1;
     }
-    return false;
+    return 0;
 }
 
-bool read_right_button(){
+int8_t read_right_button(){
     if (PINB & (1<<PB1)){
-        return true;
+        return 1;
     }
-    return false;
+    return 0;
+}
+
+buttons_struct get_buttons_status(void)
+{
+	buttons_struct value;
+
+	value.right = read_right_button();
+
+	value.left = read_left_button();
+
+	return value;
 }

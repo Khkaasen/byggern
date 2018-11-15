@@ -1,9 +1,18 @@
 #ifndef buttons_h
 #define buttons_h
 
-#include <stdbool.h>
+#include <stdint.h>
 
-bool read_left_button();
-bool read_right_button();
+int8_t read_left_button();
+int8_t read_right_button();
+
+
+typedef struct buttons_status
+{
+	int8_t right;
+	int8_t left;
+} buttons_struct;
+
+buttons_struct get_buttons_status(void);
 
 #endif

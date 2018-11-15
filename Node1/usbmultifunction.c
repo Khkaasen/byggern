@@ -6,7 +6,7 @@
 #include "oled.h"
 #include <avr/io.h>
 
-#define MESSAGE_LENGTH 6
+#define MESSAGE_LENGTH 8
 
 #define IO_ID 1 //nå er joystick ID lik IO_ID. FIX
 
@@ -26,7 +26,7 @@ unsigned char read_channel(int channel)
 	return *adc;
 }
 
-void transmit_IO_card(sliders sliders, joystick_status joystick)
+void transmit_IO_card(sliders sliders, joystick_status joystick¨, buttons_struct buttons)
 {
 	/* initialize can message with correct data bytes */
 	int8_t b[MESSAGE_LENGTH] = 
@@ -36,13 +36,15 @@ void transmit_IO_card(sliders sliders, joystick_status joystick)
 		joystick.dir, 
 		joystick.button, 
 		sliders.left_slider,
-		sliders.right_slider
+		sliders.right_slider,
+        buttons.right,
+        buttons.left
 	};
     
     can_message msg=
     {
         .length=MESSAGE_LENGTH,
-        .id=IO_ID, //id = 2 is slider_pos
+        .id=IO_ID, //id = 1 is IO_card ID
         .RTR=0
     };
 
@@ -52,6 +54,8 @@ void transmit_IO_card(sliders sliders, joystick_status joystick)
     msg.data[3] = b[3];
     msg.data[4] = b[4];
     msg.data[5] = b[5];
+    msg.data[6] = b[6];
+    msg.data[7] = b[7];
 
 
     /* transmit can message to can */

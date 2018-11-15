@@ -1,0 +1,25 @@
+Make menus
+
+transmit buttons from I/O card via CAN
+
+implement timer interrupt and interrupt on CAN (send 50 CAN meldinger i sekundet)
+
+lagre highscore (SRAM??) --> skal dette være tid? implementer måte å telle poeng
+
+make game
+
+Tune controller (PID, P, PD)
+
+Fikse ledninger
+
+fikse kode, legg til kommentarer alle kommentarer på /* denne formen!! */ (NB: liten forbokstav) 
+static const menus
+
+
+fikse funksjonsnavn. fra get_joystick_status() til joy_get_status. bruke denne syntakesen overalt?? 
+
+
+SPI-driver node 1: lag funksjon for å velge hvilken slave det skal skrives til. 
+
+
+fikse alle structs til å ha samme oppsett, eksempel: "menu_struct" og "joystick_struct"

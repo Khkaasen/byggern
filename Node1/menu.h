@@ -17,7 +17,7 @@ typedef struct menu_struct
 typedef struct menu_node_t
 {
 	struct menu_node_t * parent;
-	struct menu_node_t * childs[3];
+	struct menu_node_t * childs[5];
 	char * title;
 	int reallength;
 } menu_node_t;

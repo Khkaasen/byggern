@@ -32,6 +32,14 @@ static const struct menu_node_t teammode_instructions;
 struct menu_node_t highscores;
 struct menu_node_t singleplayer_highscores;
 struct menu_node_t teammode_highscores;
+struct menu_node_t level_easy;
+struct menu_node_t level_medium;
+struct menu_node_t level_hard;
+struct menu_node_t level_extreme;
+
+ {
+ 	
+ }; 
 
 
 menu_node_t main_menu = 
@@ -39,7 +47,7 @@ menu_node_t main_menu =
 	
 	.title = "Main Menu",
 	.parent = 0,
-	.childs = {&singleplayer, &teammode, &highscores},
+	.childs = {&singleplayer, &teammode, &highscores,NULL,NULL},
 	.reallength = 3
 };
 
@@ -47,7 +55,7 @@ menu_node_t singleplayer =
 {
 	.title = "Singleplayer",
 	.parent = &main_menu,
-	.childs = {&singleplayer_instructions,NULL,NULL},
+	.childs = {&singleplayer_instructions,&level_easy,&level_medium,&level_hard,&level_extreme},
 	.reallength = 1	
 };
 
@@ -55,7 +63,7 @@ menu_node_t teammode =
 {
 	.title = "Teammode",
 	.parent = &main_menu,
-	.childs = {&teammode_instructions,NULL,NULL},
+	.childs = {&teammode_instructions,&level_easy,&level_medium,&level_hard,&level_extreme},
 	.reallength = 1		
 };
 
@@ -63,7 +71,7 @@ menu_node_t singleplayer_instructions=
 {
 	.title = "Instructions",
 	.parent = &singleplayer,
-	.childs = {NULL,NULL,NULL},
+	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 0	
 };
 
@@ -71,7 +79,7 @@ static const menu_node_t teammode_instructions=
 {
 	.title = "Instructions",
 	.parent = &teammode,
-	.childs = {NULL,NULL,NULL},
+	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 0
 };
 
@@ -79,7 +87,7 @@ menu_node_t highscores =
 {
 	.title = "Highscores",
 	.parent = &main_menu,
-	.childs = {&singleplayer_highscores,&teammode_highscores,NULL},
+	.childs = {&singleplayer_highscores,&teammode_highscores,NULL,NULL,NULL},
 	.reallength = 2	
 };
 
@@ -87,7 +95,7 @@ menu_node_t singleplayer_highscores =
 {
 	.title = "S Highscores",
 	.parent = &highscores,
-	.childs = {NULL,NULL,NULL},
+	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 0	
 };
 
@@ -95,9 +103,42 @@ menu_node_t teammode_highscores =
 {
 	.title = "T Highscores",
 	.parent = &highscores,
-	.childs = {NULL,NULL,NULL},
+	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 0
 };
+
+menu_node_t level_easy =
+{
+	.title = "Level easy (PID)",
+	.parent = &main_menu,
+	.childs = {NULL,NULL,NULL,NULL,NULL},
+	.reallength = 1
+}
+
+menu_node_t level_medium =
+{
+	.title = "Level medium (PD)",
+	.parent = &main_menu,
+	.childs = {NULL,NULL,NULL,NULL,NULL},
+	.reallength = 1
+}
+
+menu_node_t level_hard =
+{
+	.title = "Level hard (P)",
+	.parent = &main_menu,
+	.childs = {NULL,NULL,NULL,NULL,NULL},
+	.reallength = 1
+}
+
+menu_node_t level_extreme =
+{
+	.title = "Level extreme (mirror)",
+	.parent = &main_menu,
+	.childs = {NULL,NULL,NULL,NULL,NULL},
+	.reallength = 1
+}
+
 
 
 

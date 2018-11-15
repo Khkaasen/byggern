@@ -1,0 +1,1 @@
+void game_start(can_message msg);

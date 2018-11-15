@@ -17,7 +17,7 @@
 #include "DAC_driver.h"
 #include <avr/interrupt.h>
 #include "Motor_driver.h"
-#include "slider_driver.h"
+#include "motor_controller.h"
 #include "game.h"
 
 #define Baudrate 9600

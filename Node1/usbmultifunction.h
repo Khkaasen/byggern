@@ -11,6 +11,6 @@ void multi_card_init();
 
 unsigned char read_channel(int channel);
 
-void transmit_IO_card(sliders sliders, joystick_status joystick, buttons_struct buttons);
+void transmit_IO_card(sliders_struct sliders, joystick_struct joystick, buttons_struct buttons);
 
 #endif

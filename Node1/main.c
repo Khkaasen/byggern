@@ -88,7 +88,7 @@ void main(){
     //printf("id after read (1) %x \n",msg_recieve.id);
     //printf("data1 after read: %x \n", msg_recieve.data[0]);
     //printf("data2 after read: %x \n", msg_recieve.data[1]);
-    //printf("data3 after read: %x \n", msg.data[2]);
+    //printf("data3 after read: %x \n", msg.data[2]); 
     //printf("length = 2: ");
    	//printf("%d\n",msg.length);
     
@@ -96,9 +96,9 @@ void main(){
     //printf("%d\n", msg.data);
    	//CLEAR_BIT(PORTB,PB4);
 
-    joystick_status joy;
+    joystick_struct joy;
 
-     sliders slider;
+     sliders_struct slider;
 
      buttons_struct buttons;
      //game();

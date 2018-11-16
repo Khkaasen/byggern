@@ -18,10 +18,10 @@ typedef struct joystick_status
 	int8_t y;
 	joystick_dir dir;
 	int8_t button; 
-} joystick_status;
+} joystick_struct;
 
-joystick_status get_joystick_status(void);
+joystick_struct get_joystick_status(void);
 
-void transmit_joystick_status(joystick_status joystick);
+void transmit_joystick_status(joystick_struct joystick);
 
 #endif

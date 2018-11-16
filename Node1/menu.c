@@ -25,52 +25,56 @@
 struct menu_struct menu;
 bool shift_allowed;
 
-struct menu_node_t* curr_menu;
-struct menu_node_t main_menu;
-struct menu_node_t singleplayer;
-struct menu_node_t singleplayer_instructions;
-struct menu_node_t teammode;
+static const struct menu_node_t* curr_menu;
+static const struct menu_node_t main_menu;
+static const struct menu_node_t singleplayer;
+static const struct menu_node_t singleplayer_instructions;
+static const struct menu_node_t teammode;
 static const struct menu_node_t teammode_instructions;
-struct menu_node_t highscores;
-struct menu_node_t singleplayer_highscores;
-struct menu_node_t teammode_highscores;
-struct menu_node_t level_easy;
-struct menu_node_t level_medium;
-struct menu_node_t level_hard;
-struct menu_node_t level_extreme;
+static const struct menu_node_t highscores;
+static const struct menu_node_t singleplayer_highscores;
+static const struct menu_node_t teammode_highscores;
+static const struct menu_node_t level_easy;
+static const struct menu_node_t level_medium;
+static const struct menu_node_t level_hard;
+static const struct menu_node_t level_extreme;
 
 
-menu_node_t main_menu = 
+static const menu_node_t main_menu = 
 {
 	
 	.title = "Main Menu",
 	.parent = 0,
 	.childs = {&singleplayer, &teammode, &highscores,NULL,NULL},
-	.reallength = 3
+	.reallength = 3,
+	.mode = MODE_MENU
 };
 
-menu_node_t singleplayer = 
+static const menu_node_t singleplayer = 
 {
 	.title = "Singleplayer",
 	.parent = &main_menu,
 	.childs = {&singleplayer_instructions,&level_easy,&level_medium,&level_hard,&level_extreme},
-	.reallength = 5
+	.reallength = 5,
+	.mode = MODE_MENU
 };
 
-menu_node_t teammode = 
+static const menu_node_t teammode = 
 {
 	.title = "Teammode",
 	.parent = &main_menu,
 	.childs = {&teammode_instructions,&level_easy,&level_medium,&level_hard,&level_extreme},
-	.reallength = 5		
+	.reallength = 5,
+	.mode = MODE_MENU	
 };
 
-menu_node_t singleplayer_instructions=
+static const menu_node_t singleplayer_instructions=
 {
 	.title = "Instructions",
 	.parent = &singleplayer,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
-	.reallength = 0	
+	.reallength = 0,
+	.mode = MODE_TEXT
 };
 
 static const menu_node_t teammode_instructions=
@@ -78,67 +82,71 @@ static const menu_node_t teammode_instructions=
 	.title = "Instructions",
 	.parent = &teammode,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
-	.reallength = 0
+	.reallength = 0,
+	.mode = MODE_TEXT
 };
 
-menu_node_t highscores =  
+static const menu_node_t highscores =  
 {
 	.title = "Highscores",
 	.parent = &main_menu,
 	.childs = {&singleplayer_highscores,&teammode_highscores,NULL,NULL,NULL},
-	.reallength = 2	
+	.reallength = 2,
+	.mode = MODE_MENU
 };
 
-menu_node_t singleplayer_highscores = 
+static const menu_node_t singleplayer_highscores = 
 {
 	.title = "S Highscores",
 	.parent = &highscores,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
-	.reallength = 0	
+	.reallength = 0,
+	.mode = MODE_MENU
 };
 
-menu_node_t teammode_highscores =
+static const menu_node_t teammode_highscores =
 {
 	.title = "T Highscores",
 	.parent = &highscores,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
-	.reallength = 0
+	.reallength = 0,
+	.mode = MODE_TEXT
 };
 
-menu_node_t level_easy =
+static const menu_node_t level_easy =
 {
 	.title = "Level easy",
 	.parent = &main_menu,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 1,
-	.mode = 1
+	.mode = MODE_GAME_EASY
 };
 
-menu_node_t level_medium =
+static const menu_node_t level_medium =
 {
 	.title = "Level medium",
 	.parent = &main_menu,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 1,
-	.mode = 2
+	.mode = MODE_GAME_MEDIUM
 };
 
-menu_node_t level_hard =
+static const menu_node_t level_hard =
 {
 	.title = "Level hard",
 	.parent = &main_menu,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 1,
-	.mode = 3
+	.mode = MODE_GAME_HARD
 };
 
-menu_node_t level_extreme =
+static const menu_node_t level_extreme =
 {
 	.title = "Level extreme",
 	.parent = &main_menu,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 1,
-	.mode = 4
+	.mode = MODE_GAME_EXTREME
 };
 
 
@@ -170,7 +178,7 @@ void delete_cursor()
 	write_c(LOWER_COL0);
 	write_c(HIGHER_COL0);
 	write_c(menu.cursor_pos);
-	for (uint8_t j = 0; j < 15; j++){
+	for (uint8_t j = 0; j < 16; j++){
         write_d(0x00);  //pekeren iterer av seg selv      
     }
 
@@ -213,7 +221,7 @@ void display_menu(menu_node_t * node)
 void menu_change_menu()
 {
 
-	joystick_status joy = get_joystick_status();
+	joystick_struct joy = get_joystick_status();
 	if(joy.dir==4)
 	{
 		shift_allowed = true;
@@ -227,7 +235,7 @@ void menu_change_menu()
 				delete_cursor();
 				if(menu.cursor_pos!=LINE1)
 				{
-					menu.cursor_pos--;
+					menu.cursor_pos --;
 					menu.position --;
 				}
 				draw_cursor();
@@ -249,15 +257,11 @@ void menu_change_menu()
 					curr_menu = curr_menu->childs[menu.position];
 					if(curr_menu->mode >0)
 					{
-						game();
+						game(curr_menu->mode);
 						curr_menu = curr_menu->parent;
 					}
-					display_menu(curr_menu);
-
-					
+					display_menu(curr_menu);	
 				}
-
-
 				break;
 			case 3: // left
 				

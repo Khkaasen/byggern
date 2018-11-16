@@ -17,7 +17,7 @@
 #include "DAC_driver.h"
 #include <avr/interrupt.h>
 #include "Motor_driver.h"
-#include "slider_driver.h"
+#include "motor_controller.h"
 #include "game.h"
 
 #define Baudrate 9600
@@ -39,13 +39,16 @@ void main(){
     IR_init();
     TWI_Master_Initialise();
     DAC_init();
+
     motor_init();
     joystick_init();
 
+    printf("BITCH START\n");
     sei();
     _delay_ms(100);
     
-    controller_init();
+
+    //controller_init();
     
     /*
   	uint8_t b[2] = {0xFF,0x1d};
@@ -71,6 +74,8 @@ void main(){
     //printf("id after read (5): %x \n",msg.id);
     while(1) {
 
+
+      printf("main while\n");
       //data = ADC_read();
 
 
@@ -82,8 +87,13 @@ void main(){
      //PWM_set_duty_cycle(-100);
 
       msg=CAN_receive();
+      //printf("main while 1 \n");
 
       game_start(msg);
+
+      //printf("main while 2\n");
+
+
 
       //ref =slider_to_motorref(msg);
       //position_controller(ref);

@@ -8,10 +8,10 @@ typedef struct sliders_status
     uint8_t left_slider;
     uint8_t right_slider;
     
-} sliders ;
+} sliders_struct ;
 
-sliders get_sliders_status();
+sliders_struct get_sliders_status();
 
-void transmit_sliders_status(sliders slider);
+void transmit_sliders_status(sliders_struct slider);
 
 #endif

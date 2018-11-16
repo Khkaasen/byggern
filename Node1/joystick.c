@@ -39,9 +39,9 @@ int get_dir(int8_t x, int8_t y){
     else {return -1;} //trenger vi denne?? 
 }
 
-joystick_status get_joystick_status() {   //skal vi endre funknavn til joy_get_status?? må gjøres overalt 
+joystick_struct get_joystick_status() {   //skal vi endre funknavn til joy_get_status?? må gjøres overalt 
 
-	joystick_status joystick;
+	joystick_struct joystick;
 
     joystick.dir= NEUTRAL; // trenger vi denne linjen? vi gir ny verdi lenger nede her. 
 
@@ -80,14 +80,14 @@ joystick_status get_joystick_status() {   //skal vi endre funknavn til joy_get_s
 
 
 
-bool pos_max(joystick_status joy) //trenger vi denne? hvor brukes den?? kan brukes om vi skal kalibrere joystick
+bool pos_max(joystick_struct joy) //trenger vi denne? hvor brukes den?? kan brukes om vi skal kalibrere joystick
 {
     return (abs(joy.x)==100 || abs(joy.y)==100);
 }
 
 
 
-void transmit_joystick_status(joystick_status joystick)
+void transmit_joystick_status(joystick_struct joystick)
 {
     /* initialize can message with correct data bytes */
     int8_t b[3] = 

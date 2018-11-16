@@ -213,7 +213,7 @@ void display_menu(menu_node_t * node)
 void menu_change_menu()
 {
 
-	joystick_status joy = get_joystick_status();
+	joystick_struct joy = get_joystick_status();
 	if(joy.dir==4)
 	{
 		shift_allowed = true;

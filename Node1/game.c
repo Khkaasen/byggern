@@ -68,9 +68,9 @@ void game()
 
 	printf("after game start()\n");
 
-	joystick_status joy;
+	joystick_struct joy;
 
-    sliders slider;
+    sliders_struct slider;
 
     buttons_struct buttons;
 

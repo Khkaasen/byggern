@@ -26,7 +26,7 @@ unsigned char read_channel(int channel)
 	return *adc;
 }
 
-void transmit_IO_card(sliders sliders, joystick_status joystick, buttons_struct buttons)
+void transmit_IO_card(sliders_struct sliders, joystick_struct joystick, buttons_struct buttons)
 {
 	/* initialize can message with correct data bytes */
 	int8_t b[MESSAGE_LENGTH] = 

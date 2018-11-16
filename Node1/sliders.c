@@ -9,10 +9,10 @@
 #define SLIDER_ID 2
 #define CONVERT_GAIN 0.3922
 
-sliders get_sliders_status()
+sliders_struct get_sliders_status()
 {
 
-    sliders value;
+    sliders_struct value;
 
     /*converting sliders to percentage with absolute value */
     value.left_slider = read_channel(CHANNEL_LS)*(CONVERT_GAIN);
@@ -21,7 +21,7 @@ sliders get_sliders_status()
     return value;
 }
 
-void transmit_sliders_status(sliders slider)
+void transmit_sliders_status(sliders_struct slider)
 {
     /* initalize can message with correct data bytes*/
 	int8_t b[2] = 

@@ -40,6 +40,9 @@ uint16_t OLED_DATA_SIZE= 0x200;
 #define PLAY_POS_LOW 0x00
 #define PLAY_POS_HIGH 0x13
 
+#define G_OVER_POS_LOW 0x00
+#define G_OVER_POS_HIGH 0x12
+
 void oled_init()
 {
     write_c(0xae);  //display off
@@ -210,7 +213,18 @@ void oled_print_pic()
 }
 
 
-void oled_display_game_over(int8_t score)
+void oled_display_game_over(uint8_t score /*, int8_t higescore*/)
 {
-    
+    write_c(LINE4); //starte på linje
+    write_c(G_OVER_POS_LOW);
+    write_c(G_OVER_PLAY_POS_HIGH);
+    write_c(0x81); //akkseserer contrast
+    write_c(0xFF);
+    oled_print("GAME OVER!");
+/*
+    write_c(LINE7);
+    write_c(G_OVER_POS_LOW);
+    write_c(G_OVER_PLAY_POS_HIGH);
+    oled_print("Highscore:")
+*/
 }

@@ -30,9 +30,9 @@ static int mode;
 void game_start()
 {
 
-	oled_display_countdown();
-
 	transmit_start_game();
+
+	oled_display_countdown();
 
 	
 }

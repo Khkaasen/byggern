@@ -3,6 +3,7 @@
 #include "motor_controller.h"
 #include "joystick_driver.h"
 #include "IR_driver.h"
+#include "timer.h"
 
 #include <stdio.h>
 #include <stdint.h>
@@ -21,7 +22,8 @@ void game_start(can_message msg)
 
 		game();	
 
-		//timer for score må startes her. 
+		/* denne added av marius*/
+		timer_start(); 
 	}
 
 }
@@ -34,8 +36,15 @@ int8_t game_lost_handle(can_message msg)
 
 		//read timer;
 		//we have to check if timer larger than 128??  
-		int8_t score=40;
-		//stop or reset timer; 
+
+		/* denne added av marius*/
+		
+		//int8_t score= timer_read_timer();
+		int8_t score= 40;
+
+
+		/* denne added av marius  */
+		timer_reset(); //tror ikke jeg trenger denne, siden den uansett blir satt til 0 når game starter. 
 
 		int8_t b[1]= {0};
 		b[0]= score; //denne skal countes opp hit. 

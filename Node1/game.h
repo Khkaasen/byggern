@@ -3,11 +3,11 @@
 
 #include <stdint.h>
 
-void game_start();
+void game_start(int8_t game_mode);
 
 int8_t game_check_game_over();
 void game_over(int8_t score);
-void game(); 
-void transmit_start_game();
+void game(int8_t game_mode); 
+void transmit_start_game(int8_t game_mode);
 
 #endif

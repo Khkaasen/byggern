@@ -257,7 +257,7 @@ void menu_change_menu()
 					curr_menu = curr_menu->childs[menu.position];
 					if(curr_menu->mode >0)
 					{
-						game();
+						game(curr_menu->mode);
 						curr_menu = curr_menu->parent;
 					}
 					display_menu(curr_menu);

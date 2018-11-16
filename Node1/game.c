@@ -27,10 +27,10 @@ static int mode;
 
 
 
-void game_start()
+void game_start(int8_t game_mode)
 {
 
-	transmit_start_game();
+	transmit_start_game(game_mode);
 
 	oled_display_countdown();
 
@@ -61,10 +61,10 @@ void game_over(int8_t score)
 }
 
 
-void game() 
+void game(int8_t game_mode) 
 {
 
-	game_start();
+	game_start(game_mode);
 
 	printf("after game start()\n");
 
@@ -102,11 +102,11 @@ void game()
 }
 
 
-void transmit_start_game()
+void transmit_start_game(int8_t game_mode)
 {
 	int8_t b[MESSAGE_LENGTH] = 
 	{	
-		1
+		game_mode
 	};
 
     can_message msg=

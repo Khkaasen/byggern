@@ -9,6 +9,8 @@ static int32_t KP;
 static int32_t KI;
 static int32_t KD;
 
+#define MOTOR_INIT_FORCE 90
+
 uint16_t encoder_endpoint;
 int32_t error_integral;
 int32_t last_error;
@@ -51,15 +53,15 @@ void controller_select(int8_t game_mode)
 
 void controller_init()
 {
-	uint16_t encoder_read;
+	//uint16_t encoder_read;
 	//DAC_set_output(0);
-	encoder_reset();
+	//encoder_reset();
 	//encoder_read = read_encoder();
 	//printf("encoder reset:%d\n", encoder_read );
 	error_integral = 0;
 	last_error = 0;
 	set_motor_dir(1);
-	DAC_set_output(100);
+	DAC_set_output(MOTOR_INIT_FORCE);
     _delay_ms(2800);
     DAC_set_output(0);
     _delay_ms(500);
@@ -74,7 +76,7 @@ void controller_init()
 
 
     set_motor_dir(0);
-    DAC_set_output(100);
+    DAC_set_output(MOTOR_INIT_FORCE);
     _delay_ms(2800);
     DAC_set_output(0);
     _delay_ms(500);
@@ -106,7 +108,7 @@ int32_t controller_read_motor_ref(can_message msg)
 void controller_set_motor_input(int32_t ref)
 {	
 	//reset encoder hvis den når FFFF
-
+	/*
 	int32_t error = ref - read_encoder();
 	error_integral +=error;
 	int32_t error_derivate = error - last_error;
@@ -130,6 +132,7 @@ void controller_set_motor_input(int32_t ref)
 	DAC_set_output(abs(u));
 
 	last_error = error;
+	*/
 }
 
 
@@ -137,6 +140,7 @@ void controller_set_motor_input(int32_t ref)
 //finn på noe smart !!!
 int16_t live_calibration()
 {
+	/*
 	uint16_t motorpos = read_encoder();
 	if(motorpos>encoder_endpoint)
 	{
@@ -151,4 +155,5 @@ int16_t live_calibration()
 	else
 		motorpos=read_encoder();
 	return motorpos;
+	*/
 }

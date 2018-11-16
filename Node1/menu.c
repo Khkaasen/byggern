@@ -227,7 +227,7 @@ void menu_change_menu()
 				delete_cursor();
 				if(menu.cursor_pos!=LINE1)
 				{
-					menu.cursor_pos--;
+					menu.cursor_pos --;
 					menu.position --;
 				}
 				draw_cursor();
@@ -252,12 +252,8 @@ void menu_change_menu()
 						game();
 						curr_menu = curr_menu->parent;
 					}
-					display_menu(curr_menu);
-
-					
+					display_menu(curr_menu);	
 				}
-
-
 				break;
 			case 3: // left
 				

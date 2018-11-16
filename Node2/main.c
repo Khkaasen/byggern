@@ -39,13 +39,14 @@ void main(){
     IR_init();
     TWI_Master_Initialise();
     DAC_init();
+
     motor_init();
     joystick_init();
 
     sei();
     _delay_ms(100);
     
-    controller_init();
+    //controller_init();
     
     /*
   	uint8_t b[2] = {0xFF,0x1d};

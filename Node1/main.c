@@ -96,9 +96,9 @@ void main(){
     //printf("%d\n", msg.data);
    	//CLEAR_BIT(PORTB,PB4);
 
-    joystick_status joy;
+    joystick_struct joy;
 
-     sliders slider;
+     sliders_struct slider;
 
      buttons_struct buttons;
      //game();

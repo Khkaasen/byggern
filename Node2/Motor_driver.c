@@ -26,7 +26,7 @@ void motor_init()
 	PORTH |= (1<<PH1);
 
 	//Toggle RST to reset encoder
-	encoder_reset();
+	//encoder_reset();
 }
 
 void set_motor_dir(uint8_t dir)	//spørre studass om type int eller kanskje uint8_t

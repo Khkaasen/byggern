@@ -21,6 +21,10 @@ void CAN_init()
 	MCP_write(0x00,MCP_CANINTF);
 }
 
+
+//lag can konstruktør i begge nodene. 
+
+
 void CAN_transmit(can_message msg)
 {
 	while((MCP_read(MCP_TXB0CTRL)&(1<<TXREQ)));
@@ -43,7 +47,7 @@ can_message CAN_receive()
 {
 
 	//while((MCP_read(MCP_CANINTF)&(1<<MCP_RX0IF)));
-	
+	//printf("ionside can recieve\n");
 	can_message msg;
 	msg.id = MCP_read(MCP_RXB0CTRL+1);
 	uint8_t datalength = MCP_read(MCP_RXB0CTRL+5); //bytt ut 5 med define 

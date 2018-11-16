@@ -170,7 +170,7 @@ void delete_cursor()
 	write_c(LOWER_COL0);
 	write_c(HIGHER_COL0);
 	write_c(menu.cursor_pos);
-	for (uint8_t j = 0; j < 15; j++){
+	for (uint8_t j = 0; j < 16; j++){
         write_d(0x00);  //pekeren iterer av seg selv      
     }
 

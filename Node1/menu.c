@@ -25,28 +25,29 @@
 struct menu_struct menu;
 bool shift_allowed;
 
-struct menu_node_t* curr_menu;
-struct menu_node_t main_menu;
-struct menu_node_t singleplayer;
-struct menu_node_t singleplayer_instructions;
-struct menu_node_t teammode;
+static const struct menu_node_t* curr_menu;
+static const struct menu_node_t main_menu;
+static const struct menu_node_t singleplayer;
+static const struct menu_node_t singleplayer_instructions;
+static const struct menu_node_t teammode;
 static const struct menu_node_t teammode_instructions;
-struct menu_node_t highscores;
-struct menu_node_t singleplayer_highscores;
-struct menu_node_t teammode_highscores;
-struct menu_node_t level_easy;
-struct menu_node_t level_medium;
-struct menu_node_t level_hard;
-struct menu_node_t level_extreme;
+static const struct menu_node_t highscores;
+static const struct menu_node_t singleplayer_highscores;
+static const struct menu_node_t teammode_highscores;
+static const struct menu_node_t level_easy;
+static const struct menu_node_t level_medium;
+static const struct menu_node_t level_hard;
+static const struct menu_node_t level_extreme;
 
 
-menu_node_t main_menu = 
+static const menu_node_t main_menu = 
 {
 	
 	.title = "Main Menu",
 	.parent = 0,
 	.childs = {&singleplayer, &teammode, &highscores,NULL,NULL},
-	.reallength = 3
+	.reallength = 3,
+	.mode = MODE_MENU
 };
 
 menu_node_t singleplayer = 
@@ -54,7 +55,8 @@ menu_node_t singleplayer =
 	.title = "Singleplayer",
 	.parent = &main_menu,
 	.childs = {&singleplayer_instructions,&level_easy,&level_medium,&level_hard,&level_extreme},
-	.reallength = 5
+	.reallength = 5,
+	.mode = MODE_MENU
 };
 
 menu_node_t teammode = 
@@ -62,7 +64,8 @@ menu_node_t teammode =
 	.title = "Teammode",
 	.parent = &main_menu,
 	.childs = {&teammode_instructions,&level_easy,&level_medium,&level_hard,&level_extreme},
-	.reallength = 5		
+	.reallength = 5,
+	.mode = MODE_MENU	
 };
 
 menu_node_t singleplayer_instructions=
@@ -70,7 +73,8 @@ menu_node_t singleplayer_instructions=
 	.title = "Instructions",
 	.parent = &singleplayer,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
-	.reallength = 0	
+	.reallength = 0,
+	.mode = MODE_TEXT
 };
 
 static const menu_node_t teammode_instructions=
@@ -78,7 +82,8 @@ static const menu_node_t teammode_instructions=
 	.title = "Instructions",
 	.parent = &teammode,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
-	.reallength = 0
+	.reallength = 0,
+	.mode = MODE_TEXT
 };
 
 menu_node_t highscores =  
@@ -86,7 +91,8 @@ menu_node_t highscores =
 	.title = "Highscores",
 	.parent = &main_menu,
 	.childs = {&singleplayer_highscores,&teammode_highscores,NULL,NULL,NULL},
-	.reallength = 2	
+	.reallength = 2,
+	.mode = MODE_MENU
 };
 
 menu_node_t singleplayer_highscores = 
@@ -94,7 +100,8 @@ menu_node_t singleplayer_highscores =
 	.title = "S Highscores",
 	.parent = &highscores,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
-	.reallength = 0	
+	.reallength = 0,
+	.mode = MODE_MENU
 };
 
 menu_node_t teammode_highscores =
@@ -102,7 +109,8 @@ menu_node_t teammode_highscores =
 	.title = "T Highscores",
 	.parent = &highscores,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
-	.reallength = 0
+	.reallength = 0,
+	.mode = MODE_TEXT
 };
 
 menu_node_t level_easy =
@@ -111,7 +119,7 @@ menu_node_t level_easy =
 	.parent = &main_menu,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 1,
-	.mode = 1
+	.mode = MODE_GAME_EASY
 };
 
 menu_node_t level_medium =
@@ -120,7 +128,7 @@ menu_node_t level_medium =
 	.parent = &main_menu,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 1,
-	.mode = 2
+	.mode = MODE_GAME_MEDIUM
 };
 
 menu_node_t level_hard =
@@ -129,7 +137,7 @@ menu_node_t level_hard =
 	.parent = &main_menu,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 1,
-	.mode = 3
+	.mode = MODE_GAME_HARD
 };
 
 menu_node_t level_extreme =
@@ -138,7 +146,7 @@ menu_node_t level_extreme =
 	.parent = &main_menu,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 1,
-	.mode = 4
+	.mode = MODE_GAME_EXTREME
 };
 
 

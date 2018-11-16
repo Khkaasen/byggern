@@ -19,7 +19,7 @@
 #include "Motor_driver.h"
 #include "motor_controller.h"
 #include "game.h"
-
+#include "timer.h"
 #define Baudrate 9600
 #define MYUBRR F_CPU/16/Baudrate-1
 
@@ -39,7 +39,7 @@ void main(){
     IR_init();
     TWI_Master_Initialise();
     DAC_init();
-
+    //timer_init();
     motor_init();
     joystick_init();
 
@@ -72,10 +72,12 @@ void main(){
     //printf("data2 after read: %x \n", msg.data[1]);
     //printf("length after read (2): %x \n",msg.length);
     //printf("id after read (5): %x \n",msg.id);
+
+    timer_test();
     while(1) {
 
 
-      printf("main while\n");
+      //printf("main while\n");
       //data = ADC_read();
 
 

@@ -41,7 +41,7 @@ int8_t game_check_game_over()
 {
 	can_message msg = CAN_read();
 
-	if(msg.id== GAME_OVER_ID && msg.data[PLAY]==1)
+	if(msg.id== GAME_OVER_ID)
 	{
 		return msg.data[SCORE];
 	}
@@ -50,14 +50,21 @@ int8_t game_check_game_over()
 
 void game_over(int8_t score)
 {
-	oled_display_game_over(score);
+    if (game_check_game_over())
+    {
+        oled_display_game_over(score);
 
-	/*save highscore in AVR
-	//read all highscores 
-	//print all highscores (top 10)
-	
-	
-|	*/
+        /*save highscore in AVR
+
+        //read all highscores 
+        //print all highscores (top 10)
+              */
+
+        return 1;
+    }
+    return 0;
+
+
 }
 
 
@@ -93,14 +100,18 @@ void game(int8_t game_mode)
      		game_over(game_check_game_over());
      		break; 
      	} */
+        if (game_over())
+        {
+            break;
+        }
 
-
-     	/* DETTE SKAL BORT NÅR GAME OVER ER IMPLEMENTERT */
+     	/* DETTE SKAL BORT NÅR GAME OVER ER IMPLEMENTERT 
      	if(buttons.right==1)
      	{	
      		//her skal oled_print_game_quit() print "player quit the game. the score was ...."
      		break;
      	}
+        */
 	}
 }
 

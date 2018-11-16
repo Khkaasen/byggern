@@ -14,6 +14,7 @@ void game_start(can_message msg)
 {
 	if (msg.id == GAME_START_ID)
 	{
+		printf("Hælle er det marius jeg snakker med?");
 		controller_init();
 
 		controller_select(msg.data[0]);

@@ -39,7 +39,7 @@ void main(){
     IR_init();
     TWI_Master_Initialise();
     DAC_init();
-    //timer_init();
+    timer_init();
     motor_init();
     joystick_init();
 
@@ -47,7 +47,6 @@ void main(){
     sei();
     _delay_ms(100);
     
-
     //controller_init();
     
     /*
@@ -73,11 +72,10 @@ void main(){
     //printf("length after read (2): %x \n",msg.length);
     //printf("id after read (5): %x \n",msg.id);
 
-    timer_test();
+    //timer_test();
     while(1) {
 
 
-      //printf("main while\n");
       //data = ADC_read();
 
 

@@ -12,16 +12,21 @@ static int8_t extra_timer;
 static int8_t timer;
 void timer_init()
 {
-	
+	cli();
+
+
 	//DDRE |= (1 << PE4); //set flag output as output //mighit not need to set this. i just want to increment a variable. 
 	
 	TCCR0A = (1 << WGM01); //set CTC mode
 
 	//TCCR0B |= (1 << CS02) | (1 << CS00); //set prescaler to 1024
 
+	TCNT0  = 0;//initialize counter value to 0
+
 	OCR0A = 32;  // set compare number. flag should be set when number of ticks is 156
 
 	TIMSK0 = (1 << OCIE0A);
+
 
 	sei();
 
@@ -32,12 +37,18 @@ void timer_init()
 
 void timer_start()
 {
+	TCNT0  = 0;//set counter register to 0
+
 	timer = 0; 
 }
 
 void timer_reset() //ikke sikkert jeg trenger denne. 
 {
+	TCNT0  = 0;//set counter register to 0
+
 	timer = 0; 
+
+
 }
 
 
@@ -65,13 +76,14 @@ void timer_test(){
 }
 
 /* increment timer when timer interrupt falg is set 100 times. */
-IRS(TIMER0_COMPA_vect) 
+ISR(TIMER0_COMPA_vect) 
 {
 
 	printf("interrupt HALLAAAIS\n" );
 	extra_timer++;
 
 	if(extra_timer==100){
+		
 		timer+=1;
 		extra_timer=0;
 	}

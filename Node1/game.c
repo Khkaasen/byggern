@@ -93,6 +93,9 @@ void game(int8_t game_mode)
      		game_over(game_check_game_over());
      		break; 
      	} */
+
+
+     	/* DETTE SKAL BORT NÅR GAME OVER ER IMPLEMENTERT */
      	if(buttons.right==1)
      	{	
      		//her skal oled_print_game_quit() print "player quit the game. the score was ...."

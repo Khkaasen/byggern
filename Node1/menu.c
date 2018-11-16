@@ -50,7 +50,7 @@ static const menu_node_t main_menu =
 	.mode = MODE_MENU
 };
 
-menu_node_t singleplayer = 
+static const menu_node_t singleplayer = 
 {
 	.title = "Singleplayer",
 	.parent = &main_menu,
@@ -59,7 +59,7 @@ menu_node_t singleplayer =
 	.mode = MODE_MENU
 };
 
-menu_node_t teammode = 
+static const menu_node_t teammode = 
 {
 	.title = "Teammode",
 	.parent = &main_menu,
@@ -68,7 +68,7 @@ menu_node_t teammode =
 	.mode = MODE_MENU	
 };
 
-menu_node_t singleplayer_instructions=
+static const menu_node_t singleplayer_instructions=
 {
 	.title = "Instructions",
 	.parent = &singleplayer,
@@ -86,7 +86,7 @@ static const menu_node_t teammode_instructions=
 	.mode = MODE_TEXT
 };
 
-menu_node_t highscores =  
+static const menu_node_t highscores =  
 {
 	.title = "Highscores",
 	.parent = &main_menu,
@@ -95,7 +95,7 @@ menu_node_t highscores =
 	.mode = MODE_MENU
 };
 
-menu_node_t singleplayer_highscores = 
+static const menu_node_t singleplayer_highscores = 
 {
 	.title = "S Highscores",
 	.parent = &highscores,
@@ -104,7 +104,7 @@ menu_node_t singleplayer_highscores =
 	.mode = MODE_MENU
 };
 
-menu_node_t teammode_highscores =
+static const menu_node_t teammode_highscores =
 {
 	.title = "T Highscores",
 	.parent = &highscores,
@@ -113,7 +113,7 @@ menu_node_t teammode_highscores =
 	.mode = MODE_TEXT
 };
 
-menu_node_t level_easy =
+static const menu_node_t level_easy =
 {
 	.title = "Level easy",
 	.parent = &main_menu,
@@ -122,7 +122,7 @@ menu_node_t level_easy =
 	.mode = MODE_GAME_EASY
 };
 
-menu_node_t level_medium =
+static const menu_node_t level_medium =
 {
 	.title = "Level medium",
 	.parent = &main_menu,
@@ -131,7 +131,7 @@ menu_node_t level_medium =
 	.mode = MODE_GAME_MEDIUM
 };
 
-menu_node_t level_hard =
+static const menu_node_t level_hard =
 {
 	.title = "Level hard",
 	.parent = &main_menu,
@@ -140,7 +140,7 @@ menu_node_t level_hard =
 	.mode = MODE_GAME_HARD
 };
 
-menu_node_t level_extreme =
+static const menu_node_t level_extreme =
 {
 	.title = "Level extreme",
 	.parent = &main_menu,

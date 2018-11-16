@@ -97,14 +97,15 @@ void main(){
     //printf("%d\n", msg.data);
    	//CLEAR_BIT(PORTB,PB4);
 
-    joystick_status joy;
+    joystick_struct joy;
 
-     sliders slider;
+     sliders_struct slider;
 
      buttons_struct buttons;
      //game();
 
     //display_countdown();
+     uint8_t i= 123;
     while(1) {
 
       //oled_print_pic();
@@ -118,8 +119,9 @@ void main(){
 
       transmit_IO_card(slider, joy, buttons);
       */
-    
-      menu_change_menu();
+      
+      oled_display_game_over(i);
+      //menu_change_menu();
 
 
       

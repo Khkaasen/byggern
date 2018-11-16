@@ -213,18 +213,59 @@ void oled_print_pic()
 }
 
 
-void oled_display_game_over(uint8_t score /*, int8_t higescore*/)
+void oled_display_game_over( uint8_t score /*, int8_t higescore */)
 {
+    oled_reset();
+    /*Game Over!*/
     write_c(LINE4); //starte på linje
     write_c(G_OVER_POS_LOW);
-    write_c(G_OVER_PLAY_POS_HIGH);
+    write_c(G_OVER_POS_HIGH);
     write_c(0x81); //akkseserer contrast
     write_c(0xFF);
     oled_print("GAME OVER!");
-/*
+
+    /* Score */
+    uint8_t number_1 = 1;
+    uint8_t number_2 = 0;
+    uint8_t number_3 = 0;
+    
+    
+
+    number_1 = score%10;
+    number_2 = (score%100-number_1)/10;
+    number_3 = (score%1000-number_2-number_1)/100;
+
+    write_c(LINE6);
+    write_c(G_OVER_POS_LOW);
+    write_c(G_OVER_POS_HIGH);
+
+    oled_print("Score: ");
+    if(number_3!=0){
+        for (int i =0; i<8; i++)
+        {
+                write_d(pgm_read_byte(&font8[number_3+16][i])); 
+        }
+    }
+    if(number_2!=0 && number_3!=0){
+        for (int i =0; i<8; i++)
+        {
+                write_d(pgm_read_byte(&font8[number_2+16][i])); 
+        }
+    }
+    for (int i =0; i<8; i++)
+    {
+            write_d(pgm_read_byte(&font8[number_1+16][i])); 
+    }
+
+
+/*  //Highscore
     write_c(LINE7);
     write_c(G_OVER_POS_LOW);
-    write_c(G_OVER_PLAY_POS_HIGH);
+    write_c(G_OVER_POS_HIGH);
     oled_print("Highscore:")
 */
 }
+
+//modulo 10 plass 1
+//modulo 100- 10 plass 2
+//modulo 1000-100 plass 3

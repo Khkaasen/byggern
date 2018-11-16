@@ -21,7 +21,7 @@ void oled_display_countdown();
 
 void oled_print_pic();
 
-void oled_display_game_over(int8_t score);
+void oled_display_game_over(uint8_t score);
 
 
 

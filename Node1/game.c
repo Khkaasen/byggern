@@ -41,7 +41,7 @@ int8_t game_check_game_over()
 {
 	can_message msg = CAN_read();
 
-	if(msg.id== GAME_OVER_ID && msg.data[PLAY]==1)
+	if(msg.id== GAME_OVER_ID)
 	{
 		return msg.data[SCORE];
 	}

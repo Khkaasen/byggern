@@ -15,6 +15,7 @@
 #include "CAN_driver.h"
 #include "MCP2515.h"
 #include "game.h"
+#include "EEPROM_driver.h"
 
 #define Baudrate 9600
 #define MYUBRR F_CPU/16/Baudrate-1

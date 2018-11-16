@@ -39,11 +39,11 @@ void main(){
     IR_init();
     TWI_Master_Initialise();
     DAC_init();
-    timer_init();
+    //timer_init();
     motor_init();
     joystick_init();
 
-    printf("BITCH START\n");
+    //printf("BITCH START\n");
     sei();
     _delay_ms(100);
     
@@ -63,7 +63,6 @@ void main(){
     uint8_t blockage;
     can_message msg;
 
-    int32_t ref;
     int16_t encoder;
 
   	//printf("start program \n");
@@ -73,8 +72,11 @@ void main(){
     //printf("id after read (5): %x \n",msg.id);
 
     //timer_test();
+    //printf("right before main loop\n");
     while(1) {
 
+
+      printf("r in main loop\n");
 
       //data = ADC_read();
 
@@ -89,7 +91,9 @@ void main(){
       msg=CAN_receive();
       //printf("main while 1 \n");
 
-      game_start(msg);
+      //game_start(msg);
+
+
 
       //printf("main while 2\n");
 
@@ -105,8 +109,8 @@ void main(){
 
       //data =joystick_to_motorspeed(msg);
       //uint8_t dir = joystick_to_motordir(msg);
-      //printf("%d\n", msg.data[1] );
-      //printf("%d\n", msg.id);
+      printf("%d\n", msg.data[1] );
+      printf("%d\n", msg.id);
       //printf("%d\n", data );
 
       //set_motor_dir(dir);

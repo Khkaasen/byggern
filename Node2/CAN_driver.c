@@ -12,13 +12,21 @@
 #define MASK_RTR 0x40
 void CAN_init()
 {
-	MCP_bit_modify(MODE_MASK, MCP_CANCTRL, MODE_NORMAL); //set CAN to normal mode.
+	MCP_bit_modify(MODE_MASK, MCP_CANCTRL, MODE_CONFIG);
+	if (MCP_read(MCP_CANSTAT) & MODE_MASK != MODE_CONFIG) {
+		//printf("Not in config mode\n");
+	}
+
 	MCP_bit_modify(MODE_MASK,MCP_TXB0CTRL+2,0x00);
 	MCP_bit_modify(0x60,MCP_RXB0CTRL,0xff);
 	
 	//enables all flags and sets them low
-	MCP_write(0xff,MCP_CANINTE);
-	MCP_write(0x00,MCP_CANINTF);
+	MCP_write(0x01,MCP_CANINTE);
+	//MCP_write(0x00,MCP_CANINTF);
+	MCP_bit_modify(MODE_MASK, MCP_CANCTRL, MODE_NORMAL); //set CAN to normal mode.
+	if (MCP_read(MCP_CANSTAT) & MODE_MASK != MODE_NORMAL) {
+		//printf("Not in normal mode\n");
+	}
 }
 
 
@@ -46,24 +54,25 @@ void CAN_transmit(can_message msg)
 can_message CAN_receive()
 {
 
-	//while((MCP_read(MCP_CANINTF)&(1<<MCP_RX0IF)));
-	//printf("ionside can recieve\n");
+	while(!(MCP_read(MCP_CANINTF)&(1<<MCP_RX0IF))) {
+		;
+	};
 	can_message msg;
 	msg.id = MCP_read(MCP_RXB0CTRL+1);
 	uint8_t datalength = MCP_read(MCP_RXB0CTRL+5); //bytt ut 5 med define 
-	//printf("length read = 1: ");
+	
 	//printf("%x\n", MCP_read(MCP_RXB0CTRL+5));
 	msg.length = (0x0F & datalength);
 	
 	msg.RTR = (0x40 && datalength);
 
+	//printf("length read: %d \n", msg.length);
 
 	MCP_read_n_byte(msg.data,MCP_RXB0CTRL+6,msg.length);
 
 
 	//change to bit_modify
 	MCP_write(0, MCP_CANINTF); //clear interrup flag register
-
 
 	return msg;
 }

@@ -43,9 +43,11 @@ void main(){
     motor_init();
     joystick_init();
 
+    printf("BITCH START\n");
     sei();
     _delay_ms(100);
     
+
     //controller_init();
     
     /*
@@ -72,6 +74,8 @@ void main(){
     //printf("id after read (5): %x \n",msg.id);
     while(1) {
 
+
+      printf("main while\n");
       //data = ADC_read();
 
 
@@ -83,8 +87,13 @@ void main(){
      //PWM_set_duty_cycle(-100);
 
       msg=CAN_receive();
+      //printf("main while 1 \n");
 
       game_start(msg);
+
+      //printf("main while 2\n");
+
+
 
       //ref =slider_to_motorref(msg);
       //position_controller(ref);

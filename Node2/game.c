@@ -14,7 +14,7 @@ void game_start(can_message msg)
 {
 	if (msg.id == GAME_START_ID)
 	{
-		printf("Hælle er det marius jeg snakker med?");
+		printf("inside game_start\n");
 		controller_init();
 
 		controller_select(msg.data[0]);
@@ -26,9 +26,10 @@ void game_start(can_message msg)
 
 }
 
-int8_t game_lost_handle(uint8_t IR_detection)
+int8_t game_lost_handle(can_message msg)
 {
-	if (IR_detection==1)
+	if (detect_blockage() || msg.data[6])
+	//if for buttton to
 	{
 
 		//read timer;
@@ -36,19 +37,22 @@ int8_t game_lost_handle(uint8_t IR_detection)
 		int8_t score=40;
 		//stop or reset timer; 
 
-		int8_t b[8]= {0,0,0,0,0,0,0,0};
+		int8_t b[1]= {0};
 		b[0]= score; //denne skal countes opp hit. 
 
 		can_message msg=
     	{
-        	.length=8,
+        	.length=1,
         	.id=GAME_OVER_ID,
         	.RTR=0
     	};
 
    		CAN_transmit(msg);
 
-		break; //want to break while loop 
+   		printf("hælla");
+   		return(1);
+
+		//break; //want to break while loop 
 	}
 }
 
@@ -60,6 +64,8 @@ void game()
     int32_t ref;
 	while(1)
 	{
+		printf("inside game while\n");
+
 		msg=CAN_receive();
 
     	ref =controller_read_motor_ref(msg);
@@ -70,6 +76,7 @@ void game()
 
         joystick_button_to_soleniode(msg);
 
-        game_lost_check(detect_bloackage()); // this line should break the loop if game is lost
+        if(game_lost_handle(msg)==1)
+        	break;
 	}
 }

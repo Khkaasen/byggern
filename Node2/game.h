@@ -9,6 +9,6 @@ void game_start(can_message msg);
 
 void game();
 
-int8_t game_lost_handle(uint8_t IR_detection); //return score 
+int8_t game_lost_handle(can_message msg); //return score 
 
 #endif

@@ -47,7 +47,7 @@ can_message CAN_receive()
 {
 
 	//while((MCP_read(MCP_CANINTF)&(1<<MCP_RX0IF)));
-	
+	//printf("ionside can recieve\n");
 	can_message msg;
 	msg.id = MCP_read(MCP_RXB0CTRL+1);
 	uint8_t datalength = MCP_read(MCP_RXB0CTRL+5); //bytt ut 5 med define 

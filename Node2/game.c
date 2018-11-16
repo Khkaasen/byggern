@@ -44,7 +44,7 @@ int8_t game_lost_handle(can_message msg)
 
 
 		/* denne added av marius  */
-		timer_reset(); //tror ikke jeg trenger denne, siden den uansett blir satt til 0 når game starter. 
+		//timer_reset(); //tror ikke jeg trenger denne, siden den uansett blir satt til 0 når game starter. 
 
 		int8_t b[1]= {0};
 		b[0]= score; //denne skal countes opp hit. 
@@ -60,8 +60,6 @@ int8_t game_lost_handle(can_message msg)
 
    		printf("hælla");
    		return(1);
-
-		//break; //want to break while loop 
 	}
 }
 

@@ -83,6 +83,7 @@ void controller_init()
 
 
     encoder_endpoint = read_encoder();
+    set_max_point(encoder_endpoint);
     //printf("Endpoint %d\n", encoder_endpoint);
     //_delay_ms(1000);
 }

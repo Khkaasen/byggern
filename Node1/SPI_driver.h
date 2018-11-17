@@ -8,7 +8,7 @@
 
 void SPI_init();
 
-char SPI_read();
+uint8_t SPI_read();
 
 void SPI_write(char cData);
 

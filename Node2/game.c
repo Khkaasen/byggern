@@ -9,7 +9,7 @@
 #include <stdint.h>
 
 #define GAME_START_ID 2
-#define GAME_OVER_ID 3
+#define GAME_INFO_ID 3
 #define DUMMY_ID 10  
 
 void game_start(can_message msg)
@@ -52,17 +52,18 @@ int8_t game_lost_handle(can_message msg)
 		/* denne added av marius  */
 		//timer_reset(); //tror ikke jeg trenger denne, siden den uansett blir satt til 0 når game starter. 
 
-		int8_t b[1]= {score};
+		int8_t b[2]= {1,score};
 		 
 
 		can_message msg=
     	{
-        	.length=1,
-        	.id=GAME_OVER_ID,
+        	.length=2,
+        	.id=GAME_INFO_ID,
         	.RTR=0
     	};
 
     	msg.data[0] = b[0];
+    	msg.data[1] = b[1];
 
    		CAN_transmit(msg);
 
@@ -73,18 +74,18 @@ int8_t game_lost_handle(can_message msg)
 	}
 	else
 	{
-		int8_t b[1]= {-1};
+		int8_t b[2]= {0,0};
 		 
 
 		can_message msg=
     	{
-        	.length=1,
-        	.id=GAME_OVER_ID,
+        	.length=2,
+        	.id=GAME_INFO_ID,
         	.RTR=0
     	};
 
     	msg.data[0] = b[0];
-
+    	msg.data[1] = b[1];
    		CAN_transmit(msg);
 	}
 	return 0;
@@ -108,10 +109,13 @@ void game()
 
         joystick_button_to_soleniode(msg);
 
-        if(game_lost_handle(msg)==1)
+        if(msg.id == GAME_INFO_ID)
         {
-       		
-        	break;
+			if(game_lost_handle(msg)==1)
+	        {       		
+	        	break;
+	        }
         }
+	        
 	}
 }

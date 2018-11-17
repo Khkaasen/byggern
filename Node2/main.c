@@ -26,6 +26,20 @@
 //testprogram med jtag
 //Cutoff frequency: 796.18 Hz
 
+  can_message msg =
+  {
+    .length = 0,
+    .id = 10,
+    .RTR=0
+  };
+
+ISR(INT4_vect) {
+  // Interrupt for reciving message.
+  printf("jeg er her yooo\n");
+  msg = CAN_receive();
+}
+
+
 //ACM0 putty
 void main(){
     cli();
@@ -61,23 +75,30 @@ void main(){
 
     */
     uint8_t blockage;
-    can_message msg;
 
     int16_t encoder;
+    
+//printf ("%x\r\n",MCP_read(MCP_CANINTF));
 
+    msg = CAN_receive();
+
+printf ("%x\r\n",MCP_read(MCP_CANINTF));
   	//printf("start program \n");
-    //printf("data1 after read: %x \n", msg.data[1]);
+    printf("data1 after read: %d ", msg.data[1]);
     //printf("data2 after read: %x \n", msg.data[1]);
-    //printf("length after read (2): %x \n",msg.length);
-    //printf("id after read (5): %x \n",msg.id);
+    //printf("length after read : %d ",msg.length);
+    printf("id after read : %d \n\r",msg.id);
 
     //timer_test();
     //printf("right before main loop\n");
-    printf("r in main loop\n");
     while(1) {
+      
+      //printf("data1 after read: %d ", msg.data[1]);
+      //printf("data2 after read: %x \n", msg.data[1]);
+      //printf("length after read : %d ",msg.length);
+      //printf("id after read : %d \n\r",msg.id);
 
-
-      printf("r in main loop\n\r");
+      //printf("r in main loop\n\r");
 
       //data = ADC_read();
 
@@ -94,7 +115,8 @@ void main(){
 
       //game_start(msg);
 
-
+      ///printf ("%x\r\n",MCP_read(MCP_CANINTF));
+       // printf("%x\n\r", MCP_read(MCP_EFLG));
 
       //printf("main while 2\n");
 
@@ -110,8 +132,8 @@ void main(){
 
       //data =joystick_to_motorspeed(msg);
       //uint8_t dir = joystick_to_motordir(msg);
-      //printf("Data: %d\n", msg.data[0] );
-      //printf("ID: %d\n", msg.id);
+      //printf("Data: %d  ", msg.data[0] );
+      //printf("ID: %d\n\r", msg.id);
       //printf("%d\n", data );
 
       //set_motor_dir(dir);
@@ -127,3 +149,4 @@ void main(){
     
     
 }
+

@@ -18,7 +18,7 @@
 
 #define GAME_START_ID 2
 
-#define GAME_OVER_ID 3
+#define GAME_INFO_ID 3
 
 #define SCORE 1
 
@@ -45,13 +45,13 @@ void game_start(int8_t game_mode)
 int8_t game_check_game_over()
 {   
 
-	can_message msg = CAN_read();
+	can_message msg = CAN_receive();
     /*  */
 
-	if(msg.id== GAME_OVER_ID && msg.data[0]>0)
+	if(msg.id== GAME_INFO_ID && msg.data[0]!=0)
 	{
         printf("node 2 says game is over\n");
-        int8_t score = msg.data[0];
+        int8_t score = msg.data[1];
 		return score;
 	}
 	return 0; 
@@ -80,6 +80,8 @@ void game(int8_t game_mode)
 
     buttons_struct buttons;
 
+    can_message msg;
+
 	/* game loop */
 	while (1)
 	{
@@ -88,11 +90,31 @@ void game(int8_t game_mode)
 
      	joy = get_joystick_status();
 
+        printf("updated joystick\n");
+
       	slider = get_sliders_status();
 
-      	buttons = get_buttons_status();
+        printf("updated slider\n" );
 
+      	buttons = get_buttons_status();
+        printf("updated button\n");
       	transmit_IO_card(slider, joy, buttons);
+
+        printf("transmitted IO card\n");
+
+        can_message msg = 
+        {
+            .length = 2,
+            .id = GAME_INFO_ID,
+            .RTR = 0
+
+        };
+        int8_t b[2]= {0,0};
+
+        msg.data[0] = b[0];
+        msg.data[1] = b[1];
+
+        CAN_transmit(msg);
 
 
      	//_delay_ms(1);// needed? depends on implementation of CAN interrupt
@@ -103,9 +125,14 @@ void game(int8_t game_mode)
      		break; 
      	} */
 
+
         int8_t score = game_check_game_over();
-        if (score >0)
+
+        printf("%d\n",game_over);
+        if (score!=0)
         {
+
+            printf("game over\n");
             game_over(score);
 
             _delay_ms(3000);

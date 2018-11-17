@@ -10,6 +10,7 @@
 #define DIR PH1
 
 int32_t encoder_max;
+#define encoder_min 0
 void motor_init()
 {
 	//set enable, direction, select?, reset and oe pins  as output. 

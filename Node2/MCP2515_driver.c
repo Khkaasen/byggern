@@ -6,6 +6,10 @@
 
 uint8_t MCP_init()
 {
+
+	MCP_reset();
+
+	//aksel og de setter can i loopback mode, så i normal mode her inne. 
 	//uint8_t value;
 	//SPI_init(); // Initialize SPI
 	//MCP2515_reset(); // Send reset-command

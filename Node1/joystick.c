@@ -47,7 +47,10 @@ joystick_struct get_joystick_status() {   //skal vi endre funknavn til joy_get_s
 
     /*converting joystick x to percentage*/
     joystick.x = (X_OFFSET-read_channel(CHANNEL_X))*(JOYSTICK_PERCENTAGE);
-    joystick.y = (Y_OFFSET-read_channel(CHANNEL_Y))*(JOYSTICK_PERCENTAGE);  
+    joystick.y = (Y_OFFSET-read_channel(CHANNEL_Y))*(JOYSTICK_PERCENTAGE); 
+
+    printf("read_channel: %d ", read_channel(CHANNEL_Y));
+    
 
     /* set joystick posistion offset */
     if(joystick.x>(-2) && joystick.x<2){
@@ -74,6 +77,11 @@ joystick_struct get_joystick_status() {   //skal vi endre funknavn til joy_get_s
     {
         joystick.button=0;
     }
+
+    printf("dir: %d  ", joystick.dir);
+    printf("x: %d  ", joystick.x);
+    printf("y: %d  ", joystick.y);
+    printf("button: %d\n\r  ", joystick.button);
 
     return joystick;
 }

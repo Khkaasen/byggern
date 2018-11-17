@@ -14,9 +14,9 @@ void SPI_init()
 }
 
 
-char SPI_read()
+uint8_t SPI_read()
 {
-	//lag egen funksjon for å velge hvilken slave det skal skrives til
+	
 
 	/* write dummy byte to data register */  
 	SPDR = 0x00; 	// denne linjen kan byttes ut med SPI_write(0). 

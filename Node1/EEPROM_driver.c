@@ -28,3 +28,11 @@ EECR |= (1<<EERE);
 /* Return data from data register */
 return EEDR;
 }
+
+
+unsigned char EEPROM_test(unsigned int uiAddress, unsigned char ucData)
+{
+	EEPROM_write(uiAddress,ucData);
+
+	return (EEPROM_read());
+}

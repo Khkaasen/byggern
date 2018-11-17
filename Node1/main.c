@@ -38,8 +38,8 @@ void main(){
 
 
     printf("program start\n");
-/*
-    uint8_t b[2] = {0xFF,0x0dc};
+
+    int8_t b[2] = {100,-100};
    	 can_message msg = 
    	{
    		.length=2,
@@ -50,7 +50,7 @@ void main(){
     msg.data[1]=b[1];
      _delay_ms(10);
 
-     
+     /*
 
     CAN_transmit(msg);
 */
@@ -119,11 +119,13 @@ void main(){
 
       transmit_IO_card(slider, joy, buttons);
       */
+
+      CAN_transmit(msg);
       
       //oled_display_game_over(i);
       //menu_change_menu();
 
-      menu_change_menu();
+      //menu_change_menu();
       
       //enu_change_menu();
 

@@ -14,7 +14,6 @@ void motor_init()
 {
 	//set enable, direction, select?, reset and oe pins  as output. 
 	DDRH |= (1<<EN) | (1<<DIR)|(1<<OE)|(1<<RST)|(1<<SEL);
-	DDRH |= ;
 
 	//set MJ2 as inputs
 	DDRK = 0;

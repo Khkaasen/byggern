@@ -22,10 +22,12 @@ void game_start(can_message msg)
 
 		controller_select(msg.data[0]);
 
+		/* denne added av marius*/
+		//timer_start();
+
 		game();	
 
-		/* denne added av marius*/
-		//timer_start(); 
+ 
 	}
 
 }
@@ -69,6 +71,22 @@ int8_t game_lost_handle(can_message msg)
 
    		return(1);
 	}
+	else
+	{
+		int8_t b[1]= {-1};
+		 
+
+		can_message msg=
+    	{
+        	.length=1,
+        	.id=GAME_OVER_ID,
+        	.RTR=0
+    	};
+
+    	msg.data[0] = b[0];
+
+   		CAN_transmit(msg);
+	}
 	return 0;
 }
 
@@ -84,9 +102,7 @@ void game()
 
 		msg=CAN_receive();
 
-    	//ref =controller_read_motor_ref(msg);
-
-    	controller_set_motor_input(controller_read_motor_ref(msg));
+    	controller_set_motor_input(msg);
 
         joystick_to_servopos(msg);
 
@@ -94,17 +110,7 @@ void game()
 
         if(game_lost_handle(msg)==1)
         {
-       		int8_t novalue[1]= {0};
-
-    		can_message dummy=
-      		{
-          		.length=1,
-          		.id=10,
-          		.RTR=0
-      		};
-      		dummy.data[0]= novalue[0];
-
-      		CAN_transmit(dummy);
+       		
         	break;
         }
 	}

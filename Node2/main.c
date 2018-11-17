@@ -73,10 +73,11 @@ void main(){
 
     //timer_test();
     //printf("right before main loop\n");
+    printf("r in main loop\n");
     while(1) {
 
 
-      printf("r in main loop\n");
+      printf("r in main loop\n\r");
 
       //data = ADC_read();
 
@@ -88,7 +89,7 @@ void main(){
 
      //PWM_set_duty_cycle(-100);
 
-      msg=CAN_receive();
+      //msg=CAN_receive();
       //printf("main while 1 \n");
 
       //game_start(msg);
@@ -109,8 +110,8 @@ void main(){
 
       //data =joystick_to_motorspeed(msg);
       //uint8_t dir = joystick_to_motordir(msg);
-      printf("Data: %d\n", msg.data[0] );
-      printf("ID: %d\n", msg.id);
+      //printf("Data: %d\n", msg.data[0] );
+      //printf("ID: %d\n", msg.id);
       //printf("%d\n", data );
 
       //set_motor_dir(dir);

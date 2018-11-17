@@ -46,8 +46,9 @@ int8_t game_check_game_over()
 {   
 
 	can_message msg = CAN_read();
+    /*  */
 
-	if(msg.id== GAME_OVER_ID)
+	if(msg.id== GAME_OVER_ID && msg.data[0]>0)
 	{
         printf("node 2 says game is over\n");
         int8_t score = msg.data[0];

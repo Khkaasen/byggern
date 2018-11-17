@@ -96,18 +96,18 @@ void main(){
     //printf("%d\n", msg.data);
    	//CLEAR_BIT(PORTB,PB4);
 
-    joystick_struct joy;
+    //joystick_struct joy;
 
-     sliders_struct slider;
+     //sliders_struct slider;
 
-     buttons_struct buttons;
+     //buttons_struct buttons;
      //game();
 
     //display_countdown();
-     uint8_t i= 123;
+    // uint8_t i= 123;
     while(1) {
 
-      printf("in main while loop\n");
+      //printf("in main while loop\n");
       //oled_print_pic();
       /*
       joy = get_joystick_status();
@@ -120,10 +120,10 @@ void main(){
       transmit_IO_card(slider, joy, buttons);
       */
 
-      CAN_transmit(msg);
+      //CAN_transmit(msg);
       
       //oled_display_game_over(i);
-      //menu_change_menu();
+      menu_change_menu();
 
       //menu_change_menu();
       

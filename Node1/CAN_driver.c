@@ -21,7 +21,7 @@ void CAN_init()
 
 void CAN_transmit(can_message msg)
 {
-	//while((MCP_read(MCP_TXB0CTRL)&(1<<TXREQ))); //fungerer ikke som vi tenker burde også være motsatt(!)
+	while((MCP_read(MCP_TXB0CTRL)&(1<<TXREQ))); //fungerer ikke som vi tenker burde også være motsatt(!)
 
 
 	MCP_write(msg.id,MCP_TXB0CTRL + 1);
@@ -41,8 +41,9 @@ void CAN_transmit(can_message msg)
 can_message CAN_read()
 {
 
-	//while(MCP_read(MCP_CANINTF)&(1<<MCP_RX0IF));
-	
+	while(!(MCP_read(MCP_CANINTF)&(1<<MCP_RX0IF))) {
+		;
+	};	
 	can_message msg;
 	msg.id = MCP_read(MCP_RXB0CTRL+1);
 	uint8_t datalength = MCP_read(MCP_RXB0CTRL+5); //bytt ut 5 med define 

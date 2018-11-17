@@ -4,7 +4,6 @@
 
 
 static int blockage;
-static int n_goals;
 
 #define IR_HIGH 195  //voltage 
 #define LOWER_BOUND 0.25 
@@ -13,7 +12,6 @@ static int n_goals;
 void IR_init()
 {
 	blockage= 0;
-	n_goals = 0;
 
 }
 
@@ -38,17 +36,3 @@ uint8_t detect_blockage()
 	}
 	return 0;
 }
-
-void count_goals()
-{
-	if(detect_blockage())
-	{
-		n_goals ++;
-	}
-}
-
-int get_n_goals()
-{
-	return n_goals;
-}
-

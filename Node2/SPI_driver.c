@@ -22,8 +22,9 @@ char SPI_read()
 
 	SPDR = 0x00;
 	/* Wait for reception complete */
-	while(!(SPSR & (1<<SPIF)))
-		;
+	while(!(SPSR & (1<<SPIF))) {
+		printf("hi\n");
+	}
 	/* Return data register */
 
 	//egen funksjon her og

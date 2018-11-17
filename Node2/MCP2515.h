@@ -142,14 +142,14 @@ Copyright 2003 Kimberly Otten Software Consulting
 
 // CANINTF Register Bits
 
-#define MCP_RX0IF		0x01
-#define MCP_RX1IF		0x02
-#define MCP_TX0IF		0x04
-#define MCP_TX1IF		0x08
-#define MCP_TX2IF		0x10
-#define MCP_ERRIF		0x20
-#define MCP_WAKIF		0x40
-#define MCP_MERRF		0x80
+#define MCP_RX0IF		0x00
+#define MCP_RX1IF		0x01
+#define MCP_TX0IF		0x03
+#define MCP_TX1IF		0x07
+#define MCP_TX2IF		0x09
+#define MCP_ERRIF		0x19
+#define MCP_WAKIF		0x39
+#define MCP_MERRF		0x79
 
 
 

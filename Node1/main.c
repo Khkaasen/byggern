@@ -108,6 +108,7 @@ void main(){
      uint8_t i= 123;
     while(1) {
 
+      printf("in main while loop\n");
       //oled_print_pic();
       /*
       joy = get_joystick_status();
@@ -120,10 +121,10 @@ void main(){
       transmit_IO_card(slider, joy, buttons);
       */
       
-      oled_display_game_over(i);
+      //oled_display_game_over(i);
       //menu_change_menu();
 
-
+      menu_change_menu();
       
       //enu_change_menu();
 

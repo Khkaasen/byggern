@@ -1,5 +1,5 @@
 # List all source files to be compiled; separate with space 
-SOURCE_FILES := main.c uart.c CAN_driver.c MCP2515_driver.c SPI_driver.c PWM_driver.c joystick_driver.c ADC_driver.c IR_driver.c TWI_Master.c DAC_driver.c Motor_driver.c motor_controller.c game.c
+SOURCE_FILES := main.c uart.c CAN_driver.c MCP2515_driver.c SPI_driver.c PWM_driver.c joystick_driver.c ADC_driver.c IR_driver.c TWI_Master.c DAC_driver.c Motor_driver.c motor_controller.c game.c timer.c
 
 # Set this flag to "yes" (no quotes) to use JTAG; otherwise ISP (SPI) is used
 PROGRAM_WITH_JTAG := yes

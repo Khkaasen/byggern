@@ -13,20 +13,20 @@
 void motor_init()
 {
 	//set enable, direction, select?, reset and oe pins  as output. 
-	DDRH = (1<<EN) | (1<<DIR);
-	DDRH |= (1<<OE)|(1<<RST)|(1<<SEL);
+	DDRH |= (1<<EN) | (1<<DIR)|(1<<OE)|(1<<RST)|(1<<SEL);
+	DDRH |= ;
 
 	//set MJ2 as inputs
 	DDRK = 0;
 
 	//enable motor
-	PORTH = (1<<PH4);
+	PORTH |= (1<<PH4);
 
 	//default direction
 	PORTH |= (1<<PH1);
 
 	//Toggle RST to reset encoder
-	//encoder_reset();
+	encoder_reset();
 }
 
 void set_motor_dir(uint8_t dir)	//spørre studass om type int eller kanskje uint8_t

@@ -117,10 +117,7 @@ void main(){
     //printf("data3 after read: %x \n", msg.data[2]); 
     //printf("length = 2: ");
    	//printf("%d\n",msg.length);
-
-     int8_t test = EEPROM_read(10);
-
-     printf("%d\n", test);
+     //EEPROM_write(11,150);
 
     //printf("%d\n", msg.data);
    	//CLEAR_BIT(PORTB,PB4);
@@ -134,6 +131,10 @@ void main(){
     //printf("%d\n",test );
     //display_countdown();
     // uint8_t i= 123;
+    uint8_t a=123;
+    //uint8_t c=EEPROM_read(11);
+    uint8_t hei=EEPROM_read(11);
+    printf("%d\n",hei);
     while(1) {
 
       //printf("in main while loop\n");
@@ -148,6 +149,8 @@ void main(){
 
       transmit_IO_card(slider, joy, buttons);
       */
+
+      oled_display_game_over(a,hei);
 
       //CAN_transmit(msg);
       //msg=CAN_receive();

@@ -225,11 +225,11 @@ void oled_print_pic()
 */
 
 /* UNDER HER ER DET MYYYYEE KODE, BURDE KORTES NED */
-void oled_display_game_over( uint8_t score , int8_t high_score )
+void oled_display_game_over( uint8_t score , uint8_t high_score )
 {
     oled_reset();
     /*Game Over!*/
-    write_c(LINE4); //starte på linje
+    write_c(LINE2); //starte på linje
     write_c(G_OVER_POS_LOW);
     write_c(G_OVER_POS_HIGH);
     write_c(0x81); //akkseserer contrast
@@ -245,9 +245,9 @@ void oled_display_game_over( uint8_t score , int8_t high_score )
     number_2 = (score%100-number_1)/10;
     number_3 = (score%1000-number_2-number_1)/100;
 
-    write_c(LINE6); 
-    write_c(G_OVER_POS_LOW);
-    write_c(G_OVER_POS_HIGH);
+    write_c(LINE5); 
+    write_c(MENU_POS_LOW);
+    write_c(MENU_POS_HIGH);
 
     oled_print("Score: ");
     if(number_3!=0){
@@ -260,9 +260,9 @@ void oled_display_game_over( uint8_t score , int8_t high_score )
 
 
     /* Highscore */
-    write_c(LINE7);
-    write_c(G_OVER_POS_LOW);
-    write_c(G_OVER_POS_HIGH);
+    write_c(LINE6);
+    write_c(MENU_POS_LOW);
+    write_c(MENU_POS_HIGH);
 
     uint8_t number_4 = 0;
     uint8_t number_5= 0;
@@ -272,7 +272,7 @@ void oled_display_game_over( uint8_t score , int8_t high_score )
     number_5= (high_score%100-number_4)/10;
     number_6 = (high_score%1000-number_5-number_4)/100;
 
-     oled_print("High score: ");
+     oled_print("Best : ");
     if(number_6!=0){
         oled_print_number(number_6);
     }
@@ -281,11 +281,14 @@ void oled_display_game_over( uint8_t score , int8_t high_score )
     }
     oled_print_number(number_4);
 
+
 }
 
+/*
 void oled_test_print()
 {
     uint8_t number= 567;
 
     oled_print((char)(number));
 }
+*/

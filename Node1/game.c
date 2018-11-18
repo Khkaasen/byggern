@@ -58,9 +58,9 @@ int8_t game_check_game_over()
 	return 0; 
 }
 
-void game_over(int8_t score)
+void game_over(uint8_t score,uint8_t high_score)
 {
-        oled_display_game_over(score);
+        oled_display_game_over(score,high_score);
 
         /*save highscore in AVR
 
@@ -127,14 +127,15 @@ void game(int8_t game_mode)
      	} */
 
 
-        int8_t score = game_check_game_over();
+        uint8_t score = game_check_game_over();
+        uint8_t high_score = 9434; //randomshit
 
         printf("%d\n",game_over);
         if (score!=0)
         {
 
             printf("game over\n");
-            game_over(score);
+            game_over(score, high_score);
 
             _delay_ms(3000);
             break;

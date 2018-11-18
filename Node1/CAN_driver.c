@@ -17,15 +17,6 @@
 void CAN_init()
 {	
 	printf("jeg er i can init\n");
-	cli();
-
-	/* set interrupt on falling edge */
-	MCUCR |= (1<<ISC01);
-	MCUCR &= ~(1<<ISC00);
-
-	GICR |= (1<<INT0);
-
-	sei();	
 
 	MCP_init();
 
@@ -44,6 +35,16 @@ void CAN_init()
 	MCP_bit_modify(0x60,MCP_RXB0CTRL,0xff); //Turn mask/filters off; receive any msg
 
   	MCP_bit_modify(MCP_CANCTRL, MODE_MASK, MODE_NORMAL); // Set mode for CAN Controller.
+
+  	/* satt nederst nå uten å teste, test imorgen */
+	cli();
+	/* set interrupt on falling edge */
+	MCUCR |= (1<<ISC01);
+	MCUCR &= ~(1<<ISC00);
+
+	GICR |= (1<<INT0);  
+
+	sei();	
 
 }
 

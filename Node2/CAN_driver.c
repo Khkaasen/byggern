@@ -29,12 +29,7 @@ void CAN_init() {
   // EICRB register for trigging edge
 
 	//----enable interrupt on atmega
-	cli();
-	//DDRE |= (1 << PE4); // Set PE4 as output
-    EICRB |= (1 << 1); // Set ISC41 to 1. Trigger INT4 On falling edge.
-    EIMSK |= (1 << INT4); // External Interrupt Mask Register
-  	
-  	sei();
+
 	//----enable interrupt on atmega
 
 
@@ -61,6 +56,15 @@ void CAN_init() {
   	MCP_bit_modify(0x60,MCP_RXB0CTRL,0xff); //Turn mask/filters off; receive any msg
 
   	MCP_bit_modify(MCP_CANCTRL, MODE_MASK, MODE_NORMAL); // Set mode for CAN Controller.
+
+
+  	/* flyttet nederst uten å teste, testes imorgen */
+	cli();
+	//DDRE |= (1 << PE4); // Set PE4 as output
+    EICRB |= (1 << 1); // Set ISC41 to 1. Trigger INT4 On falling edge.
+    EIMSK |= (1 << INT4); // External Interrupt Mask Register
+  	
+  	sei();
 
 	return;
 }

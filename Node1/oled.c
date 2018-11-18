@@ -102,11 +102,21 @@ void oled_reset()
 
 void oled_print_char(const char data)
 {
-    for (int i =0; i<8; i++){
+    for (int i =0; i<8; i++)
+    {
             write_d(pgm_read_byte(&font8[(int)data-32][i])); 
     }
 
 }
+
+void oled_print_number(uint8_t number)
+{
+    for (int i =0; i<8; i++)
+    {                
+        write_d(pgm_read_byte(&font8[number+16][i])); 
+    }    
+}
+
 void oled_print_char_small(const char data)
 {
     for (int i=0; i<4;i++)
@@ -192,7 +202,7 @@ void oled_display_countdown()
     oled_print("PLAY!");
 }
 
-
+/*
 void oled_print_pic()
 {
     uint8_t page = PAGE0;
@@ -212,8 +222,10 @@ void oled_print_pic()
     }
 }
 
+*/
 
-void oled_display_game_over( uint8_t score /*, int8_t higescore */)
+/* UNDER HER ER DET MYYYYEE KODE, BURDE KORTES NED */
+void oled_display_game_over( uint8_t score , int8_t high_score )
 {
     oled_reset();
     /*Game Over!*/
@@ -221,51 +233,59 @@ void oled_display_game_over( uint8_t score /*, int8_t higescore */)
     write_c(G_OVER_POS_LOW);
     write_c(G_OVER_POS_HIGH);
     write_c(0x81); //akkseserer contrast
-    write_c(0xFF);
+    write_c(0xFF); //full styrke
     oled_print("GAME OVER!");
 
     /* Score */
-    uint8_t number_1 = 1;
+    uint8_t number_1 = 0;
     uint8_t number_2 = 0;
     uint8_t number_3 = 0;
     
-    
-
     number_1 = score%10;
     number_2 = (score%100-number_1)/10;
     number_3 = (score%1000-number_2-number_1)/100;
 
-    write_c(LINE6);
+    write_c(LINE6); 
     write_c(G_OVER_POS_LOW);
     write_c(G_OVER_POS_HIGH);
 
     oled_print("Score: ");
     if(number_3!=0){
-        for (int i =0; i<8; i++)
-        {
-                write_d(pgm_read_byte(&font8[number_3+16][i])); 
-        }
+        oled_print_number(number_3);
     }
     if(number_2!=0 && number_3!=0){
-        for (int i =0; i<8; i++)
-        {
-                write_d(pgm_read_byte(&font8[number_2+16][i])); 
-        }
+        oled_print_number(number_2);
     }
-    for (int i =0; i<8; i++)
-    {
-            write_d(pgm_read_byte(&font8[number_1+16][i])); 
-    }
+    oled_print_number(number_1);
 
 
-/*  //Highscore
+    /* Highscore */
     write_c(LINE7);
     write_c(G_OVER_POS_LOW);
     write_c(G_OVER_POS_HIGH);
-    oled_print("Highscore:")
-*/
+
+    uint8_t number_4 = 0;
+    uint8_t number_5= 0;
+    uint8_t number_6 = 0;
+
+    number_4 = high_score%10;
+    number_5= (high_score%100-number_4)/10;
+    number_6 = (high_score%1000-number_5-number_4)/100;
+
+     oled_print("High score: ");
+    if(number_6!=0){
+        oled_print_number(number_6);
+    }
+    if(number_5!=0 && number_6!=0){
+        oled_print_number(number_5);
+    }
+    oled_print_number(number_4);
+
 }
 
-//modulo 10 plass 1
-//modulo 100- 10 plass 2
-//modulo 1000-100 plass 3
+void oled_test_print()
+{
+    uint8_t number= 567;
+
+    oled_print((char)(number));
+}

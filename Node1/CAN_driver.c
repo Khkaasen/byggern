@@ -1,3 +1,4 @@
+#define F_CPU 4915200UL
 #include "CAN_driver.h"
 #include "MCP2515_driver.h"
 #include <stdio.h>
@@ -104,6 +105,8 @@ void CAN_receive(can_message * msg) {
 
  	//clear RX0IF flag
 	MCP_bit_modify(MCP_CANINTF,(1 << 0),0);
+
+
 	return;
 }
 

@@ -117,7 +117,10 @@ void main(){
     //printf("data3 after read: %x \n", msg.data[2]); 
     //printf("length = 2: ");
    	//printf("%d\n",msg.length);
-    
+
+     int8_t test = EEPROM_read(10);
+
+     printf("%d\n", test);
 
     //printf("%d\n", msg.data);
    	//CLEAR_BIT(PORTB,PB4);
@@ -128,12 +131,12 @@ void main(){
 
      //buttons_struct buttons;
      //game();
-
+    //printf("%d\n",test );
     //display_countdown();
     // uint8_t i= 123;
     while(1) {
 
-      printf("in main while loop\n");
+      //printf("in main while loop\n");
       //oled_print_pic();
       
       //joy = get_joystick_status();

@@ -34,5 +34,5 @@ unsigned char EEPROM_test(unsigned int uiAddress, unsigned char ucData)
 {
 	EEPROM_write(uiAddress,ucData);
 
-	return (EEPROM_read());
+	return (EEPROM_read(uiAddress));
 }

@@ -28,13 +28,18 @@ void CAN_init() {
   // Initialize interrupt for CAN rec.
   // EICRB register for trigging edge
 
+	//----enable interrupt on atmega
 	cli();
 	//DDRE |= (1 << PE4); // Set PE4 as output
     EICRB |= (1 << 1); // Set ISC41 to 1. Trigger INT4 On falling edge.
     EIMSK |= (1 << INT4); // External Interrupt Mask Register
   	
   	sei();
-  // Initialize the can bus.
+	//----enable interrupt on atmega
+
+
+	
+    // Initialize the can bus.
 	// will return current mode as unsigned char.
 
 	MCP_init();
@@ -106,13 +111,14 @@ void CAN_transmit(can_message * msg)
 	/* write lenght to register */
 	MCP_bit_modify(MASK_LENGTH,MCP_TXB0CTRL + 5,msg->length); //hvordan setter vi lentgh her? setter antall bytes med 4 posisjoner. mens vi sender inn et heltall
 
+	printf("id: %d ",msg->id);
+	printf("data[0] %d\n\r",msg->data[0]);
 	
 	//MCP_bit_modify(MASK_RTR,MCP_TXB0CTRL+5,msg.RTR);
 	//MCP_write(TXB0CTRL + 5,msg->length); //hva skjer her? skal vi ikke skrive på -> måten
 
 	for (uint8_t i = 0; i< msg->length; i++) {
 		MCP_write(msg->data[i], MCP_TXB0D0 + i);
-		_delay_ms(10);
 	}
 
 

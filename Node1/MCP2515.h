@@ -3,10 +3,13 @@
 
 /*
 mcp2515.h
+
 This file contains constants that are specific to the MCP2515.
+
 Version     Date        Description
 ----------------------------------------------------------------------
 v1.00       2003/12/11  Initial release
+
 Copyright 2003 Kimberly Otten Software Consulting
 */
 
@@ -142,15 +145,36 @@ Copyright 2003 Kimberly Otten Software Consulting
 
 // CANINTF Register Bits
 
-#define MCP_RX0IF		0x00
-#define MCP_RX1IF		0x01
-#define MCP_TX0IF		0x02
-#define MCP_TX1IF		0x03
+#define MCP_RX0IF		0x01
+#define MCP_RX1IF		0x02
+#define MCP_TX0IF		0x04
+#define MCP_TX1IF		0x08
 #define MCP_TX2IF		0x10
 #define MCP_ERRIF		0x20
 #define MCP_WAKIF		0x40
 #define MCP_MERRF		0x80
 
+// 'Manually' defined
+#define MCP_TXB0SIDH	0x31
+#define MCP_TXB0SIDL	0x32
+#define MCP_TXB0DLC		0x35 //Data length code
+#define MCP_TXB0D0		0x36
 
+#define MCP_RXB0SIDH	0x61
+#define MCP_RXB0SIDL	0x62
+#define MCP_RXB0DLC		0x65
+#define MCP_RXB0D0		0x66
+
+#define MCP_TXB1SIDH	0x41
+#define MCP_TXB1SIDL	0x42
+#define MCP_TXB1DLC		0x45 //Data length code
+#define MCP_TXB1D0		0x46
+
+#define MCP_RXB1SIDH	0x71
+#define MCP_RXB1SIDL	0x72
+#define MCP_RXB1DLC		0x75
+#define MCP_RXB1D0		0x76
+
+#define MCP_BFPCTRL		0x0C
 
 #endif

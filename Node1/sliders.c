@@ -41,7 +41,7 @@ void transmit_sliders_status(sliders_struct slider)
     msg.data[1] = b[1];
 
     /* transmit can message to can */
-    CAN_transmit(msg);
+    CAN_transmit(&msg);
 }
 
 

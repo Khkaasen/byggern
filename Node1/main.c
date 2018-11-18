@@ -15,27 +15,53 @@
 #include "CAN_driver.h"
 #include "MCP2515.h"
 #include "game.h"
-
+#include <avr/interrupt.h>
 #define Baudrate 9600
 #define MYUBRR F_CPU/16/Baudrate-1
 
 //testprogram med jtag
 //Cutoff frequency: 796.18 Hz
 //ttyS0 putty
+/*
+  can_message msg_send = {
+    .data = {5,5},
+    .length=2,
+    .id=0,
+    .RTR=0
+  };
+  
+  can_message msg_rec = {
+    .data={0,0},
+    .length = 2,
+    .id=1,
+    .RTR= 0
+  };
+*/
+/*
+ISR(INT0_vect)
+{
+  printf("i ficking git i missige i mifickki!!!! \n");
+  CAN_receive(&msg_rec);
+}
+*/
 void main(){    
 
+  
+  //cli();
 
     UART_init(MYUBRR);
-    
+    printf("!!!! \n");
     SRAM_init();
     oled_reset();
     multi_card_init();
-    //oled_init(); //denne skjer nå i multi_card_init(); 
-    menu_init();
-    SPI_init();
-    MCP_init();
+    oled_init(); //denne skjer nå i multi_card_init(); 
+    //menu_init();
+    printf("!!!! \n");
+
     //printf("%d",MCP_read_status());
    	CAN_init();
+
+    //sei();
 
    	printf("program start\n");
 
@@ -63,7 +89,6 @@ void main(){
 
     transmit_joystick_status(joy);
     */
-     _delay_ms(1000);
     
     /*
     if((MCP_read(MCP_CANSTAT) & MODE_MASK) == MODE_LOOPBACK) //må huske å maske
@@ -106,7 +131,7 @@ void main(){
     // uint8_t i= 123;
     while(1) {
 
-      //printf("in main while loop\n");
+      printf("in main while loop\n");
       //oled_print_pic();
       
       //joy = get_joystick_status();
@@ -119,8 +144,12 @@ void main(){
       transmit_IO_card(slider, joy, buttons);
       */
 
-      CAN_transmit(msg);
-      
+      //CAN_transmit(msg);
+      //msg=CAN_receive();
+
+      //printf("Data: %d  ", msg.data[0] );
+      //printf("ID: %d\n\r", msg.id);
+      //printf("%d\n", data );
       //oled_display_game_over(i);
       //menu_change_menu();
 

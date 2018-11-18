@@ -34,9 +34,11 @@ void CAN_init()
 }
 
 void CAN_transmit(can_message msg)
-{
-	while((MCP_read(MCP_TXB0CTRL)&(1<<TXREQ))); 
-
+{	
+	/*
+	while((MCP_read(MCP_TXB0CTRL)&(1<<TXREQ)))
+		; 
+	*/
 	/* write id to register */
 	MCP_write(msg.id,MCP_TXB0CTRL + 1);
 

@@ -65,7 +65,7 @@ int8_t game_lost_handle(can_message msg)
     	msg.data[0] = b[0];
     	msg.data[1] = b[1];
 
-   		CAN_transmit(msg);
+   		CAN_transmit(&msg);
 
 
    				/* make sure last game_over message not still on can bus */
@@ -86,7 +86,7 @@ int8_t game_lost_handle(can_message msg)
 
     	msg.data[0] = b[0];
     	msg.data[1] = b[1];
-   		CAN_transmit(msg);
+   		CAN_transmit(&msg);
 	}
 	return 0;
 }
@@ -101,7 +101,7 @@ void game()
 	{
 		printf("inside game while loop\n");
 
-		msg=CAN_receive();
+		CAN_receive(&msg);
 
     	controller_set_motor_input(msg);
 

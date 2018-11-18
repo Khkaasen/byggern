@@ -8,7 +8,7 @@
 //#include "CAN_driver.h"
 #include "SPI_driver.h"
 #include "MCP2515.h"
-#include "MCP2515_driver.h"
+#include "MCP_driver.h"
 #include "PWM_driver.h"
 #include "joystick_driver.h"
 #include "ADC_driver.h"
@@ -26,28 +26,28 @@
 //testprogram med jtag
 //Cutoff frequency: 796.18 Hz
 
-  can_message msg =
-  {
-    .length = 0,
-    .id = 10,
-    .RTR=0
-  };
+  can_message msg;
 
 ISR(INT4_vect) {
-  // Interrupt for reciving message.
-  printf("jeg er her yooo\n");
-  msg = CAN_receive();
+  //_delay_ms(100);
+  printf("Hallaais\n\r" );
+  printf("%x\n\r", MCP_read(MCP_CANINTF));
+
+  CAN_receive(&msg);
 }
 
 
 //ACM0 putty
 void main(){
+  
     cli();
-
   	UART_init(MYUBRR);
-    SPI_init();
+
+    
+
     //printf("%d",MCP_read_status());
-   	CAN_init();
+
+   	CAN_init(); // this also inits mcp and spi
     PWM_init();
     ADC_init();
     IR_init();
@@ -56,11 +56,12 @@ void main(){
     //timer_init();
     motor_init();
     joystick_init();
+    
 
-    //printf("BITCH START\n");
     sei();
     _delay_ms(100);
-    
+        printf("BITCH START\n");
+
     //controller_init();
     
     /*
@@ -72,22 +73,21 @@ void main(){
    		.RTR=0
    	};
     msg.data[0] = b[0];
+  */
+    //uint8_t blockage;
 
-    */
-    uint8_t blockage;
-
-    int16_t encoder;
+//    int16_t encoder;
     
 //printf ("%x\r\n",MCP_read(MCP_CANINTF));
 
-    msg = CAN_receive();
+    //msg = CAN_receive();
 
-printf ("%x\r\n",MCP_read(MCP_CANINTF));
+    //printf ("%x\r\n",MCP_read(MCP_CANINTF));
   	//printf("start program \n");
-    printf("data1 after read: %d ", msg.data[1]);
+    //printf("data1 after read: %d ", msg.data[1]);
     //printf("data2 after read: %x \n", msg.data[1]);
     //printf("length after read : %d ",msg.length);
-    printf("id after read : %d \n\r",msg.id);
+    //printf("id after read : %d \n\r",msg.id);
 
     //timer_test();
     //printf("right before main loop\n");
@@ -115,7 +115,7 @@ printf ("%x\r\n",MCP_read(MCP_CANINTF));
 
       //game_start(msg);
 
-      ///printf ("%x\r\n",MCP_read(MCP_CANINTF));
+      //printf ("%x\r\n",MCP_read(MCP_CANINTF));
        // printf("%x\n\r", MCP_read(MCP_EFLG));
 
       //printf("main while 2\n");
@@ -141,11 +141,10 @@ printf ("%x\r\n",MCP_read(MCP_CANINTF));
       //printf("Left B  : %d \n", msg.data[7]);
       //printf("DIR: %d \n", msg.data[2]);
       //joystick_to_servopos(msg);
-      //_delay_ms(500);
+      //_delay_ms(10);
             //printf("%x\n", MCP_read(MCP_CANINTF));
 
   	}
-    
     
     
 }

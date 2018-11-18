@@ -109,7 +109,7 @@ void main(){
       //printf("in main while loop\n");
       //oled_print_pic();
       
-      joy = get_joystick_status();
+      //joy = get_joystick_status();
       /*
       slider = get_sliders_status();
 
@@ -119,7 +119,7 @@ void main(){
       transmit_IO_card(slider, joy, buttons);
       */
 
-      //CAN_transmit(msg);
+      CAN_transmit(msg);
       
       //oled_display_game_over(i);
       //menu_change_menu();
@@ -139,7 +139,7 @@ void main(){
     	//SPI_write(0xF0);
 
       //MCP_read(0x03);
-     _delay_ms(100);
+     _delay_ms(10);
 
 
     }

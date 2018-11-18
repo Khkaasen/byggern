@@ -33,13 +33,13 @@ void main(){
     //oled_init(); //denne skjer nå i multi_card_init(); 
     menu_init();
     SPI_init();
+    MCP_init();
     //printf("%d",MCP_read_status());
    	CAN_init();
 
+   	printf("program start\n");
 
-    printf("program start\n");
-/*
-    uint8_t b[2] = {0xFF,0x0dc};
+    int8_t b[2] = {100,-100};
    	 can_message msg = 
    	{
    		.length=2,
@@ -50,8 +50,7 @@ void main(){
     msg.data[1]=b[1];
      _delay_ms(10);
 
-     
-
+/*
     CAN_transmit(msg);
 */
    
@@ -98,19 +97,20 @@ void main(){
 
     joystick_struct joy;
 
-     sliders_struct slider;
+     //sliders_struct slider;
 
-     buttons_struct buttons;
+     //buttons_struct buttons;
      //game();
 
     //display_countdown();
-     uint8_t i= 123;
+    // uint8_t i= 123;
     while(1) {
 
+      //printf("in main while loop\n");
       //oled_print_pic();
+      
+      //joy = get_joystick_status();
       /*
-      joy = get_joystick_status();
-
       slider = get_sliders_status();
 
       buttons = get_buttons_status();
@@ -118,11 +118,13 @@ void main(){
 
       transmit_IO_card(slider, joy, buttons);
       */
+
+      CAN_transmit(msg);
       
-      oled_display_game_over(i);
+      //oled_display_game_over(i);
       //menu_change_menu();
 
-
+      //menu_change_menu();
       
       //enu_change_menu();
 
@@ -137,7 +139,7 @@ void main(){
     	//SPI_write(0xF0);
 
       //MCP_read(0x03);
-     _delay_ms(1);
+     _delay_ms(10);
 
 
     }

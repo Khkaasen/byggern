@@ -83,6 +83,7 @@ void controller_init()
 
 
     encoder_endpoint = read_encoder();
+    set_max_point(encoder_endpoint);
     //printf("Endpoint %d\n", encoder_endpoint);
     //_delay_ms(1000);
 }
@@ -105,10 +106,10 @@ int32_t controller_read_motor_ref(can_message msg)
 }
 
 
-void controller_set_motor_input(int32_t ref)
+void controller_set_motor_input(can_message msg)
 {	
 	//reset encoder hvis den når FFFF
-	/*
+	int32_t ref = controller_read_motor_ref(msg);
 	int32_t error = ref - read_encoder();
 	error_integral +=error;
 	int32_t error_derivate = error - last_error;
@@ -132,7 +133,7 @@ void controller_set_motor_input(int32_t ref)
 	DAC_set_output(abs(u));
 
 	last_error = error;
-	*/
+	
 }
 
 

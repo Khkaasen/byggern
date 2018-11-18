@@ -1,6 +1,17 @@
-#ifndef CAN_driver_h
-#define CAN_driver_h
+/*
+ * can_com.h
+ *
+ * Created: 25.10.2018 08:42:20
+ *  Author: margronv
+ */
+
+
+#ifndef CAN_COM_H_
+#define CAN_COM_H_
+
 #include <stdint.h>
+
+
 
 typedef struct struct_can_message
 {
@@ -13,7 +24,7 @@ typedef struct struct_can_message
 
 void CAN_init();
 
-void CAN_transmit(can_message msg);
-can_message CAN_receive();
+void CAN_receive(can_message * msg);
 
-#endif
+void CAN_transmit(can_message * msg);
+#endif /* CAN_COM_H_ */

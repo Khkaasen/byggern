@@ -8,7 +8,7 @@
 //#include "CAN_driver.h"
 #include "SPI_driver.h"
 #include "MCP2515.h"
-#include "MCP2515_driver.h"
+#include "MCP_driver.h"
 #include "PWM_driver.h"
 #include "joystick_driver.h"
 #include "ADC_driver.h"
@@ -26,14 +26,28 @@
 //testprogram med jtag
 //Cutoff frequency: 796.18 Hz
 
+  can_message msg;
+
+ISR(INT4_vect) {
+  //_delay_ms(100);
+  printf("Hallaais\n\r" );
+  printf("%x\n\r", MCP_read(MCP_CANINTF));
+
+  CAN_receive(&msg);
+}
+
+
 //ACM0 putty
 void main(){
+  
     cli();
-
   	UART_init(MYUBRR);
-    SPI_init();
+
+    
+
     //printf("%d",MCP_read_status());
-   	CAN_init();
+
+   	CAN_init(); // this also inits mcp and spi
     PWM_init();
     ADC_init();
     IR_init();
@@ -42,11 +56,12 @@ void main(){
     //timer_init();
     motor_init();
     joystick_init();
+    
 
-    //printf("BITCH START\n");
     sei();
     _delay_ms(100);
-    
+        printf("BITCH START\n");
+
     //controller_init();
     
     /*
@@ -58,25 +73,32 @@ void main(){
    		.RTR=0
    	};
     msg.data[0] = b[0];
+  */
+    //uint8_t blockage;
 
-    */
-    uint8_t blockage;
-    can_message msg;
+//    int16_t encoder;
+    
+//printf ("%x\r\n",MCP_read(MCP_CANINTF));
 
-    int16_t encoder;
+    //msg = CAN_receive();
 
+    //printf ("%x\r\n",MCP_read(MCP_CANINTF));
   	//printf("start program \n");
-    //printf("data1 after read: %x \n", msg.data[1]);
+    //printf("data1 after read: %d ", msg.data[1]);
     //printf("data2 after read: %x \n", msg.data[1]);
-    //printf("length after read (2): %x \n",msg.length);
-    //printf("id after read (5): %x \n",msg.id);
+    //printf("length after read : %d ",msg.length);
+    //printf("id after read : %d \n\r",msg.id);
 
     //timer_test();
     //printf("right before main loop\n");
     while(1) {
+      
+      //printf("data1 after read: %d ", msg.data[1]);
+      //printf("data2 after read: %x \n", msg.data[1]);
+      //printf("length after read : %d ",msg.length);
+      //printf("id after read : %d \n\r",msg.id);
 
-
-      printf("r in main loop\n");
+      //printf("r in main loop\n\r");
 
       //data = ADC_read();
 
@@ -88,12 +110,13 @@ void main(){
 
      //PWM_set_duty_cycle(-100);
 
-      msg=CAN_receive();
+      //msg=CAN_receive();
       //printf("main while 1 \n");
 
       //game_start(msg);
 
-
+      //printf ("%x\r\n",MCP_read(MCP_CANINTF));
+       // printf("%x\n\r", MCP_read(MCP_EFLG));
 
       //printf("main while 2\n");
 
@@ -109,8 +132,8 @@ void main(){
 
       //data =joystick_to_motorspeed(msg);
       //uint8_t dir = joystick_to_motordir(msg);
-      printf("%d\n", msg.data[1] );
-      printf("%d\n", msg.id);
+      //printf("Data: %d  ", msg.data[0] );
+      //printf("ID: %d\n\r", msg.id);
       //printf("%d\n", data );
 
       //set_motor_dir(dir);
@@ -118,11 +141,11 @@ void main(){
       //printf("Left B  : %d \n", msg.data[7]);
       //printf("DIR: %d \n", msg.data[2]);
       //joystick_to_servopos(msg);
-      //_delay_ms(500);
+      //_delay_ms(10);
             //printf("%x\n", MCP_read(MCP_CANINTF));
 
   	}
     
     
-    
 }
+

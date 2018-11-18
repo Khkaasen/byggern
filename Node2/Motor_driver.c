@@ -9,12 +9,12 @@
 #define EN PH4
 #define DIR PH1
 
-
+int32_t encoder_max;
+#define encoder_min 0
 void motor_init()
 {
 	//set enable, direction, select?, reset and oe pins  as output. 
 	DDRH |= (1<<EN) | (1<<DIR)|(1<<OE)|(1<<RST)|(1<<SEL);
-	DDRH |= ;
 
 	//set MJ2 as inputs
 	DDRK = 0;
@@ -27,6 +27,11 @@ void motor_init()
 
 	//Toggle RST to reset encoder
 	encoder_reset();
+}
+
+void set_max_point(int32_t max_value)
+{
+	encoder_max = max_value;
 }
 
 void set_motor_dir(uint8_t dir)	//spørre studass om type int eller kanskje uint8_t
@@ -69,7 +74,7 @@ int16_t read_encoder()
 	//set !OE high to disable output of encoder
 	PORTH |= (1<<OE);
 
-	return encoder_read;
+	return encoder_calibration(encoder_read);
 
 }
 
@@ -82,4 +87,18 @@ void encoder_reset()
 	PORTH |= (1<<RST);
 
 
+}
+
+
+int16_t encoder_calibration(int16_t encoder_value)
+{
+	if(encoder_value > encoder_max)
+	{
+		encoder_value = encoder_max;
+	}
+	else if(encoder_value <encoder_min )
+	{
+		encoder_value = encoder_min;
+	}
+	return encoder_value;
 }

@@ -1,12 +1,18 @@
-#ifndef SPI_driver_h
-#define SPI_driver_h
+/*
+ * spi_com.h
+ *
+ * Created: 01.11.2018 09:00:08
+ *  Author: margronv
+ */ 
 
-#include <stdint.h>
-#define SET_BIT(reg, bit) (reg |= (1 << bit))      //flytte til mcp til felles?!??
-#define CLEAR_BIT(reg, bit) (reg &= ~(1 << bit))   //flytte til mcp
+
+#ifndef SPI_COM_H_
+#define SPI_COM_H_
 
 void SPI_init();
-char SPI_read();
 void SPI_write(char cData);
+char SPI_read();
+void spi_slave_select(int state);
 
-#endif
+
+#endif /* SPI_COM_H_ */

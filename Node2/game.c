@@ -9,7 +9,7 @@
 #include <stdint.h>
 
 #define GAME_START_ID 2
-#define GAME_OVER_ID 3
+#define GAME_INFO_ID 3
 #define DUMMY_ID 10  
 
 void game_start(can_message msg)
@@ -22,10 +22,12 @@ void game_start(can_message msg)
 
 		controller_select(msg.data[0]);
 
+		/* denne added av marius*/
+		//timer_start();
+
 		game();	
 
-		/* denne added av marius*/
-		//timer_start(); 
+ 
 	}
 
 }
@@ -50,24 +52,41 @@ int8_t game_lost_handle(can_message msg)
 		/* denne added av marius  */
 		//timer_reset(); //tror ikke jeg trenger denne, siden den uansett blir satt til 0 når game starter. 
 
-		int8_t b[1]= {score};
+		int8_t b[2]= {1,score};
 		 
 
 		can_message msg=
     	{
-        	.length=1,
-        	.id=GAME_OVER_ID,
+        	.length=2,
+        	.id=GAME_INFO_ID,
         	.RTR=0
     	};
 
     	msg.data[0] = b[0];
+    	msg.data[1] = b[1];
 
-   		CAN_transmit(msg);
+   		CAN_transmit(&msg);
 
 
    				/* make sure last game_over message not still on can bus */
 
    		return(1);
+	}
+	else
+	{
+		int8_t b[2]= {0,0};
+		 
+
+		can_message msg=
+    	{
+        	.length=2,
+        	.id=GAME_INFO_ID,
+        	.RTR=0
+    	};
+
+    	msg.data[0] = b[0];
+    	msg.data[1] = b[1];
+   		CAN_transmit(&msg);
 	}
 	return 0;
 }
@@ -82,30 +101,21 @@ void game()
 	{
 		printf("inside game while loop\n");
 
-		msg=CAN_receive();
+		CAN_receive(&msg);
 
-    	//ref =controller_read_motor_ref(msg);
-
-    	controller_set_motor_input(controller_read_motor_ref(msg));
+    	controller_set_motor_input(msg);
 
         joystick_to_servopos(msg);
 
         joystick_button_to_soleniode(msg);
 
-        if(game_lost_handle(msg)==1)
+        if(msg.id == GAME_INFO_ID)
         {
-       		int8_t novalue[1]= {0};
-
-    		can_message dummy=
-      		{
-          		.length=1,
-          		.id=10,
-          		.RTR=0
-      		};
-      		dummy.data[0]= novalue[0];
-
-      		CAN_transmit(dummy);
-        	break;
+			if(game_lost_handle(msg)==1)
+	        {       		
+	        	break;
+	        }
         }
+	        
 	}
 }

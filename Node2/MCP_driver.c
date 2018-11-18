@@ -100,26 +100,3 @@ uint8_t MCP_read_status() {
 	PORTB |= (1 << PB7);
 	return result;
 }
-
-
-void MCP_read_n_byte(int8_t *data,uint8_t address, uint8_t num_bytes)
-{
-	
-	PORTB &= ~(1 << PB7);
-	//select CAN-controller
-	
-
-	//send read instrucion
-	SPI_write(MCP_READ);
-
-	//send address
-	SPI_write(address);
-
-	for(int i =0; i<num_bytes;i++)
-	{
-		data[i] = SPI_read();
-	}	
-
-	PORTB |= (1 << PB7); 
-	
-}

@@ -45,7 +45,8 @@ void game_start(int8_t game_mode)
 int8_t game_check_game_over()
 {   
 
-	can_message msg = CAN_receive();
+	can_message msg;
+    CAN_receive(&msg);
     /*  */
 
 	if(msg.id== GAME_INFO_ID && msg.data[0]!=0)
@@ -114,7 +115,7 @@ void game(int8_t game_mode)
         msg.data[0] = b[0];
         msg.data[1] = b[1];
 
-        CAN_transmit(msg);
+        CAN_transmit(&msg);
 
 
      	//_delay_ms(1);// needed? depends on implementation of CAN interrupt
@@ -168,7 +169,7 @@ void transmit_start_game(int8_t game_mode)
 
 
     /* transmit can message to can */
-    CAN_transmit(msg);
+    CAN_transmit(&msg);
 
 }
 

@@ -262,8 +262,9 @@ void menu_change_menu()
 				{
 					delete_cursor();
 					curr_menu = curr_menu->childs[menu.position];
-					if(curr_menu->mode >0)
-					{	
+					if(curr_menu->mode >1)
+					{
+	
 						printf("right + game\n");
 						game(curr_menu->mode);
 						curr_menu = curr_menu->parent;

@@ -119,7 +119,7 @@ void transmit_joystick_status(joystick_struct joystick)
     msg.data[2] = b[2];
 
     /* transmit can message to can */
-    CAN_transmit(msg);
+    CAN_transmit(&msg);
 
 }
 

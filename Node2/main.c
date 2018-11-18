@@ -26,18 +26,32 @@
 //testprogram med jtag
 //Cutoff frequency: 796.18 Hz
 
-  can_message msg;
+  can_message msg_send = {
+    .data = {5,5},
+    .length=2,
+    .id=0,
+    .RTR=0
+  };
+  
+  can_message msg_rec = {
+    .data={0,0},
+    .length = 2,
+    .id=1,
+    .RTR= 0
+  };
 
 ISR(INT4_vect) {
   //_delay_ms(100);
-  printf("Hallaais\n\r" );
-  printf("%x\n\r", MCP_read(MCP_CANINTF));
+  //printf("Hallaais\n\r" );
+  //printf("%x\n\r", MCP_read(MCP_CANINTF));
 
-  CAN_receive(&msg);
+  CAN_receive(&msg_rec);
+
+
 }
 
 
-//ACM0 putty
+//ACM0 putty 
 void main(){
   
     cli();
@@ -60,20 +74,12 @@ void main(){
 
     sei();
     _delay_ms(100);
-        printf("BITCH START\n");
+    printf("BITCH START\n");
 
     //controller_init();
     
-    /*
-  	uint8_t b[2] = {0xFF,0x1d};
-   	can_message msg = 
-   	{
-   		.length=2,
-   		.id=1,
-   		.RTR=0
-   	};
-    msg.data[0] = b[0];
-  */
+
+  
     //uint8_t blockage;
 
 //    int16_t encoder;
@@ -99,7 +105,8 @@ void main(){
       //printf("id after read : %d \n\r",msg.id);
 
       //printf("r in main loop\n\r");
-
+      //printf("data: %d ",msg_send.data[0]);
+      //printf("data: %d \n\r ",msg_send.id);
       //data = ADC_read();
 
 
@@ -110,10 +117,17 @@ void main(){
 
      //PWM_set_duty_cycle(-100);
 
-      //msg=CAN_receive();
+      //CAN_receive();
       //printf("main while 1 \n");
 
       //game_start(msg);
+      if (detect_blockage()){
+        //cli(); vetke om dette trengs egt.
+        CAN_transmit(&msg_send);
+        printf("node 2 has sent can message\n");
+        //sei();
+      }
+      
 
       //printf ("%x\r\n",MCP_read(MCP_CANINTF));
        // printf("%x\n\r", MCP_read(MCP_EFLG));

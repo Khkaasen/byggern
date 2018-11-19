@@ -109,6 +109,7 @@ int32_t controller_read_motor_ref(can_message msg)
 void controller_set_motor_input(can_message msg)
 {	
 	//reset encoder hvis den når FFFF
+
 	int32_t ref = controller_read_motor_ref(msg);
 	int32_t error = ref - read_encoder();
 	error_integral +=error;
@@ -116,6 +117,8 @@ void controller_set_motor_input(can_message msg)
 	//printf("ref:%ld\n", ref);
 	//printf("error:%ld\n", error);
 	int32_t u = error*KP/10000 + error_integral*KI/10000 +error_derivate*KD/10000;
+
+
 	if(abs(u)>255)
 	{
 		u=255;

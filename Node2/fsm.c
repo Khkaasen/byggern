@@ -20,6 +20,7 @@ can_message msg_rec = {
 };
 
 
+
 void fsm_init(){
 	change_state = 0;
 
@@ -118,9 +119,9 @@ void fsm(){
 
 	}
 }
-
+/*
 ISR(INT4_vect) {
 
   CAN_receive(&msg_rec);
 
-}
+}*/

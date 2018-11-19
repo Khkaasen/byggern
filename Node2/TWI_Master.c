@@ -78,7 +78,8 @@ void TWI_Start_Transceiver_With_Data( unsigned char *msg, unsigned char msgSize 
 {
   unsigned char temp;
 
-  while ( TWI_Transceiver_Busy() );             // Wait until TWI is ready for next transmission.
+  //while ( TWI_Transceiver_Busy() )
+      //printf("stuck in TWI flmfplfmflfm\n" );             // Wait until TWI is ready for next transmission.
 
   TWI_msgSize = msgSize;                        // Number of data to transmit.
   TWI_buf[0]  = msg[0];                         // Store slave address with R/W setting.

@@ -50,29 +50,29 @@ ISR(INT4_vect) {
   CAN_receive(&msg_rec);
 
 
-}
-*/
+}*/
 
+can_message msg_rec_test = {
+    .data={0,0},
+    .length = 2,
+    .id=1,
+    .RTR= 0
+};
 void init_all(){
 
       cli();
     UART_init(MYUBRR);
-
-    
-
-    //printf("%d",MCP_read_status());
-
     CAN_init(); // this also inits mcp and spi
+    TWI_Master_Initialise();
     PWM_init();
     ADC_init();
     IR_init();
-    TWI_Master_Initialise();
+
     DAC_init();
     //timer_init();
     motor_init();
     joystick_init();
-    
-
+ 
     sei();
 
 }
@@ -80,19 +80,32 @@ void init_all(){
 void main(){
   
   init_all();
-  
+   
     _delay_ms(100);
     //fsm();
     controller_init();
-    /*
+
     while(1)
     {
+      printf("in while \n\r");
+
+      //joystick_to_servopos(msg_rec_test);
+      controller_set_motor_input(msg_rec_test);
+      /*
       if (detect_blockage()){
         printf("sent msg node 2\n");
         CAN_transmit(&msg_send);
       }
+      */ 
     }
 
-    */
+
+    
 }
 
+
+ISR(INT4_vect) {
+  printf("message for jam boy\r\n");
+  CAN_receive(&msg_rec_test);
+
+}

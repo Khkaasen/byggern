@@ -58,28 +58,31 @@ void controller_init()
 	//encoder_reset();
 	//encoder_read = read_encoder();
 	//printf("encoder reset:%d\n", encoder_read );
+
+	
 	error_integral = 0;
 	last_error = 0;
 	set_motor_dir(1);
+
 	DAC_set_output(MOTOR_INIT_FORCE);
-    _delay_ms(2800);
+
+    //_delay_ms(2800);
+printf("controller init\n\r");
     DAC_set_output(0);
-    _delay_ms(500);
+	
+    //_delay_ms(500);
+
+   
     encoder_reset();
-    //encoder_read = read_encoder();
-    //printf("Initial start pos:%d\n", encoder_read );
-
-    //_delay_ms(1000);
-    
-    //encoder_endpoint = read_encoder();
-    //printf("%d\n",encoder_endpoint );
-
 
     set_motor_dir(0);
+
     DAC_set_output(MOTOR_INIT_FORCE);
-    _delay_ms(2800);
+
+    //_delay_ms(2800);
+
     DAC_set_output(0);
-    _delay_ms(500);
+    //_delay_ms(500);
 
 
     encoder_endpoint = read_encoder();

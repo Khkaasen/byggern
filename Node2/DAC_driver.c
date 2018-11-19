@@ -37,5 +37,4 @@ void DAC_set_output(uint8_t output) //må finne nytt navn
 
 	//send message
 	TWI_Start_Transceiver_With_Data(DAC_message, 3);
-
 }

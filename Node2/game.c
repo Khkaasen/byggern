@@ -11,7 +11,7 @@
 #define GAME_START_ID 2
 #define GAME_INFO_ID 3
 #define DUMMY_ID 10  
-
+/*
 void game_start(can_message msg)
 {
 	if (msg.id == GAME_START_ID)
@@ -22,7 +22,7 @@ void game_start(can_message msg)
 
 		controller_select(msg.data[0]);
 
-		/* denne added av marius*/
+		//denne added av marius
 		//timer_start();
 
 		game();	
@@ -42,13 +42,12 @@ int8_t game_lost_handle(can_message msg)
 		//read timer;
 		//we have to check if timer larger than 128??  
 
-		/* denne added av marius*/
-		
+		 //denne added av marius		
 		//int8_t score= timer_read_timer();
 		int8_t score= 40;
 
 
-		/* denne added av marius  */
+		// denne added av marius 
 		//timer_reset(); //tror ikke jeg trenger denne, siden den uansett blir satt til 0 når game starter. 
 
 		int8_t b[2]= {1,score};
@@ -67,7 +66,7 @@ int8_t game_lost_handle(can_message msg)
    		CAN_transmit(&msg);
 
 
-   				/* make sure last game_over message not still on can bus */
+   				//make sure last game_over message not still on can bus 
 
    		return(1);
 	}
@@ -97,8 +96,6 @@ void game()
 
     //int32_t ref;
 	while(1)
-	{
-		printf("inside game while loop\n");
 
 		CAN_receive(&msg);
 
@@ -114,7 +111,7 @@ void game()
 	        {       		
 	        	break;
 	        }
-        }
+    }
 	        
-	}
 }
+*/

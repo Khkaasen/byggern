@@ -31,37 +31,14 @@
 //Cutoff frequency: 796.18 Hz
 //ttyS0 putty
 
-/* disse er nå opprettet i fsm 
-  can_message msg_send = {
-    .length=1,
-    .id=10,
-    .RTR=0
-  };
-  int8_t b[2] = {100,-100};
 
-
-  can_message msg_rec = {
-    .data={0,0},
-    .length = 2,
-    .id=1,
-    .RTR= 0
-  };
-*/
-
-
-/* denne er nå skrevet i fsm
-ISR(INT0_vect)
+void init_all()
 {
 
-  CAN_receive(&msg_rec);
-}
-*/
-
-void inti_all(){
-
-  cli();
+  	cli();
 
     UART_init(MYUBRR);
+    printf("all init done\n");
     SRAM_init();
     oled_reset();
     multi_card_init();
@@ -80,7 +57,9 @@ void inti_all(){
 void main(){    
 
   
-  void inti_all(){
+  init_all();
+
+  //printf("all init done\n");
 
   fsm();
 
@@ -164,6 +143,6 @@ void main(){
         break;
       }
       /* Hvorfor delay? */
-     _delay_ms(10);
-    }    
+     //_delay_ms(10);
+        
 }

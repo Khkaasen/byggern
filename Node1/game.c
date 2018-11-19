@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "oled.h"
+#include "EEPROM_driver.h"
 #include <avr/interrupt.h>
 
 #include <util/delay.h>
@@ -70,7 +71,7 @@ void game_over(uint8_t score, uint8_t high_score)
 
 void game(int8_t game_mode)  //denne brukes ikke lengre. 
 {
-     disse er nå opprettet i fsm
+     //disse er nå opprettet i fsm
 	joystick_struct joy;
 
     sliders_struct slider;
@@ -148,7 +149,7 @@ void game_update_high_score(int score){
     int third = EEPROM_read(2);
 
     if (score > first){
-        EPROM_write(0, score);
+        EEPROM_write(0, score);
         EEPROM_write(1, first);
         EEPROM_write(2, second);
         return;

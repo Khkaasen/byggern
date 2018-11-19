@@ -11,19 +11,16 @@
 #include "CAN_driver.h"
 #include "MCP2515_driver.h"
 
-/* MASKS */
 #define MASK_LENGTH 0x0F
 #define MASK_RTR 0x40
 #define MASK_ENABLE 0xff
 #define MASK_DISABLE 0x00
 
-/* BITS */
 #define RX0IF 0x00
 #define RX0IE 0X01
 #define TXREQ 0x03
 #define RXM1_RXM0 0X60 
 
-/* BUFFERS */
 #define ID_HIGH_OFFSET 0x01
 #define ID_LOW_OFFSET 0x02
 #define DATA_LENGTH_OFFSET 0x05
@@ -87,8 +84,6 @@ void CAN_transmit(can_message * msg)
 
 	sei();
 }
-
-
 
 void CAN_receive(can_message * msg)
 {

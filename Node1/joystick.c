@@ -8,8 +8,8 @@
 #include "CAN_driver.h"
 
 /* Joystick channels on usb multifunction card */
-#define CHANNEL_X 4  //CHANNEL 1
-#define CHANNEL_Y 5  //CHANNEL 2
+#define CHANNEL_X 4
+#define CHANNEL_Y 5
 
 /* Define all joystick constants */
 #define X_OFFSET 127
@@ -109,7 +109,6 @@ void transmit_joystick_status(joystick_struct joystick)
 
     /* Transmit can message to can */
     CAN_transmit(&msg);
-
 }
 
 

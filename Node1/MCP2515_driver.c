@@ -36,7 +36,6 @@ void MCP_reset()
 
 char MCP_read(char address)
 {
-	
 	PORTB &= ~(1 << PB4);
 
 	uint8_t result;

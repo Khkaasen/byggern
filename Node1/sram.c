@@ -1,20 +1,22 @@
 #define F_CPU 4915200UL
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <avr/io.h>
 #include <util/delay.h>
 
+#include "sram.h"
+
 void SRAM_init(void)
 {
-	/* enable external SRAM operation */
+	/* Enable external SRAM operation */
 	MCUCR = (1<<SRE);
 
-	/*release PC7-PC4 for normal pin function. These are use as input til JTAG */
+	/* Release PC7-PC4 for normal pin function. Used for jtag */
 	SFIOR = (1<<XMM2);
 }
 
-
-void SRAM_test(void)	//fikk vi denne funksjonen?? trenger vi fiske kommentering her???? 
+void SRAM_test(void)
 {
 	volatile char *ext_ram = (char *) 0x1800; // Start address for the SRAM
 	uint16_t ext_ram_size= 0x800;

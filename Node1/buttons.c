@@ -1,16 +1,21 @@
-#include "buttons.h"
 #include <stdio.h>
 #include <avr/io.h>
 
-int8_t read_left_button(){
-    if (PINB & (1<<PB0)){
+#include "buttons.h"
+
+int8_t read_left_button()
+{
+    if (PINB & (1<<PB0))
+    {
         return 1;
     }
     return 0;
 }
 
-int8_t read_right_button(){
-    if (PINB & (1<<PB1)){
+int8_t read_right_button()
+{
+    if (PINB & (1<<PB1))
+    {
         return 1;
     }
     return 0;

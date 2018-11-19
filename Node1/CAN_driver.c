@@ -1,33 +1,33 @@
 #define F_CPU 4915200UL
-#include "CAN_driver.h"
-#include "MCP2515_driver.h"
+
 #include <stdio.h>
 #include <avr/io.h>
-#include "MCP2515.h"
 #include <stdint.h>
 #include <stdbool.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
-#define RXM0 5
-#define TXREQ 3
+#include "MCP2515.h"
+#include "CAN_driver.h"
+#include "MCP2515_driver.h"
+
+/* MASKS */
 #define MASK_LENGTH 0x0F
 #define MASK_RTR 0x40
-
-
-#define ENABLE 0xff
-#define DISABLE 0x00
+#define MASK_ENABLE 0xff
+#define MASK_DISABLE 0x00
 
 /* BITS */
 #define RX0IF 0x00
 #define RX0IE 0X01
+#define TXREQ 0x03
 #define RXM1_RXM0 0X60 
 
 /* BUFFERS */
-#define ID_HIGH_OFFSET 1
-#define ID_LOW_OFFSET 2
-#define DATA_LENGTH_OFFSET 5
-#define DATA_BYTE_OFFSET 6
+#define ID_HIGH_OFFSET 0x01
+#define ID_LOW_OFFSET 0x02
+#define DATA_LENGTH_OFFSET 0x05
+#define DATA_BYTE_OFFSET 0x06
 
 void CAN_init()
 {	
@@ -41,14 +41,14 @@ void CAN_init()
 	_delay_ms(1);                                                         // HVOROFR DELAY
 
 	/* Enable RX0IE interrupt */
-	MCP_bit_modify(MCP_CANINTE, RX0IE, ENABLE);
+	MCP_bit_modify(MCP_CANINTE, RX0IE, MASK_ENABLE);
 	_delay_ms(1);                                                         // HVOROFR DELAY
 
 	/* Disable the 3 last identifier bits*/
-	MCP_bit_modify(MCP_TXB0CTRL+ID_LOW_OFFSET,MODE_MASK, DISABLE);
+	MCP_bit_modify(MCP_TXB0CTRL+ID_LOW_OFFSET,MODE_MASK, MASK_DISABLE);
 
 	/* Turn mask/filters off; receive any msg */
-	MCP_bit_modify(MCP_RXB0CTRL,RXM1_RXM0,ENABLE);
+	MCP_bit_modify(MCP_RXB0CTRL,RXM1_RXM0,MASK_ENABLE);
 
 	/* Set mode for CAN Controller */
   	MCP_bit_modify(MCP_CANCTRL, MODE_MASK, MODE_NORMAL); 
@@ -61,7 +61,6 @@ void CAN_init()
 	GICR |= (1<<INT0);  
 
 	sei();	
-
 }
 
 void CAN_transmit(can_message * msg)
@@ -91,7 +90,8 @@ void CAN_transmit(can_message * msg)
 
 
 
-void CAN_receive(can_message * msg) {
+void CAN_receive(can_message * msg)
+{
 	
 	/* Read ID */
 	msg->id = MCP_read(MCP_RXB0CTRL+ID_HIGH_OFFSET);
@@ -109,7 +109,7 @@ void CAN_receive(can_message * msg) {
 	MCP_read_n_bytes(MCP_RXB0CTRL+DATA_BYTE_OFFSET,msg->data,msg->length);
 
  	/* Clear recieve buffer full flag */
-	MCP_bit_modify(MCP_CANINTF,(1 << RX0IF),DISABLE);
+	MCP_bit_modify(MCP_CANINTF,(1 << RX0IF),MASK_DISABLE);
 
 	return;
 }

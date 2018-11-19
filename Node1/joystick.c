@@ -1,10 +1,11 @@
-#include "usbmultifunction.h"
-#include "joystick.h"
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "CAN_driver.h"
 #include <avr/io.h>
+
+#include "usbmultifunction.h"
+#include "joystick.h"
+#include "CAN_driver.h"
 
 /* joystick channels on usb multifunction card */
 #define CHANNEL_X 4  //CHANNEL 1

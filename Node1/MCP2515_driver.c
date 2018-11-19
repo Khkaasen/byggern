@@ -57,6 +57,7 @@ char MCP_read(char address) {
 	result = SPI_read();
 
 	PORTB |= (1 << PB4);
+
 	
 	return result;
 }
@@ -72,7 +73,7 @@ void MCP_write(int8_t data, uint8_t address) {
 
 	//send data
 	SPI_write(data);
-
+	
 
 	PORTB |= (1 << PB4);
 }
@@ -82,7 +83,6 @@ void MCP_request_to_send() {
 	
 	SPI_write(MCP_RTS_TX0);
 	
-
 	PORTB |= (1 << PB4);
 }
 
@@ -98,3 +98,67 @@ uint8_t MCP_read_status() {
 	PORTB |= (1 << PB4);
 	return result;
 }
+
+void MCP_read_n_bytes(char address,int8_t * data, char length) {
+	
+	PORTB &= ~(1 << PB4);
+
+
+
+	//send read instrucion
+	SPI_write(MCP_READ);
+
+	//send address
+	SPI_write(address);
+
+
+	for(int i =0;i<length;i++)
+	{
+		data[i]=SPI_read();
+		//printf("Data read%d\n",data[i] );
+	}
+
+
+	
+
+
+	PORTB |= (1 << PB4);
+	
+}
+
+void MCP_write_n_bytes(char address,int8_t * data, char length) {
+	
+	PORTB &= ~(1 << PB4);
+
+	//send write instrucion
+	SPI_write(MCP_WRITE);
+
+	//send address
+	SPI_write(address);
+
+	//read result
+	for(int8_t i =0;i<length;i++)
+	{
+		SPI_write(data[i]);
+	}
+
+	PORTB |= (1 << PB4);
+	
+}
+
+
+/*
+write SPDR: 3
+write SPDR: 30
+read SPDR: 0
+write SPDR: 2
+write SPDR: 31
+write SPDR: a
+write SPDR: 5
+write SPDR: 35
+write SPDR: f
+write SPDR: 5
+write SPDR: 2
+write SPDR: 36
+write SPDR: 0
+*/

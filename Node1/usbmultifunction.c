@@ -59,6 +59,6 @@ void transmit_IO_card(sliders_struct sliders, joystick_struct joystick, buttons_
 
 
     /* transmit can message to can */
-    CAN_transmit(&msg);
+    CAN_transmit(msg);
 
 }

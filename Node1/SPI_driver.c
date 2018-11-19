@@ -25,6 +25,7 @@ uint8_t SPI_read()
 	while(!(SPSR & (1<<SPIF)));
 
 	/* Return data register */
+	//printf("read SPDR: %x\r\n", SPDR);
 	return SPDR;
 }
 
@@ -33,7 +34,9 @@ void SPI_write(char cData)
 {
 	/* Start transmission */
 	SPDR = cData;
-	
+	//printf("write SPDR: %x\r\n", cData);
 	/* Wait for transmission complete */
 	while(!(SPSR & (1<<SPIF)));
+
+	
 }

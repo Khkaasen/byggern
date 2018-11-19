@@ -196,7 +196,6 @@ void display_menu(menu_node_t * node)
 	write_c(line);
 	oled_print(node->title);
 
-	printf("menu: %s\n", node->title);
 
 	if(menu.length==0)
 	{
@@ -222,17 +221,14 @@ void display_menu(menu_node_t * node)
 
 void menu_change_menu()
 {
-	printf("start of menu\n");
 	joystick_struct joy = get_joystick_status();
-	printf("joystick.dir: %d\n", joy.dir);
 	if(joy.dir==4)
 	{
 		shift_allowed = true;
-		printf("1\n");
 	}
 	if(pos_max(joy)&&shift_allowed)
 	{
-		printf("2\n");
+
 		shift_allowed=false;
 		switch(joy.dir)
 		{
@@ -244,7 +240,6 @@ void menu_change_menu()
 					menu.position --;
 				}
 				draw_cursor();
-				printf("up\n");
 				break;
 			case 2: //down
 				delete_cursor();
@@ -254,7 +249,6 @@ void menu_change_menu()
 					menu.position ++;
 				}
 				draw_cursor();
-				printf("down\n");
 				break;
 			case 1: // right
 				
@@ -265,12 +259,10 @@ void menu_change_menu()
 					if(curr_menu->mode >1)
 					{
 	
-						printf("right + game\n");
 						game(curr_menu->mode);
 						curr_menu = curr_menu->parent;
 					}
-					display_menu(curr_menu);
-					printf("right\n");	
+					display_menu(curr_menu);	
 				}
 				break;
 			case 3: // left
@@ -280,7 +272,6 @@ void menu_change_menu()
 					delete_cursor();
 					curr_menu = curr_menu->parent;
 					display_menu(curr_menu);
-					printf("left\n");
 				}
 				
 				break;

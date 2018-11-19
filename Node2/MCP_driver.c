@@ -100,3 +100,50 @@ uint8_t MCP_read_status() {
 	PORTB |= (1 << PB7);
 	return result;
 }
+
+void MCP_read_n_bytes(char address,int8_t * data, char length) {
+	
+	PORTB &= ~(1 << PB4);
+
+
+
+	//send read instrucion
+	SPI_write(MCP_READ);
+
+	//send address
+	SPI_write(address);
+
+
+	for(int i =0;i<length;i++)
+	{
+		data[i]=SPI_read();
+		//printf("Data read%d\n",data[i] );
+	}
+
+
+	
+
+
+	PORTB |= (1 << PB4);
+	
+}
+
+void MCP_write_n_bytes(char address,int8_t * data, char length) {
+	
+	PORTB &= ~(1 << PB4);
+
+	//send write instrucion
+	SPI_write(MCP_WRITE);
+
+	//send address
+	SPI_write(address);
+
+	//read result
+	for(int8_t i =0;i<length;i++)
+	{
+		SPI_write(data[i]);
+	}
+
+	PORTB |= (1 << PB4);
+	
+}

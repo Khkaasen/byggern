@@ -27,9 +27,9 @@
 //Cutoff frequency: 796.18 Hz
 
   can_message msg_send = {
-    .data = {5,5},
+    .data = {1,5},
     .length=2,
-    .id=0,
+    .id=3,
     .RTR=0
   };
   
@@ -146,7 +146,8 @@ void main(){
 
       //data =joystick_to_motorspeed(msg);
       //uint8_t dir = joystick_to_motordir(msg);
-      //printf("Data: %d  ", msg.data[0] );
+      printf("Joystick X received : %d\n\r  ", msg_rec.data[0] );
+
       //printf("ID: %d\n\r", msg.id);
       //printf("%d\n", data );
 

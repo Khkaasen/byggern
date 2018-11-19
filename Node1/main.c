@@ -32,12 +32,13 @@
 //ttyS0 putty
 
   can_message msg_send = {
-    .data = {5,5},
-    .length=2,
-    .id=0,
+    .length=1,
+    .id=10,
     .RTR=0
   };
-  
+  int8_t b[2] = {100,-100};
+
+
   can_message msg_rec = {
     .data={0,0},
     .length = 2,
@@ -47,7 +48,7 @@
 
 ISR(INT0_vect)
 {
-  printf("i ficking git i missige i mifickki!!!! \n");
+
   CAN_receive(&msg_rec);
 }
 
@@ -57,6 +58,8 @@ void main(){
   cli();
 
     UART_init(MYUBRR);
+    SPI_init();
+    MCP_init();
     //printf("!!!! \n");
     SRAM_init();
     oled_reset();
@@ -82,6 +85,7 @@ void main(){
     msg.data[0] = b[0];
     msg.data[1]=b[1];
      _delay_ms(10);
+    msg_send.data[0] = b[0];
 
 /*
     CAN_transmit(msg);
@@ -122,16 +126,17 @@ void main(){
     //printf("data3 after read: %x \n", msg.data[2]); 
     //printf("length = 2: ");
    	//printf("%d\n",msg.length);
-    /*EEPROM_write(11,250);
+    //EEPROM_write(11,250);
 
     //printf("%d\n", msg.data);
    	//CLEAR_BIT(PORTB,PB4);
 
     joystick_struct joy;
 
-     //sliders_struct slider;
+     sliders_struct slider;
 
-     //buttons_struct buttons;
+     buttons_struct buttons;
+     /*
      //game();
     //printf("%d\n",test );
     //display_countdown();
@@ -144,19 +149,34 @@ void main(){
  */
     while(1) {
 
-      printf("in main while loop\n\r");
+      //printf("in main while loop\n\r");
       //oled_print_pic();
       
-      //joy = get_joystick_status();
-      /*
-      slider = get_sliders_status();
+      joy = get_joystick_status();
+      
+      //slider = get_sliders_status();
 
-      buttons = get_buttons_status();
+      //buttons = get_buttons_status();
 
 
-      transmit_IO_card(slider, joy, buttons);
-      */
+      //transmit_IO_card(slider, joy, buttons);
 
+      //printf("transmitted IO card\r\n");
+
+
+      msg_send.data[0] = joy.x;
+
+
+
+      CAN_transmit(&msg_send);
+
+      //printf("joystick X sent: %d\r\n", msg_send.data[0] );
+      if(msg_rec.id == 3 )
+      {
+        break;
+      }
+      
+     printf("Joystick X received: %d\n\r",msg_rec.data[0]);
       
 
       //CAN_transmit(msg);
@@ -183,7 +203,7 @@ void main(){
     	//SPI_write(0xF0);
 
       //MCP_read(0x03);
-     //_delay_ms(10);
+     _delay_ms(10);
 
 
     }

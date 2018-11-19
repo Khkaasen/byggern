@@ -33,6 +33,7 @@
     .RTR=0
   };
   
+  /* dette er lagt inn i fsm
   can_message msg_rec = {
     .data={0,0},
     .length = 2,
@@ -49,19 +50,18 @@ ISR(INT4_vect) {
 
 
 }
+*/
 
+void init_all(){
 
-//ACM0 putty 
-void main(){
-  
-    cli();
-  	UART_init(MYUBRR);
+      cli();
+    UART_init(MYUBRR);
 
     
 
     //printf("%d",MCP_read_status());
 
-   	CAN_init(); // this also inits mcp and spi
+    CAN_init(); // this also inits mcp and spi
     PWM_init();
     ADC_init();
     IR_init();
@@ -73,6 +73,13 @@ void main(){
     
 
     sei();
+
+}
+//ACM0 putty 
+void main(){
+  
+  init_all();
+  
     _delay_ms(100);
     printf("BITCH START\n");
 

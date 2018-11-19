@@ -35,6 +35,6 @@ typedef struct menu_node_t
 void menu_init();
 void draw_cursor();
 void delete_cursor();
-void menu_change_menu();
+int menu_change_menu();
 
 #endif

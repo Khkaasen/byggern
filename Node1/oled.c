@@ -225,7 +225,7 @@ void oled_print_pic()
 */
 
 /* UNDER HER ER DET MYYYYEE KODE, BURDE KORTES NED */
-void oled_display_game_over( uint8_t score , uint8_t high_score )
+void oled_display_game_over(uint8_t score ,uint8_t high_score )
 {
     oled_reset();
     /*Game Over!*/

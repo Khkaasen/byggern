@@ -219,7 +219,7 @@ void display_menu(menu_node_t * node)
 
 
 
-void menu_change_menu()
+int menu_change_menu()
 {
 	joystick_struct joy = get_joystick_status();
 	if(joy.dir==4)
@@ -227,7 +227,6 @@ void menu_change_menu()
 		shift_allowed = true;
 	}
 	if(pos_max(joy)&&shift_allowed)
-	{
 
 		shift_allowed=false;
 		switch(joy.dir)
@@ -240,7 +239,9 @@ void menu_change_menu()
 					menu.position --;
 				}
 				draw_cursor();
-				break;
+
+				return 0;
+
 			case 2: //down
 				delete_cursor();
 				if(menu.cursor_pos!=(TITLE+ menu.length))
@@ -249,7 +250,8 @@ void menu_change_menu()
 					menu.position ++;
 				}
 				draw_cursor();
-				break;
+
+				return 0;
 			case 1: // right
 				
 				if((curr_menu->childs[menu.position]!=NULL)) //check if menu.child is game mode 
@@ -258,13 +260,37 @@ void menu_change_menu()
 					curr_menu = curr_menu->childs[menu.position];
 					if(curr_menu->mode >1)
 					{
-	
-						game(curr_menu->mode);
+						//ikke kall på game her. endre state, return og kall på game in IN_GAME state
+						//game(curr_menu->mode);
 						curr_menu = curr_menu->parent;
+
+						//MÅ JEG DISPLAY MENU før jeg returnerer??
+						if (curr_menu->mode == MODE_GAME_EASY)
+							curr_menu = curr_menu->parent;
+							return 2;
+
+						if (curr_menu->mode == MODE_GAME_MEDIUM)
+							curr_menu = curr_menu->parent;
+							return 3;
+
+						if (curr_menu->mode == MODE_GAME_HARD)
+							curr_menu = curr_menu->parent;
+							return 4;
+
+						if (curr_menu->mode == MODE_GAME_EXTREME)
+							curr_menu = curr_menu->parent;
+						return 5;
 					}
-					display_menu(curr_menu);	
+
+					if(curr_menu->mode ==1){
+						//text mode here, print instruction on oled.
+						curr_menu = curr_menu->parent;
+						return 0;
+					}
+
+					display_menu(curr_menu);
 				}
-				break;
+				return 0;
 			case 3: // left
 				
 				if(curr_menu->parent != NULL)
@@ -274,9 +300,10 @@ void menu_change_menu()
 					display_menu(curr_menu);
 				}
 				
-				break;
+				return 0;
 			default:
-				break;
+				return 0;
+				
 		}
 	}
 }

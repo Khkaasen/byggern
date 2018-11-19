@@ -38,13 +38,16 @@ void CAN_init() {
 
 	MCP_bit_modify(MCP_CANINTE, 0x01, 0xff); //enabe rx0ie interrupt
 
-
-	MCP_bit_modify(MCP_RXB0CTRL, 0x04, 0x00); // Disable rollover
-  	
   	_delay_ms(1);
-	//MCP_bit_modify(MCP_BFPCTRL, 0x04, 0x00); // Disable B0BFE (interrupt)
 
   	MCP_bit_modify(MCP_TXB0CTRL+2,MODE_MASK,0x00);  // set unused id bits 0 
+
+
+	//MCP_bit_modify(MCP_RXB0CTRL, 0x04, 0x00); // Disable rollover
+  	
+
+	//MCP_bit_modify(MCP_BFPCTRL, 0x04, 0x00); // Disable B0BFE (interrupt)
+
   	
   	MCP_bit_modify(MCP_RXB0CTRL,0x60,0xff); //Turn mask/filters off; receive any msg
 
@@ -59,7 +62,6 @@ void CAN_init() {
   	
   	sei();
 
-	return;
 }
 
 

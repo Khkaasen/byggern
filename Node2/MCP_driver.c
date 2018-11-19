@@ -103,7 +103,7 @@ uint8_t MCP_read_status() {
 
 void MCP_read_n_bytes(char address,int8_t * data, char length) {
 	
-	PORTB &= ~(1 << PB4);
+	PORTB &= ~(1 << PB7);
 
 
 
@@ -124,13 +124,13 @@ void MCP_read_n_bytes(char address,int8_t * data, char length) {
 	
 
 
-	PORTB |= (1 << PB4);
+	PORTB |= (1 << PB7);
 	
 }
 
 void MCP_write_n_bytes(char address,int8_t * data, char length) {
 	
-	PORTB &= ~(1 << PB4);
+	PORTB &= ~(1 << PB7);
 
 	//send write instrucion
 	SPI_write(MCP_WRITE);
@@ -144,6 +144,6 @@ void MCP_write_n_bytes(char address,int8_t * data, char length) {
 		SPI_write(data[i]);
 	}
 
-	PORTB |= (1 << PB4);
+	PORTB |= (1 << PB7);
 	
 }

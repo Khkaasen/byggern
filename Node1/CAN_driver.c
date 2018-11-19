@@ -35,7 +35,7 @@ void CAN_init()
 
 	MCP_bit_modify(MCP_RXB0CTRL,0x60,0xff); //Turn mask/filters off; receive any msg
 
-  	MCP_bit_modify(MCP_CANCTRL, MODE_MASK, MODE_LOOPBACK); // Set mode for CAN Controller.
+  	MCP_bit_modify(MCP_CANCTRL, MODE_MASK, MODE_NORMAL); // Set mode for CAN Controller.
 
   	/* satt nederst nå uten å teste, test imorgen */
 	

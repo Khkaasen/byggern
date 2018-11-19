@@ -58,8 +58,8 @@ void main(){
   cli();
 
     UART_init(MYUBRR);
-    SPI_init();
-    MCP_init();
+    //SPI_init();
+    //MCP_init();
     //printf("!!!! \n");
     SRAM_init();
     oled_reset();
@@ -154,12 +154,12 @@ void main(){
       
       joy = get_joystick_status();
       
-      //slider = get_sliders_status();
+      slider = get_sliders_status();
 
-      //buttons = get_buttons_status();
+      buttons = get_buttons_status();
 
 
-      //transmit_IO_card(slider, joy, buttons);
+      transmit_IO_card(slider, joy, buttons);
 
       //printf("transmitted IO card\r\n");
 
@@ -168,7 +168,7 @@ void main(){
 
 
 
-      CAN_transmit(&msg_send);
+      //CAN_transmit(&msg_send);
 
       //printf("joystick X sent: %d\r\n", msg_send.data[0] );
       if(msg_rec.id == 3 )
@@ -176,7 +176,7 @@ void main(){
         break;
       }
       
-     printf("Joystick X received: %d\n\r",msg_rec.data[0]);
+     //printf("Joystick X received: %d\n\r",msg_rec.data[0]);
       
 
       //CAN_transmit(msg);

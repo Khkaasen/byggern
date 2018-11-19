@@ -1,7 +1,6 @@
 #ifndef MCP2515_driver_h
 #define MCP2515_driver_h
 
-//rename this file to MCP_driver
 #include <stdbool.h>
 #include <stdint.h>
 

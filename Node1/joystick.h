@@ -22,6 +22,8 @@ typedef struct joystick_status
 
 joystick_struct get_joystick_status(void);
 
+bool pos_max(joystick_struct joy);
+
 void transmit_joystick_status(joystick_struct joystick);
 
 #endif

@@ -146,6 +146,7 @@ void main(){
 
       //data =joystick_to_motorspeed(msg);
       //uint8_t dir = joystick_to_motordir(msg);
+      /*
       printf("Joystick X received : %d\n\r  ", msg_rec.data[0] );
       printf("Joystick Y received : %d\n\r  ", msg_rec.data[1] );
       printf("Joystick DIR received : %d\n\r  ", msg_rec.data[2] );
@@ -154,7 +155,7 @@ void main(){
       printf("SLIDER RIGHT received : %d\n\r  ", msg_rec.data[5] );
       printf("RIGHT BUTTON received : %d\n\r  ", msg_rec.data[6] );
       printf("LEFT BUTTON received : %d\n\r  ", msg_rec.data[7] );
-
+      */
 
       //printf("ID: %d\n\r", msg.id);
       //printf("%d\n", data );

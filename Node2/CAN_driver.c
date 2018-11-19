@@ -1,11 +1,4 @@
-/*
- * can_com.c
- *
- * Created: 25.10.2018 08:42:05
- *  Author: margronv
- */
-
- #define F_CPU 16000000
+#define F_CPU 16000000
 
 #include <avr/io.h>
 #include <avr/interrupt.h>

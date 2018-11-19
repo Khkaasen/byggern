@@ -4,6 +4,10 @@
 #include <util/delay.h>
 #include <string.h>
 #include "uart.h"
+#include "CAN_driver.h"
+#include "SPI_driver.h"
+#include "MCP2515_driver.h"
+
 #include "sram.h"
 #include "joystick.h"
 #include "buttons.h"
@@ -15,7 +19,9 @@
 #include "CAN_driver.h"
 #include "MCP2515.h"
 #include "game.h"
+
 #include <avr/interrupt.h>
+
 #include "EEPROM_driver.h"
 
 #define Baudrate 9600
@@ -24,7 +30,7 @@
 //testprogram med jtag
 //Cutoff frequency: 796.18 Hz
 //ttyS0 putty
-/*
+
   can_message msg_send = {
     .data = {5,5},
     .length=2,
@@ -38,32 +44,31 @@
     .id=1,
     .RTR= 0
   };
-*/
-/*
+
 ISR(INT0_vect)
 {
   printf("i ficking git i missige i mifickki!!!! \n");
   CAN_receive(&msg_rec);
 }
-*/
+
 void main(){    
 
   
-  //cli();
+  cli();
 
     UART_init(MYUBRR);
-    printf("!!!! \n");
+    //printf("!!!! \n");
     SRAM_init();
     oled_reset();
     multi_card_init();
     oled_init(); //denne skjer nå i multi_card_init(); 
-    //menu_init();
-    printf("!!!! \n");
+    menu_init();
+    //printf("!!!! \n");
 
     //printf("%d",MCP_read_status());
    	CAN_init();
 
-    //sei();
+    sei();
 
    	printf("program start\n");
 
@@ -117,7 +122,7 @@ void main(){
     //printf("data3 after read: %x \n", msg.data[2]); 
     //printf("length = 2: ");
    	//printf("%d\n",msg.length);
-     //EEPROM_write(11,150);
+    /*EEPROM_write(11,250);
 
     //printf("%d\n", msg.data);
    	//CLEAR_BIT(PORTB,PB4);
@@ -135,9 +140,11 @@ void main(){
     //uint8_t c=EEPROM_read(11);
     uint8_t hei=EEPROM_read(11);
     printf("%d\n",hei);
+    oled_display_game_over(a,hei);
+ */
     while(1) {
 
-      //printf("in main while loop\n");
+      printf("in main while loop\n\r");
       //oled_print_pic();
       
       //joy = get_joystick_status();
@@ -150,7 +157,7 @@ void main(){
       transmit_IO_card(slider, joy, buttons);
       */
 
-      oled_display_game_over(a,hei);
+      
 
       //CAN_transmit(msg);
       //msg=CAN_receive();
@@ -176,7 +183,7 @@ void main(){
     	//SPI_write(0xF0);
 
       //MCP_read(0x03);
-     _delay_ms(10);
+     //_delay_ms(10);
 
 
     }

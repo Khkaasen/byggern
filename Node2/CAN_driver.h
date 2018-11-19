@@ -1,11 +1,3 @@
-/*
- * can_com.h
- *
- * Created: 25.10.2018 08:42:20
- *  Author: margronv
- */
-
-
 #ifndef CAN_COM_H_
 #define CAN_COM_H_
 

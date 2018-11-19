@@ -30,3 +30,5 @@ SPI-driver node 1: lag funksjon for å velge hvilken slave det skal skrives til.
 
 
 fikse alle structs til å ha samme oppsett, eksempel: "menu_struct" og "joystick_struct"
+
+legge til topp 3 liste 

@@ -16,6 +16,7 @@
 #define MCP_RX0IE 0x00
 void CAN_init()
 {	
+	cli();
 	printf("jeg er i can init\n");
 
 	MCP_init();
@@ -37,7 +38,7 @@ void CAN_init()
   	MCP_bit_modify(MCP_CANCTRL, MODE_MASK, MODE_NORMAL); // Set mode for CAN Controller.
 
   	/* satt nederst nå uten å teste, test imorgen */
-	cli();
+	
 	/* set interrupt on falling edge */
 	MCUCR |= (1<<ISC01);
 	MCUCR &= ~(1<<ISC00);

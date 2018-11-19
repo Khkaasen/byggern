@@ -178,7 +178,7 @@ void delete_cursor()
 	write_c(LOWER_COL0);
 	write_c(HIGHER_COL0);
 	write_c(menu.cursor_pos);
-	for (uint8_t j = 0; j < 16; j++){
+	for (uint8_t j = 0; j < 15; j++){
         write_d(0x00);  //pekeren iterer av seg selv      
     }
 
@@ -219,16 +219,16 @@ void display_menu(menu_node_t * node)
 
 
 
-void menu_change_menu()
-{
+int menu_change_menu()
+{	
+	printf("menu title %s\n\r", curr_menu->title);
 	joystick_struct joy = get_joystick_status();
 	if(joy.dir==4)
 	{
 		shift_allowed = true;
 	}
 	if(pos_max(joy)&&shift_allowed)
-	{
-
+		{
 		shift_allowed=false;
 		switch(joy.dir)
 		{
@@ -240,7 +240,9 @@ void menu_change_menu()
 					menu.position --;
 				}
 				draw_cursor();
-				break;
+
+				return 0;
+
 			case 2: //down
 				delete_cursor();
 				if(menu.cursor_pos!=(TITLE+ menu.length))
@@ -249,22 +251,36 @@ void menu_change_menu()
 					menu.position ++;
 				}
 				draw_cursor();
-				break;
+
+				return 0;
 			case 1: // right
 				
-				if((curr_menu->childs[menu.position]!=NULL)) //check if menu.child is game mode 
+				if((curr_menu->childs[menu.position]!=NULL)) 
 				{
 					delete_cursor();
 					curr_menu = curr_menu->childs[menu.position];
 					if(curr_menu->mode >1)
 					{
-	
-						game(curr_menu->mode);
+						//ikke kall på game her. endre state, return og kall på game in IN_GAME state
+						//game(curr_menu->mode);
+						MODES mode = curr_menu->mode;
 						curr_menu = curr_menu->parent;
+						//printf("mode: %d\n",mode );
+						return mode;
 					}
-					display_menu(curr_menu);	
+
+
+					if(curr_menu->mode ==1){
+						
+						//text mode here, print instruction on oled.
+						curr_menu = curr_menu->parent;
+						return 0;
+					}
+
+
+					display_menu(curr_menu);
 				}
-				break;
+				return 0;
 			case 3: // left
 				
 				if(curr_menu->parent != NULL)
@@ -274,9 +290,10 @@ void menu_change_menu()
 					display_menu(curr_menu);
 				}
 				
-				break;
+				return 0;
 			default:
-				break;
+				return 0;
+				
 		}
 	}
 }

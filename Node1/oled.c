@@ -69,8 +69,8 @@ void oled_init()
     write_c(0x3f);
     write_c(0xd5);  //display divide ratio/osc. freq. mode
     write_c(0x80);
-    write_c(0x81);  //contrast control
-    write_c(0x50);
+    write_c(CONTRAST_REGISTER);  //contrast control
+    write_c(0x50);  //50 of ff
     write_c(0xd9);  //set pre-charge period
     write_c(0x21);
     write_c(0x20);  //set memory adressing mode

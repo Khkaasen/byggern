@@ -66,29 +66,20 @@ void controller_init()
 
 	DAC_set_output(MOTOR_INIT_FORCE);
 
-    //_delay_ms(2800);
-printf("controller init\n\r");
+    _delay_ms(2800);
     DAC_set_output(0);
-	
-    //_delay_ms(500);
-
-   
+    _delay_ms(500);
     encoder_reset();
 
+
     set_motor_dir(0);
-
     DAC_set_output(MOTOR_INIT_FORCE);
-
-    //_delay_ms(2800);
-
+    _delay_ms(2800);
     DAC_set_output(0);
-    //_delay_ms(500);
+    _delay_ms(500);
 
 
     encoder_endpoint = read_encoder();
-    set_max_point(encoder_endpoint);
-    //printf("Endpoint %d\n", encoder_endpoint);
-    //_delay_ms(1000);
 }
 
 int32_t controller_read_motor_ref(can_message msg)

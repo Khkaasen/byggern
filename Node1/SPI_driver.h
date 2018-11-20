@@ -3,8 +3,8 @@
 
 #include <stdint.h>
 
-#define SET_BIT(reg, bit) (reg |= (1 << bit))  //skal vi bruke disse overalt? marius synes ikke disse er nødvenig så lenge vi bare bruker de her. 
-#define CLEAR_BIT(reg, bit) (reg &= ~(1 << bit)) // samme gjelder denne. 
+#define SET_BIT(reg, bit) (reg |= (1 << bit))         //skal vi bruke disse overalt? marius synes ikke disse er nødvenig så lenge vi bare bruker de her. 
+#define CLEAR_BIT(reg, bit) (reg &= ~(1 << bit))  
 
 void SPI_init();
 

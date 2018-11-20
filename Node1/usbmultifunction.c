@@ -1,14 +1,16 @@
 #define F_CPU 4915200
-#include "usbmultifunction.h"
-#include "oled.h"
+
 #include <stdint.h>
 #include <util/delay.h>
-#include "oled.h"
 #include <avr/io.h>
+
+#include "usbmultifunction.h"
+#include "oled.h"
 
 #define MESSAGE_LENGTH 8
 
-#define IO_ID 1 //nå er joystick ID lik IO_ID. FIX
+#define IO_ID 1
+#define ADC_MEMORYMAP 0x1400
 
 void multi_card_init()
 {
@@ -20,16 +22,16 @@ void multi_card_init()
 
 unsigned char read_channel(int channel)
 {
-	volatile char* adc = (char *) 0x1400;
-	adc[channel] = channel;                    //hva er syntaks her?
-	_delay_ms(50);                             //innterupt istedenfor 
+	volatile char* adc = (char *) ADC_MEMORYMAP;
+	adc[channel] = channel;
+	_delay_ms(50);
 	return *adc;
 }
 
 void transmit_IO_card(sliders_struct sliders, joystick_struct joystick, buttons_struct buttons)
 {
 	/* initialize can message with correct data bytes */
-	int8_t b[MESSAGE_LENGTH] = 
+	int8_t byte[MESSAGE_LENGTH] = 
 	{	
 		joystick.x,
 		joystick.y,
@@ -44,19 +46,18 @@ void transmit_IO_card(sliders_struct sliders, joystick_struct joystick, buttons_
     can_message msg=
     {
         .length=MESSAGE_LENGTH,
-        .id=IO_ID, //id = 1 is IO_card ID
+        .id=IO_ID,
         .RTR=0
     };
 
-    msg.data[0] = b[0];
-    msg.data[1] = b[1];
-    msg.data[2] = b[2];
-    msg.data[3] = b[3];
-    msg.data[4] = b[4];
-    msg.data[5] = b[5];
-    msg.data[6] = b[6];
-    msg.data[7] = b[7];
-
+    msg.data[0] = byte[0];
+    msg.data[1] = byte[1];
+    msg.data[2] = byte[2];
+    msg.data[3] = byte[3];
+    msg.data[4] = byte[4];
+    msg.data[5] = byte[5];
+    msg.data[6] = byte[6];
+    msg.data[7] = byte[7];
 
     /* transmit can message to can */
     CAN_transmit(&msg);

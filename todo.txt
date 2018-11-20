@@ -32,3 +32,14 @@ SPI-driver node 1: lag funksjon for Â velge hvilken slave det skal skrives til.
 fikse alle structs til Â ha samme oppsett, eksempel: "menu_struct" og "joystick_struct"
 
 legge til topp 3 liste 
+
+
+
+
+
+SISTE DAG(KRITSOFfER):
+-BYTTE NAVN PÅ JOYSTICK FUNSKJON
+-LAGE SLAVE SELECT OG DESELECT I SPI( BRUKES I MCP)
+-BYTTE NAVN PÅ MCP2515_driver til MCP_Driver
+-SET START POINT FUNSKJON OLED
+-FJERNE/BRUKE SETBIT CLEARBIT I SPI

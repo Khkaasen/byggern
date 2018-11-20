@@ -14,9 +14,11 @@ typedef struct struct_can_message
 
 void CAN_init();
 
+void CAN_transmit(can_message * msg);
+
 void CAN_receive(can_message * msg);
 
-void CAN_transmit(can_message * msg);
+
 
 
 #endif

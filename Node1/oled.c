@@ -1,10 +1,12 @@
 #define F_CPU 4915200
+
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
+
 #include "oled.h"
 #include "usbmultifunction.h"
 #include "fonts.h"
@@ -34,7 +36,7 @@ uint16_t OLED_DATA_SIZE= 0x200;
 #define MENU_POS_LOW 0x0F
 #define MENU_POS_HIGH 0x10
 
-#define COUNTDOWN_POS_LOW 0x00 //må finne riktig verdi (dette skal være midten)
+#define COUNTDOWN_POS_LOW 0x00
 #define COUNTDOWN_POS_HIGH 0x14
 
 #define PLAY_POS_LOW 0x00
@@ -42,6 +44,19 @@ uint16_t OLED_DATA_SIZE= 0x200;
 
 #define G_OVER_POS_LOW 0x00
 #define G_OVER_POS_HIGH 0x12
+
+#define DESABLE 0x00
+#define ASCII_OFFSET 32
+#define NUMBER_OFFSET 16
+#define LARGE_FONT 8
+#define SMALL_FONT 4
+#define HORIZONTAL_PIXELS 128
+
+#define CONTRAST_REGISTER 0x81
+#define MIN_CONTRAST 0x00
+#define MAX_CONTRAST 0xFF
+#define INCREASE_CONTRAST 0x04
+
 
 void oled_init()
 {
@@ -54,8 +69,8 @@ void oled_init()
     write_c(0x3f);
     write_c(0xd5);  //display divide ratio/osc. freq. mode
     write_c(0x80);
-    write_c(0x81);  //contrast control
-    write_c(0x50);
+    write_c(CONTRAST_REGISTER);  //contrast control
+    write_c(0x50);  //50 of ff
     write_c(0xd9);  //set pre-charge period
     write_c(0x21);
     write_c(0x20);  //set memory adressing mode
@@ -72,60 +87,56 @@ void oled_init()
     write_c(0x10);	//set higher column to 0.
 }
 
-
-void write_c(uint8_t command){
+void write_c(uint8_t command)
+{
     *OLED_COMMAND = command;
 }
 
-void write_d(unsigned int data){
+void write_d(unsigned int data)
+{
     *OLED_DATA=data;
 }
 
 void oled_reset()
 {
     /* iterate all pages */
-    for (uint8_t i = PAGE0; i<=PAGE7; i++){
-
+    for (uint8_t i = PAGE0; i<=PAGE7; i++)
+    {
         write_c(i);
-
         /* loop 128 times, wait for pointer to iterate all bytes. */
-        for (uint8_t j = 0; j < 128; j++){
-
-        	write_d(0x00);  //set all bytes to 0, this pointer increases by itself
-            
+        for (uint8_t j = 0; j < HORIZONTAL_PIXELS; j++){
+        	write_d(DESABLE);  //set all bytes to 0, this pointer increases by itself
         }
     }       
 }
 
-
-//KRØPLINGEN KOM SEG KUN HIT!!!!!!!!!!!!!
-
 void oled_print_char(const char data)
 {
-    for (int i =0; i<8; i++)
+    for (int i =0; i<LARGE_FONT; i++)
     {
-            write_d(pgm_read_byte(&font8[(int)data-32][i])); 
+        write_d(pgm_read_byte(&font8[(int)data - ASCII_OFFSET][i])); 
     }
-
 }
 
 void oled_print_number(uint8_t number)
 {
-    for (int i =0; i<8; i++)
+    for (int i =0; i<LARGE_FONT; i++)
     {                
-        write_d(pgm_read_byte(&font8[number+16][i])); 
+        write_d(pgm_read_byte(&font8[number + NUMBER_OFFSET][i])); 
     }    
 }
 
 void oled_print_char_small(const char data)
 {
-    for (int i=0; i<4;i++)
-        write_d(pgm_read_byte(&font4[(int)data-32][i]));
+    for (int i=0; i<SMALL_FONT;i++)
+        write_d(pgm_read_byte(&font4[(int)data - ASCII_OFFSET][i]));
 }
 
-void oled_print(const char* string){
+void oled_print(const char* string)
+{
 	char* stringPtr=string;
-	while(*stringPtr != '\0'){
+	while(*stringPtr != '\0')
+    {
 		oled_print_char(*stringPtr);
 		++stringPtr;
 	}
@@ -134,23 +145,16 @@ void oled_print(const char* string){
 void oled_print_small(const char* string)
 {
     char* stringPtr=string;
-    while(*stringPtr != '\0'){
+    while(*stringPtr != '\0')
+    {
         oled_print_char_small(*stringPtr);
         ++stringPtr;
     }
 }
 
-void set_start_col(int col)
-{
-    if(col>128 || col<0)
-    {
-        return;
-    }
-
-}
-
 void oled_print_multiple_lines(const char* string)
 {
+    /* Set start point */
     uint8_t teller =0;
     uint8_t line = LINE1;
     write_c(MENU_POS_LOW);
@@ -161,7 +165,9 @@ void oled_print_multiple_lines(const char* string)
     {
         teller++;
         oled_print_char_small(*stringPtr);
-        if(teller>20 && *stringPtr ==' ' )
+
+        /* New line */
+        if(teller>20 && *stringPtr ==' ')
         {
             teller=0;
             write_c(MENU_POS_LOW);
@@ -177,63 +183,46 @@ void oled_display_countdown()
 {
     for(char i='3'; i>'0'; i--)
     {
+        /* Set start point */
         oled_reset();
-        write_c(LINE4); //starte på linje
+        write_c(LINE4);
         write_c(COUNTDOWN_POS_LOW);
         write_c(COUNTDOWN_POS_HIGH);
-        write_c(0x81); //akkseserer contrast
-        write_c(0x00); //setter start verdi på contrast?
+
+        /* Set contrast */
+        write_c(CONTRAST_REGISTER);
+        write_c(MIN_CONTRAST);
         oled_print_char(i); 
-        for (uint16_t i=0x00; i<0xFF; i++ )
+        /* Change contrast */
+        for (uint16_t i=MIN_CONTRAST; i<MAX_CONTRAST; i++ )
         {
-            write_c(0x81); //akkseserer contrast
-            write_c(i); //setter verdi på contrast?
-            i+=0x04;
+            write_c(CONTRAST_REGISTER);
+            write_c(i);
+            i+=INCREASE_CONTRAST;
             _delay_ms(40);        
         }
     }
-    
+    /* Set start point */
     oled_reset();
-    write_c(LINE4); //starte på linje
+    write_c(LINE4);
     write_c(PLAY_POS_LOW);
     write_c(PLAY_POS_HIGH);
-    write_c(0x81); //akkseserer contrast
-    write_c(0xFF);
+    /* Set contrast*/
+    write_c(CONTRAST_REGISTER);
+    write_c(MAX_CONTRAST);
     oled_print("PLAY!");
 }
 
-/*
-void oled_print_pic()
-{
-    uint8_t page = PAGE0;
-    write_c(MENU_POS_LOW);
-    write_c(MENU_POS_HIGH);
-
-    for (int i =0; i<1024; i++)
-    {
-        if (i%128 == 0)
-        {
-            write_c(page);
-            write_c(MENU_POS_LOW);
-            write_c(MENU_POS_HIGH);
-            page++; 
-        }
-        write_d(pgm_read_byte(&bitmap_iip07f[i]));
-    }
-}
-
-*/
-
-/* UNDER HER ER DET MYYYYEE KODE, BURDE KORTES NED */
-void oled_display_game_over(uint8_t score ,uint8_t high_score )
+void oled_display_game_over( uint8_t score , uint8_t high_score )
 {
     oled_reset();
+
     /*Game Over!*/
-    write_c(LINE2); //starte på linje
+    write_c(LINE2); 
     write_c(G_OVER_POS_LOW);
     write_c(G_OVER_POS_HIGH);
-    write_c(0x81); //akkseserer contrast
-    write_c(0xFF); //full styrke
+    write_c(CONTRAST_REGISTER);
+    write_c(MAX_CONTRAST);
     oled_print("GAME OVER!");
 
     /* Score */
@@ -245,6 +234,7 @@ void oled_display_game_over(uint8_t score ,uint8_t high_score )
     number_2 = (score%100-number_1)/10;
     number_3 = (score%1000-number_2-number_1)/100;
 
+    /* Set start point*/
     write_c(LINE5); 
     write_c(MENU_POS_LOW);
     write_c(MENU_POS_HIGH);
@@ -257,7 +247,6 @@ void oled_display_game_over(uint8_t score ,uint8_t high_score )
         oled_print_number(number_2);
     }
     oled_print_number(number_1);
-
 
     /* Highscore */
     write_c(LINE6);
@@ -280,15 +269,4 @@ void oled_display_game_over(uint8_t score ,uint8_t high_score )
         oled_print_number(number_5);
     }
     oled_print_number(number_4);
-
-
 }
-
-/*
-void oled_test_print()
-{
-    uint8_t number= 567;
-
-    oled_print((char)(number));
-}
-*/

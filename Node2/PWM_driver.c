@@ -13,7 +13,7 @@
 
 void PWM_init()
 {
-
+	
 	//set "Output Compare Match B" as output 
 	DDRB |= (1<<PB6);
 
@@ -29,10 +29,10 @@ void PWM_init()
 
 	//set TOP value in ICR-register
 	ICR1 = TOP;
-
+	
 	//initial position
 	PWM_set_duty_cycle(0);
-
+	
 
 }
 
@@ -44,7 +44,7 @@ void PWM_set_duty_cycle(float percentage)
 	// never set PWM duty cycle outside range
 	if((percentage > 100) ||( percentage< -100))
 	{
-		printf("\npercentage out of range: %d", (int)percentage);
+		printf("\npercentage out of range: %d\r\n", (int)percentage);
 		return;
 	}
 
@@ -52,7 +52,7 @@ void PWM_set_duty_cycle(float percentage)
 
 	float duty_cycle = CENTER_PERCENTAGE - GAIN_PERCENTAGE * percentage/100;
 	
-	//printf("%d\n",(int)(duty_cycle*100));
+	//printf("%d\n\r",(int)(duty_cycle*100));
 
 	uint16_t compare_flag = duty_cycle * TOP;
 

@@ -20,6 +20,7 @@
 #include "motor_controller.h"
 #include "game.h"
 #include "timer.h"
+#include "fsm.h"
 #define Baudrate 9600
 #define MYUBRR F_CPU/16/Baudrate-1
 
@@ -33,6 +34,7 @@
     .RTR=0
   };
   
+  /* dette er lagt inn i fsm
   can_message msg_rec = {
     .data={0,0},
     .length = 2,
@@ -48,127 +50,70 @@ ISR(INT4_vect) {
   CAN_receive(&msg_rec);
 
 
-}
+}*/
 
+can_message msg_rec_test = {
+    .data={0,0},
+    .length = 2,
+    .id=1,
+    .RTR= 0
+};
+void init_all(){
 
-//ACM0 putty 
-void main(){
-  
-    cli();
-  	UART_init(MYUBRR);
-
-    
-
-    //printf("%d",MCP_read_status());
-
-   	CAN_init(); // this also inits mcp and spi
+      cli();
+    UART_init(MYUBRR);
+    CAN_init(); // this also inits mcp and spi
+    TWI_Master_Initialise();
     PWM_init();
     ADC_init();
     IR_init();
-    TWI_Master_Initialise();
+
     DAC_init();
     //timer_init();
     motor_init();
     joystick_init();
-    
-
+ 
     sei();
-    _delay_ms(100);
-    printf("BITCH START\n");
 
-    //controller_init();
-    
-
+}
+//ACM0 putty 
+void main(){
   
-    //uint8_t blockage;
+  init_all();
+   
+    _delay_ms(100);
+    fsm();
+    //controller_init();
+    //controller_select(2);
 
-//    int16_t encoder;
-    
-//printf ("%x\r\n",MCP_read(MCP_CANINTF));
+    while(1)
+    {
+      //printf("in while \n\r");
 
-    //msg = CAN_receive();
-
-    //printf ("%x\r\n",MCP_read(MCP_CANINTF));
-  	//printf("start program \n");
-    //printf("data1 after read: %d ", msg.data[1]);
-    //printf("data2 after read: %x \n", msg.data[1]);
-    //printf("length after read : %d ",msg.length);
-    //printf("id after read : %d \n\r",msg.id);
-
-    //timer_test();
-    //printf("right before main loop\n");
-    while(1) {
+      //joystick_to_servopos(&msg_rec_test);
       
-      //printf("data1 after read: %d ", msg.data[1]);
-      //printf("data2 after read: %x \n", msg.data[1]);
-      //printf("length after read : %d ",msg.length);
-      //printf("id after read : %d \n\r",msg.id);
-
-      //printf("r in main loop\n\r");
-      //printf("data: %d ",msg_send.data[0]);
-      //printf("data: %d \n\r ",msg_send.id);
-      //data = ADC_read();
-
-
-      //count_goals();
-      //printf("%d\n", get_n_goals());
-
-      //printf("%d\n", data);
-
-     //PWM_set_duty_cycle(-100);
-
-      //CAN_receive();
-      //printf("main while 1 \n");
-
-      //game_start(msg);
-      if (detect_blockage()){
-        //cli(); vetke om dette trengs egt.
+      //controller_set_motor_input(&msg_rec_test);
+      //joystick_button_to_soleniode(&msg_rec_test);
+      //set_motor_dir(1);
+      //DAC_set_output(100);
+      
+      /*if (detect_blockage()){
+        printf("sent msg node 2\n");
         CAN_transmit(&msg_send);
-        printf("node 2 has sent can message\n");
-        //sei();
-      }
+      }*/
       
+      //int16_t encoder = read_encoder();
+      //printf("encoder: %d\r\n", encoder );
 
-      //printf ("%x\r\n",MCP_read(MCP_CANINTF));
-       // printf("%x\n\r", MCP_read(MCP_EFLG));
-
-      //printf("main while 2\n");
-
+    }
 
 
-      //ref =slider_to_motorref(msg);
-      //position_controller(ref);
-     //encoder=live_calibration();
-      //encoder = read_encoder();
-      //printf("%d\n", encoder);
-      //joystick_to_servopos(msg);
-      //joystick_button_to_soleniode(msg);
-
-      //data =joystick_to_motorspeed(msg);
-      //uint8_t dir = joystick_to_motordir(msg);
-      printf("Joystick X received : %d\n\r  ", msg_rec.data[0] );
-      printf("Joystick Y received : %d\n\r  ", msg_rec.data[1] );
-      printf("Joystick DIR received : %d\n\r  ", msg_rec.data[2] );
-      printf("Joystick BUTTON received : %d\n\r  ", msg_rec.data[3] );
-      printf("SLIDER LEFT received : %d\n\r  ", msg_rec.data[4] );
-      printf("SLIDER RIGHT received : %d\n\r  ", msg_rec.data[5] );
-      printf("RIGHT BUTTON received : %d\n\r  ", msg_rec.data[6] );
-      printf("LEFT BUTTON received : %d\n\r  ", msg_rec.data[7] );
-
-
-      //printf("ID: %d\n\r", msg.id);
-      //printf("%d\n", data );
-
-      //set_motor_dir(dir);
-      //printf("Right B  : %d \n", msg.data[6]);
-      //printf("Left B  : %d \n", msg.data[7]);
-      //printf("DIR: %d \n", msg.data[2]);
-      //joystick_to_servopos(msg);
-      //_delay_ms(10);
-            //printf("%x\n", MCP_read(MCP_CANINTF));
-
-  	}
-    
-    
+   
 }
 
+/*
+ISR(INT4_vect) {
+  CAN_receive(&msg_rec_test);
+
+}
+*/

@@ -4,6 +4,7 @@
 
 void ADC_init()
 {
+	
 	DDRF |= (0<<PF0);
 
 	//Set ADC 0 as single input
@@ -18,7 +19,7 @@ void ADC_init()
 
 	//Prescale CPU with division factor 128
 	ADCSRA |= (1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0);
-
+	
 }
 
 uint16_t ADC_read()

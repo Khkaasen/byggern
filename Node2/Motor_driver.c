@@ -74,7 +74,9 @@ int16_t read_encoder()
 	//set !OE high to disable output of encoder
 	PORTH |= (1<<OE);
 
-	return encoder_calibration(encoder_read);
+	encoder_calibration(encoder_read);
+
+	return encoder_read;
 
 }
 
@@ -90,7 +92,7 @@ void encoder_reset()
 }
 
 
-int16_t encoder_calibration(int16_t encoder_value)
+void encoder_calibration(int16_t encoder_value)
 {
 	if(encoder_value > encoder_max)
 	{
@@ -100,5 +102,4 @@ int16_t encoder_calibration(int16_t encoder_value)
 	{
 		encoder_value = encoder_min;
 	}
-	return encoder_value;
 }

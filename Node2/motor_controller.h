@@ -13,9 +13,9 @@ void controller_select(int8_t game_mode);
 
 void controller_init();
 
-int32_t controller_read_motor_ref(can_message msg);
+int32_t controller_read_motor_ref(can_message * msg);
 
-void controller_set_motor_input(can_message msg);
+void controller_set_motor_input(can_message * msg);
 
 int16_t live_calibration();
 

@@ -1,17 +1,17 @@
-#include "usbmultifunction.h"
-#include "sliders.h"
-#include "CAN_driver.h"
 #include <stdio.h>
 #include <stdint.h>
 
-#define CHANNEL_LS 6  //CHANNEL left slider
-#define CHANNEL_RS 7  //CHANNEL right slider
+#include "usbmultifunction.h"
+#include "sliders.h"
+#include "CAN_driver.h"
+
+#define CHANNEL_LS 6  //Left slider
+#define CHANNEL_RS 7  //Right slider
 #define SLIDER_ID 2
 #define CONVERT_GAIN 0.3922
 
 sliders_struct get_sliders_status()
 {
-
     sliders_struct value;
 
     /*converting sliders to percentage with absolute value */
@@ -24,7 +24,7 @@ sliders_struct get_sliders_status()
 void transmit_sliders_status(sliders_struct slider)
 {
     /* initalize can message with correct data bytes*/
-	int8_t b[2] = 
+	int8_t byte[2] = 
     {
         slider.left_slider,
         slider.right_slider
@@ -33,14 +33,13 @@ void transmit_sliders_status(sliders_struct slider)
     can_message msg=
     {
         .length=2,
-        .id=SLIDER_ID, //id = 2 is slider_pos
+        .id=SLIDER_ID,
         .RTR=0
     };
 
-    msg.data[0] = b[0];
-    msg.data[1] = b[1];
+    msg.data[0] = byte[0];
+    msg.data[1] = byte[1];
 
-    /* transmit can message to can */
     CAN_transmit(&msg);
 }
 

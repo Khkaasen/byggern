@@ -10,6 +10,7 @@ static int32_t KI;
 static int32_t KD;
 
 #define MOTOR_INIT_FORCE 90
+#define GAME_MODE 0
 #define INTERRUPT_PERIOD 0.0326568
 
 uint16_t encoder_endpoint;
@@ -19,6 +20,38 @@ int32_t error_derivate;
 
 void controller_select(int8_t game_mode)
 {
+	//printf("MODE: %d\n",game_mode );
+
+	switch (game_mode){
+
+	/* PID controller */
+	case (2): 
+		KP= 200;
+		KI= 1;
+		KD= 50;
+		break;
+
+	/* PD controller */
+	case (3):
+		KP= 300;
+		KI= 0;
+		KD= 100;
+		break;
+
+	/* P controller */
+	case (4):
+		KP= 300;
+		KI= 0;
+		KD= 0;
+		break;
+
+	/* mirrored P controller */
+	case (5):
+		KP= 1;
+		KI= 0;
+		KD= 0; 
+		break; 
+	}
 
 }
 
@@ -29,6 +62,8 @@ void controller_init()
 	//encoder_reset();
 	//encoder_read = read_encoder();
 	//printf("encoder reset:%d\n", encoder_read );
+
+	
 
 	//enable overflow interrupt enable
 	TIMSK1 | = (1<<TOIE1);
@@ -48,18 +83,13 @@ void controller_init()
 	error_integral = 0;
 	last_error = 0;
 	set_motor_dir(1);
+
 	DAC_set_output(MOTOR_INIT_FORCE);
+
     _delay_ms(2800);
     DAC_set_output(0);
     _delay_ms(500);
     encoder_reset();
-    //encoder_read = read_encoder();
-    //printf("Initial start pos:%d\n", encoder_read );
-
-    //_delay_ms(1000);
-    
-    //encoder_endpoint = read_encoder();
-    //printf("%d\n",encoder_endpoint );
 
 
     set_motor_dir(0);
@@ -70,35 +100,39 @@ void controller_init()
 
 
     encoder_endpoint = read_encoder();
-    set_max_point(encoder_endpoint);
-    //printf("Endpoint %d\n", encoder_endpoint);
-    //_delay_ms(1000);
 }
 
-int32_t controller_read_motor_ref(can_message msg)
+int32_t controller_read_motor_ref(can_message * msg)
 {
 	int32_t motorref;
-	if(msg.id==IO_ID)
-	{
-		int32_t a = msg.data[SLIDER_RIGHT]; //changes direction on slider
-		long b = a*encoder_endpoint;
-		//printf("%d\n", read_encoder());
-		motorref = b/100;
-		//printf("%d\n", a);
-		//printf("%ld\n",b); 
-		//printf("%d\n",motorpos );
-		//_delay_ms(1000);
-		return(motorref);
-	}
+	int32_t a = msg->data[SLIDER_RIGHT]; //changes direction on slider
+
+	long b = a*encoder_endpoint;
+	//printf("%d\n", read_encoder());
+	motorref = b/100;
+	//printf("%d\n\r", a);
+	//printf("%ld\n\r",b); 
+	//printf("%d\n\r",motorref );
+	return(motorref);
 }
+
+
+void controller_set_motor_input(can_message * msg)
+{	
+	//reset encoder hvis den når FFFF
 
 ISR(TIMER1_OFV_vec)
 {
 	int32_t ref = controller_read_motor_ref(msg);
+	//printf("SLIDER_RIGHT  :%d\n\r", msg->data[SLIDER_RIGHT] );
 	int32_t error = ref - read_encoder();
+	error_integral +=error;
+	int32_t error_derivate = error - last_error;
 	error_integral +=error*INTERRUPT_PERIOD;
 	error_derivate = (error - last_error)/INTERRUPT_PERIOD;
 	int32_t u = error*KP/10000 + error_integral*KI/10000 +error_derivate*KD/10000;
+	//printf("ERROR: %d\r\n", error );
+	//printf("ref: %d\r\n", ref );
 
 	input_saturation(u);
 	input_direction(u);

@@ -97,6 +97,8 @@ void main(){
         CAN_transmit(&msg_send);
       }
       */ 
+      int16_t encoder = read_encoder();
+      printf("encoder: %d\r\n", encoder );
     }
 
 

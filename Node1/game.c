@@ -126,7 +126,7 @@ void transmit_start_game(int8_t game_mode)
 	{	
 		game_mode
 	};
-
+    //printf("MODE: %d\n", game_mode );
     can_message msg=
     {
         .length=MESSAGE_LENGTH,

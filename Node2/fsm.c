@@ -11,6 +11,7 @@ int state;
 
 int change_state;
 
+#define GAME_MODE 0
 
 can_message msg_rec = {
     .data={0,0},
@@ -41,25 +42,29 @@ void fsm(){
 			case IDLE:
 
 				while(1){
-					printf("idle\n\r");
+					//printf("idle\n\r");
+					_delay_ms(10); //går for fort!!!!!!!
 					if (msg_rec.id==2){ // 2 er game_start_id fra node 1.  
 						state = SET_UP;
 						break; // vil brake while loop her.
 					}
 				}
 			case SET_UP:
-				printf("set up\r\n");
+				//printf("set up\r\n");
 
-				controller_init();
+				
 
-				controller_select(msg_rec.data[0]); // her trenger jeg
+				controller_select(msg_rec.data[GAME_MODE]);
+	
+
+				controller_init();				
 				
 				state= IN_GAME;
 
 				break;
 
 			case IN_GAME:
-				printf("in game\r\n");
+				//printf("in game\r\n");
 
 				score = 0;
 
@@ -69,11 +74,11 @@ void fsm(){
 
 					if(msg_rec.id== 1){
 
-						controller_set_motor_input(msg_rec);
+						controller_set_motor_input(&msg_rec);
 
-        				joystick_to_servopos(msg_rec);
+        				joystick_to_servopos(&msg_rec);
 
-        				joystick_button_to_soleniode(msg_rec);
+        				joystick_button_to_soleniode(&msg_rec);
 
 
 						if(msg_rec.data[6]==1){
@@ -93,7 +98,7 @@ void fsm(){
 
 			case GAME_OVER: 
 
-				printf("game over\r\n");
+				//printf("game over\r\n");
 
 				
 
@@ -119,9 +124,8 @@ void fsm(){
 
 	}
 }
-/*
+
 ISR(INT4_vect) {
 
   CAN_receive(&msg_rec);
-
-}*/
+}

@@ -82,38 +82,38 @@ void main(){
   init_all();
    
     _delay_ms(100);
-    //fsm();
-    controller_init();
-    controller_select(2);
+    fsm();
+    //controller_init();
+    //controller_select(2);
 
     while(1)
     {
       //printf("in while \n\r");
 
-      joystick_to_servopos(&msg_rec_test);
+      //joystick_to_servopos(&msg_rec_test);
       
-      controller_set_motor_input(msg_rec_test);
-      joystick_button_to_soleniode(msg_rec_test);
+      //controller_set_motor_input(&msg_rec_test);
+      //joystick_button_to_soleniode(&msg_rec_test);
       //set_motor_dir(1);
       //DAC_set_output(100);
-      /*
-      if (detect_blockage()){
+      
+      /*if (detect_blockage()){
         printf("sent msg node 2\n");
         CAN_transmit(&msg_send);
-      }
-      */ 
+      }*/
+      
       //int16_t encoder = read_encoder();
       //printf("encoder: %d\r\n", encoder );
 
     }
 
 
-    
+   
 }
 
-
+/*
 ISR(INT4_vect) {
-  printf("jajaja\r\n");
   CAN_receive(&msg_rec_test);
 
 }
+*/

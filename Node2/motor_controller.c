@@ -10,13 +10,14 @@ static int32_t KI;
 static int32_t KD;
 
 #define MOTOR_INIT_FORCE 90
-
+#define GAME_MODE 0
 uint16_t encoder_endpoint;
 int32_t error_integral;
 int32_t last_error;
 
 void controller_select(int8_t game_mode)
 {
+	//printf("MODE: %d\n",game_mode );
 
 	switch (game_mode){
 
@@ -82,34 +83,33 @@ void controller_init()
     encoder_endpoint = read_encoder();
 }
 
-int32_t controller_read_motor_ref(can_message msg)
+int32_t controller_read_motor_ref(can_message * msg)
 {
 	int32_t motorref;
-	if(msg.id==IO_ID)
-	{
-		int32_t a = msg.data[SLIDER_RIGHT]; //changes direction on slider
-		long b = a*encoder_endpoint;
-		//printf("%d\n", read_encoder());
-		motorref = b/100;
-		//printf("%d\n\r", a);
-		//printf("%ld\n\r",b); 
-		//printf("%d\n\r",motorref );
-		//_delay_ms(1000);
-		return(motorref);
-	}
+	int32_t a = msg->data[SLIDER_RIGHT]; //changes direction on slider
+
+	long b = a*encoder_endpoint;
+	//printf("%d\n", read_encoder());
+	motorref = b/100;
+	//printf("%d\n\r", a);
+	//printf("%ld\n\r",b); 
+	//printf("%d\n\r",motorref );
+	return(motorref);
 }
 
 
-void controller_set_motor_input(can_message msg)
+void controller_set_motor_input(can_message * msg)
 {	
 	//reset encoder hvis den når FFFF
 
 	int32_t ref = controller_read_motor_ref(msg);
+	//printf("SLIDER_RIGHT  :%d\n\r", msg->data[SLIDER_RIGHT] );
 	int32_t error = ref - read_encoder();
 	error_integral +=error;
 	int32_t error_derivate = error - last_error;
 	int32_t u = error*KP/10000 + error_integral*KI/10000 +error_derivate*KD/10000;
-	printf("u: %d\n\r",u );
+	//printf("ERROR: %d\r\n", error );
+	//printf("ref: %d\r\n", ref );
 	if(abs(u)>255)
 	{
 		u=255;

@@ -17,6 +17,6 @@ void joystick_to_servopos(can_message * msg);
 
 uint8_t joystick_to_motorspeed (can_message msg);
 
-void joystick_button_to_soleniode(can_message msg);
+void joystick_button_to_soleniode(can_message * msg);
 
 #endif

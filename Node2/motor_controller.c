@@ -21,28 +21,28 @@ void controller_select(int8_t game_mode)
 	switch (game_mode){
 
 	/* PID controller */
-	case (1): 
+	case (2): 
 		KP= 200;
 		KI= 1;
 		KD= 50;
 		break;
 
 	/* PD controller */
-	case (2):
+	case (3):
 		KP= 300;
 		KI= 0;
 		KD= 100;
 		break;
 
 	/* P controller */
-	case (3):
+	case (4):
 		KP= 300;
 		KI= 0;
 		KD= 0;
 		break;
 
 	/* mirrored P controller */
-	case (4):
+	case (5):
 		KP= 1;
 		KI= 0;
 		KD= 0; 
@@ -91,9 +91,9 @@ int32_t controller_read_motor_ref(can_message msg)
 		long b = a*encoder_endpoint;
 		//printf("%d\n", read_encoder());
 		motorref = b/100;
-		//printf("%d\n", a);
-		//printf("%ld\n",b); 
-		//printf("%d\n",motorpos );
+		//printf("%d\n\r", a);
+		//printf("%ld\n\r",b); 
+		//printf("%d\n\r",motorref );
 		//_delay_ms(1000);
 		return(motorref);
 	}
@@ -108,11 +108,8 @@ void controller_set_motor_input(can_message msg)
 	int32_t error = ref - read_encoder();
 	error_integral +=error;
 	int32_t error_derivate = error - last_error;
-	//printf("ref:%ld\n", ref);
-	//printf("error:%ld\n", error);
 	int32_t u = error*KP/10000 + error_integral*KI/10000 +error_derivate*KD/10000;
-
-
+	printf("u: %d\n\r",u );
 	if(abs(u)>255)
 	{
 		u=255;

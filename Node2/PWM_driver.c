@@ -13,7 +13,7 @@
 
 void PWM_init()
 {
-	/*
+	
 	//set "Output Compare Match B" as output 
 	DDRB |= (1<<PB6);
 
@@ -29,7 +29,7 @@ void PWM_init()
 
 	//set TOP value in ICR-register
 	ICR1 = TOP;
-	*/
+	
 	//initial position
 	PWM_set_duty_cycle(0);
 	

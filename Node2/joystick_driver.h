@@ -13,7 +13,7 @@
 
 void joystick_init();
 
-void joystick_to_servopos(can_message msg);
+void joystick_to_servopos(can_message * msg);
 
 uint8_t joystick_to_motorspeed (can_message msg);
 

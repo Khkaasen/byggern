@@ -63,23 +63,6 @@ void controller_init()
 	//encoder_read = read_encoder();
 	//printf("encoder reset:%d\n", encoder_read );
 
-	
-
-	//enable overflow interrupt enable
-	TIMSK1 | = (1<<TOIE1);
-
-	//set timer2 to normal mode
-	TCCR0A &= ~(1<<WGM10);
-	TCCR0A &= ~(1<<WGM11);
-	TCCR0B &= ~(1<<WGM12);
-	TCCR0B &= ~(1<<WGM13);
-
-	//set prescale to 8
-	TCCR0B &= ~(1<<CS10);
-	TCCR0B |= (1<<CS11);
-	TCCR0B &= ~(1<<CS12);
-
-
 	error_integral = 0;
 	last_error = 0;
 	set_motor_dir(1);
@@ -120,16 +103,13 @@ int32_t controller_read_motor_ref(can_message * msg)
 void controller_set_motor_input(can_message * msg)
 {	
 	//reset encoder hvis den når FFFF
-
-ISR(TIMER1_OFV_vec)
-{
 	int32_t ref = controller_read_motor_ref(msg);
 	//printf("SLIDER_RIGHT  :%d\n\r", msg->data[SLIDER_RIGHT] );
 	int32_t error = ref - read_encoder();
 	error_integral +=error;
 	int32_t error_derivate = error - last_error;
-	error_integral +=error*INTERRUPT_PERIOD;
-	error_derivate = (error - last_error)/INTERRUPT_PERIOD;
+	error_integral +=error;
+	error_derivate = (error - last_error);
 	int32_t u = error*KP/10000 + error_integral*KI/10000 +error_derivate*KD/10000;
 	//printf("ERROR: %d\r\n", error );
 	//printf("ref: %d\r\n", ref );
@@ -160,24 +140,3 @@ void input_direction(int8_t u)
 }
 
 
-
-//finn på noe smart !!!
-int16_t live_calibration()
-{
-	/*
-	uint16_t motorpos = read_encoder();
-	if(motorpos>encoder_endpoint)
-	{
-		DAC_set_output(0);
-		motorpos = encoder_endpoint;
-	}
-	else if(motorpos<0)
-	{
-		DAC_set_output(0);
-		motorpos = 0;
-	}
-	else
-		motorpos=read_encoder();
-	return motorpos;
-	*/
-}

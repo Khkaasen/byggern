@@ -87,7 +87,7 @@ void main(){
 
     while(1)
     {
-      printf("in while \n\r");
+      //printf("in while \n\r");
 
       //joystick_to_servopos(msg_rec_test);
       controller_set_motor_input(msg_rec_test);
@@ -97,8 +97,8 @@ void main(){
         CAN_transmit(&msg_send);
       }
       */ 
-      int16_t encoder = read_encoder();
-      printf("encoder: %d\r\n", encoder );
+      //int16_t encoder = read_encoder();
+      //printf("encoder: %d\r\n", encoder );
     }
 
 
@@ -107,7 +107,6 @@ void main(){
 
 
 ISR(INT4_vect) {
-  printf("message for jam boy\r\n");
   CAN_receive(&msg_rec_test);
 
 }

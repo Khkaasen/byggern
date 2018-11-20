@@ -1,4 +1,4 @@
-t#include "fsm.h"
+#include "fsm.h"
 #define F_CPU 4915200UL
 #include <util/delay.h>
 #include "menu.h"

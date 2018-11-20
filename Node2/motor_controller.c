@@ -11,12 +11,9 @@ static int32_t KD;
 
 #define MOTOR_INIT_FORCE 90
 #define GAME_MODE 0
-#define INTERRUPT_PERIOD 0.0326568
-
 uint16_t encoder_endpoint;
 int32_t error_integral;
 int32_t last_error;
-int32_t error_derivate;
 
 void controller_select(int8_t game_mode)
 {
@@ -63,6 +60,7 @@ void controller_init()
 	//encoder_read = read_encoder();
 	//printf("encoder reset:%d\n", encoder_read );
 
+	
 	error_integral = 0;
 	last_error = 0;
 	set_motor_dir(1);
@@ -103,40 +101,54 @@ int32_t controller_read_motor_ref(can_message * msg)
 void controller_set_motor_input(can_message * msg)
 {	
 	//reset encoder hvis den når FFFF
+
 	int32_t ref = controller_read_motor_ref(msg);
 	//printf("SLIDER_RIGHT  :%d\n\r", msg->data[SLIDER_RIGHT] );
 	int32_t error = ref - read_encoder();
 	error_integral +=error;
 	int32_t error_derivate = error - last_error;
-	error_integral +=error;
-	error_derivate = (error - last_error);
 	int32_t u = error*KP/10000 + error_integral*KI/10000 +error_derivate*KD/10000;
 	//printf("ERROR: %d\r\n", error );
 	//printf("ref: %d\r\n", ref );
-
-	input_saturation(u);
-	input_direction(u);
-
-
-	DAC_set_output(abs(u));
-
-	last_error = error;
-}
-
-void input_saturation(int16_t u)
-{
 	if(abs(u)>255)
 	{
 		u=255;
 	}
-}
-
-void input_direction(int8_t u)
-{
+	//printf("u:%ld\n", u);
 	if (u<0)
+	{
 		set_motor_dir(1);
+	}
 	else
+	{
 		set_motor_dir(0);
+	}
+
+	DAC_set_output(abs(u));
+
+	last_error = error;
+	
 }
 
 
+
+//finn på noe smart !!!
+int16_t live_calibration()
+{
+	/*
+	uint16_t motorpos = read_encoder();
+	if(motorpos>encoder_endpoint)
+	{
+		DAC_set_output(0);
+		motorpos = encoder_endpoint;
+	}
+	else if(motorpos<0)
+	{
+		DAC_set_output(0);
+		motorpos = 0;
+	}
+	else
+		motorpos=read_encoder();
+	return motorpos;
+	*/
+}

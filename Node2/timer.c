@@ -1,5 +1,5 @@
 #include "timer.h"
-#define F_CPU 16000000 // do not need this. eventuelt show how i found 156/32. 
+#define F_CPU 16000000
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -20,19 +20,7 @@ void timer_init()
 
 	TCCR0B |= (1 << CS02) | (1 << CS00); //set prescaler to 1024
 
-	//TCNT0  = 0;//initialize counter value to 0
-
 	OCR0A = 20000;  // set compare number. flag should be set when number of ticks is 156
-
-	//TIMSK0 = (1 << OCIE0A);
-
-	// Interrupt
-	//cli();
-	//EICRB |= (1<<ISC71);
-	//EIMSK |= (1<<INT7);
-	//PCICR |= (1<<PCIE2);
-	//PCMSK0 |= (1<<PCINT7);
-	//sei();
 
 	extra_timer =0;
 
@@ -54,7 +42,6 @@ void timer_reset() //ikke sikkert jeg trenger denne.
 
 
 }
-
 
 int8_t timer_read_time()
 {
@@ -82,15 +69,12 @@ void timer_test(){
 /* increment timer when timer interrupt falg is set 100 times. */
 ISR(PCINT7_vect) 
 {
-
-	//printf("int\n" );
-	/*
 	extra_timer++;
 
 	if(extra_timer==100){
 		
 		timer+=1;
 		extra_timer=0;
-	}*/
+	}
 }
 

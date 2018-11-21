@@ -1,16 +1,8 @@
-/*
- * MCP_com.h
- *
- * Created: 19.10.2018 17:16:43
- *  Author: margronv
- */ 
-
 
 #ifndef MCP_COM_H_
 #define MCP_COM_H_
 
 
-// MCP
 void MCP_init();
 
 void MCP_bit_modify(char address, char mask,   char data);
@@ -29,4 +21,4 @@ void MCP_read_n_bytes(char address,int8_t * data, char length);
 
 void MCP_write_n_bytes(char address,int8_t * data, char length);
 
-#endif /* MCP_COM_H_ */
+#endif

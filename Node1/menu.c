@@ -1,10 +1,11 @@
 #include "menu.h"
 #include "oled.h"
 #include "joystick.h"
+#include "game.h"
+
 #include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
-#include "game.h"
 
 #define TITLE 0xb0
 #define LINE1 0xb1
@@ -56,7 +57,7 @@ static const menu_node_t singleplayer =
 	.parent = &main_menu,
 	.childs = {&singleplayer_instructions,&level_easy,&level_medium,&level_hard,&level_extreme},
 	.reallength = 5,
-	.mode = MODE_MENU
+	.mode = MODE_MENU_SINGLE
 };
 
 static const menu_node_t teammode = 
@@ -65,7 +66,7 @@ static const menu_node_t teammode =
 	.parent = &main_menu,
 	.childs = {&teammode_instructions,&level_easy,&level_medium,&level_hard,&level_extreme},
 	.reallength = 5,
-	.mode = MODE_MENU	
+	.mode = MODE_MENU_TEAM	
 };
 
 static const menu_node_t singleplayer_instructions=
@@ -74,7 +75,7 @@ static const menu_node_t singleplayer_instructions=
 	.parent = &singleplayer,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 0,
-	.mode = MODE_TEXT
+	.mode = MODE_TEXT_S
 };
 
 static const menu_node_t teammode_instructions=
@@ -83,7 +84,7 @@ static const menu_node_t teammode_instructions=
 	.parent = &teammode,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 0,
-	.mode = MODE_TEXT
+	.mode = MODE_TEXT_T
 };
 
 static const menu_node_t highscores =  
@@ -101,7 +102,7 @@ static const menu_node_t singleplayer_highscores =
 	.parent = &highscores,
 	.childs = {NULL,NULL,NULL,NULL,NULL},
 	.reallength = 0,
-	.mode = MODE_MENU
+	.mode = MODE_TEXT 
 };
 
 static const menu_node_t teammode_highscores =
@@ -170,7 +171,7 @@ void draw_cursor()
 	write_c(LOWER_COL0);	//set lower column to 0.
     write_c(HIGHER_COL0);	//set higher column to 0.
     write_c(menu.cursor_pos);
-	oled_print("->");
+	oled_print("-");
 }
 
 void delete_cursor()
@@ -179,7 +180,7 @@ void delete_cursor()
 	write_c(HIGHER_COL0);
 	write_c(menu.cursor_pos);
 	for (uint8_t j = 0; j < 15; j++){
-        write_d(0x00);  //pekeren iterer av seg selv      
+        write_d(0x00);  //pointer iterates in hard ware     
     }
 
 }
@@ -196,7 +197,7 @@ void display_menu(menu_node_t * node)
 	write_c(line);
 	oled_print(node->title);
 
-
+	/* handles Instrucion prints on oled */
 	if(menu.length==0)
 	{
 		delete_cursor();
@@ -204,7 +205,13 @@ void display_menu(menu_node_t * node)
 		write_c(MENU_ADJUST_HIGH);
 		line++;
 		write_c(line);
-		oled_print_multiple_lines("Teller sekunder du klarer å holde ballen i luften. Du styrer servo med joystick, og posisjon med venstre slider. LYKKE TIL! ");
+
+		if (node->mode==MODE_TEXT_S){
+			oled_print_multiple_lines("Teller sekunder du klarer aa holde ballen i luften. Du styrer vinkel paa skuddet med joystick, og posisjon med venstre slider. LYKKE TIL! ");
+		}
+		if (node->mode==MODE_TEXT_T){
+			oled_print_multiple_lines("Klare for samarbeid?? En spiller styrer vinkel paa skyter med joystick, men den andre styrer posisjonen med hoyre slider. LYKKE TIL!");
+		}
 	}
 
 	for(int i= 0; i<node->reallength; i++)
@@ -217,11 +224,14 @@ void display_menu(menu_node_t * node)
 	}
 }
 
-
+int game_type;
 
 int menu_change_menu()
 {	
-	printf("menu title %s\n\r", curr_menu->title);
+	if (curr_menu->reallength==3 ){ // reset game_type if user in Main menu
+		game_type =-1;
+	}
+
 	joystick_struct joy = get_joystick_status();
 	if(joy.dir==4)
 	{
@@ -253,26 +263,43 @@ int menu_change_menu()
 				draw_cursor();
 
 				return 0;
+
 			case 1: // right
 				
 				if((curr_menu->childs[menu.position]!=NULL)) 
 				{
 					delete_cursor();
+
 					curr_menu = curr_menu->childs[menu.position];
+
+					if (curr_menu->mode ==MODE_MENU_SINGLE){
+						game_type =0;
+					}
+
+					if (curr_menu->mode == MODE_MENU_TEAM){
+						game_type =1;
+					}
+
 					if(curr_menu->mode >1)
-					{
-						//ikke kall på game her. endre state, return og kall på game in IN_GAME state
-						//game(curr_menu->mode);
+					{	
 						MODES mode = curr_menu->mode;
+
 						curr_menu = curr_menu->parent;
-						//printf("mode: %d\n",mode );
-						return mode;
+
+						if (game_type ==0){
+							return mode;
+						}
+
+						if (game_type==1){
+							return mode * 10;
+						}
+
 					}
 
 
 					if(curr_menu->mode ==1){
 						
-						//text mode here, print instruction on oled.
+						display_menu(curr_menu); //text mode, print instruction on oled.
 						curr_menu = curr_menu->parent;
 						return 0;
 					}
@@ -281,6 +308,7 @@ int menu_change_menu()
 					display_menu(curr_menu);
 				}
 				return 0;
+
 			case 3: // left
 				
 				if(curr_menu->parent != NULL)
@@ -291,7 +319,9 @@ int menu_change_menu()
 				}
 				
 				return 0;
+
 			default:
+
 				return 0;
 				
 		}

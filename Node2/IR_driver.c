@@ -1,7 +1,7 @@
 #include "IR_driver.h"
 #include "ADC_driver.h"
-#include <util/delay.h>
 
+#include <util/delay.h>
 
 static int blockage;
 

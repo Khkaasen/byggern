@@ -4,7 +4,6 @@
 //First four bits of the slave address 0101 0000
 #define DAC_address 0x50;
 
-
 //DAC commandbits
 #define RST 5
 #define PD 4
@@ -20,13 +19,14 @@ static uint8_t DAC_message[3];
 void DAC_init()
 {
 	DAC_message[0] = DAC_address;
+
 	DAC_message[1] = (1<<RST);
 
 	TWI_Start_Transceiver_With_Data(DAC_message,3);
 }
 
 
-void DAC_set_output(uint8_t output) //må finne nytt navn
+void DAC_set_output(uint8_t output) 
 {
 
 	//Command/output byte

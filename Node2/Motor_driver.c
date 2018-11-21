@@ -10,7 +10,9 @@
 #define DIR PH1
 
 int32_t encoder_max;
+
 #define encoder_min 0
+
 void motor_init()
 {
 	//set enable, direction, select?, reset and oe pins  as output. 
@@ -34,9 +36,8 @@ void set_max_point(int32_t max_value)
 	encoder_max = max_value;
 }
 
-void set_motor_dir(uint8_t dir)	//spørre studass om type int eller kanskje uint8_t
+void set_motor_dir(uint8_t dir)
 {
-	//SE PÅ OPP-HØYRE/VENSTRE DIR
 	if(dir==0)
 		PORTH&= ~(1<<PH1);
 	else
@@ -64,13 +65,6 @@ int16_t read_encoder()
 	//read LSB
 	encoder_read+=PINK;
 
-	/*
-	//Toggle !RST to reset encoder??
-	PORTH &= ~(1<<RST);
-	_delay_ms(20);
-	PORTH |= (1<<RST);
-	*/
-
 	//set !OE high to disable output of encoder
 	PORTH |= (1<<OE);
 
@@ -85,10 +79,10 @@ void encoder_reset()
 	//Toggle RST to reset encoder
 
 	PORTH &= ~(1<<RST);
+
 	_delay_ms(20);
+
 	PORTH |= (1<<RST);
-
-
 }
 
 
@@ -98,6 +92,7 @@ void encoder_calibration(int16_t encoder_value)
 	{
 		encoder_value = encoder_max;
 	}
+	
 	else if(encoder_value <encoder_min )
 	{
 		encoder_value = encoder_min;

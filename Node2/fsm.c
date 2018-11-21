@@ -1,10 +1,12 @@
 #include "fsm.h"
 #include "CAN_driver.h"
 #include "IR_driver.h"
+
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdint.h>
+
 #define GAME_OVER_ID 3
 
 int state;
@@ -21,8 +23,9 @@ can_message msg_rec = {
 };
 
 
+void fsm_init()
+{
 
-void fsm_init(){
 	change_state = 0;
 
 	state = IDLE; 
@@ -30,9 +33,11 @@ void fsm_init(){
 }
 
 
-void fsm(){
+void fsm()
+{
 
 	float score =0;
+
 	int8_t end_score;
 
 	while(1){
@@ -42,20 +47,17 @@ void fsm(){
 			case IDLE:
 
 				while(1){
-					//printf("idle\n\r");
-					_delay_ms(10); //går for fort!!!!!!!
-					if (msg_rec.id==2){ // 2 er game_start_id fra node 1.  
+
+					_delay_ms(10); 
+
+					if (msg_rec.id==2){  
 						state = SET_UP;
-						break; // vil brake while loop her.
+						break; 
 					}
 				}
 			case SET_UP:
-				//printf("set up\r\n");
-
-				
 
 				controller_select(msg_rec.data[GAME_MODE]);
-	
 
 				controller_init();				
 				
@@ -64,7 +66,6 @@ void fsm(){
 				break;
 
 			case IN_GAME:
-				//printf("in game\r\n");
 
 				score = 0;
 
@@ -80,16 +81,17 @@ void fsm(){
 
         				joystick_button_to_soleniode(&msg_rec);
 
-
 						if(msg_rec.data[6]==1){
 
 							state = GAME_OVER;
 							break; 
 						}
 					}
+
 					uint8_t block = detect_blockage();
 
-					if (detect_blockage()==1){
+					if (block==1){
+
 						state = GAME_OVER;
 						break;
 					}
@@ -97,10 +99,6 @@ void fsm(){
 				}
 
 			case GAME_OVER: 
-
-				//printf("game over\r\n");
-
-				
 
 				end_score= score;
 
@@ -121,7 +119,6 @@ void fsm(){
 
 			   	break;
 		}
-
 	}
 }
 

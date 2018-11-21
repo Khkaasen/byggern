@@ -28,7 +28,6 @@
 #define MYUBRR F_CPU/16/Baudrate-1
 
 //Cutoff frequency: 796.18 Hz
-//ttyS0 putty
 
 void init_all()
 {

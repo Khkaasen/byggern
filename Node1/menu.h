@@ -6,12 +6,17 @@
 
 typedef enum 
 {
-	MODE_MENU=0,
+	MODE_MENU_SINGLE=-2, //indices Single Player game started 
+	MODE_MENU_TEAM = -3, //indices Team Mode game started 
+	MODE_MENU =0,
 	MODE_TEXT = 1,
 	MODE_GAME_EASY=2,
 	MODE_GAME_MEDIUM= 3,
 	MODE_GAME_HARD= 4,
 	MODE_GAME_EXTREME =5,
+	MODE_TEXT_S = -1, //handles Single Instrucion print on oled
+	MODE_TEXT_T = -2, //handles Single Instrucion print on oled
+
 } MODES;
 
 

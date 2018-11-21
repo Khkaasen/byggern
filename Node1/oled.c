@@ -217,13 +217,31 @@ void oled_display_game_over( uint8_t score , uint8_t high_score )
 {
     oled_reset();
 
-    /*Game Over!*/
+
+    if (score > high_score){
+        /*New Highscore!!*/
+        write_c(LINE2); 
+        write_c(G_OVER_POS_LOW);
+        write_c(G_OVER_POS_HIGH);
+        write_c(CONTRAST_REGISTER);
+        write_c(MAX_CONTRAST);
+        oled_print("New H score!");
+    }
+
+    else{
+        /*Game Over!*/
     write_c(LINE2); 
     write_c(G_OVER_POS_LOW);
     write_c(G_OVER_POS_HIGH);
     write_c(CONTRAST_REGISTER);
     write_c(MAX_CONTRAST);
     oled_print("GAME OVER!");
+
+
+    }
+
+
+
 
     /* Score */
     uint8_t number_1 = 0;

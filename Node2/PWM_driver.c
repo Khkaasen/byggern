@@ -1,4 +1,5 @@
 #include "PWM_driver.h"
+
 #include <avr/io.h>
 #include <stdint.h>
 
@@ -38,9 +39,6 @@ void PWM_init()
 
 void PWM_set_duty_cycle(float percentage)
 {
-
-	//printf("%d\n", (int)percentage );
-	
 	// never set PWM duty cycle outside range
 	if((percentage > 100) ||( percentage< -100))
 	{
@@ -48,14 +46,9 @@ void PWM_set_duty_cycle(float percentage)
 		return;
 	}
 
-	//printf("%d\n", (int)percentage );
-
 	float duty_cycle = CENTER_PERCENTAGE - GAIN_PERCENTAGE * percentage/100;
-	
-	//printf("%d\n\r",(int)(duty_cycle*100));
 
 	uint16_t compare_flag = duty_cycle * TOP;
-
 
 	//set compare register to compare value
 	OCR1B = compare_flag; 

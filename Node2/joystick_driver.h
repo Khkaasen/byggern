@@ -3,6 +3,7 @@
 
 
 #include "CAN_driver.h"
+
 #include <stdint.h>
 
 #define JOYSTICK_X 0

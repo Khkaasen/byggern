@@ -1,7 +1,0 @@
-flyttet chip select fra MCP2515 til SPI
-
-defined verdier i menu, inital meny er nå main menu
-
-slettet ting som var kommentert ut i oled
-
-defined verdier i joystick og slider

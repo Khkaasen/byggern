@@ -21,7 +21,6 @@ typedef struct change_of_state
 
 void update_IO_card();
 
-
 void fsm();
 
 void fsm_init();
